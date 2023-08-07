@@ -23,6 +23,10 @@ func (v *BaseSwiftgrammVisitor) VisitSentence(ctx *SentenceContext) interface{} 
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSwiftgrammVisitor) VisitPrint(ctx *PrintContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSwiftgrammVisitor) VisitDeclare_var(ctx *Declare_varContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -32,6 +36,46 @@ func (v *BaseSwiftgrammVisitor) VisitDeclare_constant(ctx *Declare_constantConte
 }
 
 func (v *BaseSwiftgrammVisitor) VisitAssign_var(ctx *Assign_varContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitIf_sentence(ctx *If_sentenceContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitSwitch_sentence(ctx *Switch_sentenceContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitSwitch_cases(ctx *Switch_casesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitSwitch_case(ctx *Switch_caseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitWhile_sentence(ctx *While_sentenceContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitFor_sentence(ctx *For_sentenceContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitGuard_sentence(ctx *Guard_sentenceContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitBreak_sentence(ctx *Break_sentenceContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitContinue_sentence(ctx *Continue_sentenceContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitReturn_sentence(ctx *Return_sentenceContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

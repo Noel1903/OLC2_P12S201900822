@@ -14,5 +14,5 @@ type Expression interface {
 }
 
 type Instruction interface {
-	GetInstruction(env table.SymbolTable) interface{}
+	Execute(env table.SymbolTable) interface{}
 }

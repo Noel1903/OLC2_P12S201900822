@@ -1,0 +1,227 @@
+2023-08-07 11:52:15:267 grammar LogManager.java:25 before: (LEXER_GRAMMAR Swiftlex (RULES (RULE INT (BLOCK (ALT 'Int'))) (RULE FLOAT (BLOCK (ALT 'Float'))) (RULE STRING (BLOCK (ALT 'String'))) (RULE BOOL (BLOCK (ALT 'Bool'))) (RULE CHARACTER (BLOCK (ALT 'Character'))) (RULE TRUE (BLOCK (ALT 'true'))) (RULE FALSE (BLOCK (ALT 'false'))) (RULE NIL (BLOCK (ALT 'nil'))) (RULE VAR (BLOCK (ALT 'var'))) (RULE LET (BLOCK (ALT 'let'))) (RULE PRINT (BLOCK (ALT 'print'))) (RULE IF (BLOCK (ALT 'if'))) (RULE ELSE (BLOCK (ALT 'else'))) (RULE SWITCH (BLOCK (ALT 'switch'))) (RULE CASE (BLOCK (ALT 'case'))) (RULE BREAK (BLOCK (ALT 'break'))) (RULE DEFAULT (BLOCK (ALT 'default'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE FOR (BLOCK (ALT 'for'))) (RULE IN (BLOCK (ALT 'in'))) (RULE GUARD (BLOCK (ALT 'guard'))) (RULE CONTINUE (BLOCK (ALT 'continue'))) (RULE RETURN (BLOCK (ALT 'return'))) (RULE FUNC (BLOCK (ALT 'func'))) (RULE STRUCT (BLOCK (ALT 'struct'))) (RULE MUTATING (BLOCK (ALT 'mutating'))) (RULE SELF (BLOCK (ALT 'self'))) (RULE INOUT (BLOCK (ALT 'inout'))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9]))) (? (BLOCK (ALT '.' (+ (BLOCK (ALT [0-9]))))))))) (RULE STRING_LITERAL (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE ID (BLOCK (ALT (BLOCK (ALT [a-zA-Z_])) (* (BLOCK (ALT [a-zA-Z0-9_])))))) (RULE CHARACTER_LITERAL (BLOCK (ALT '"' (BLOCK (ALT (~ (SET ['])))) '"'))) (RULE SUMMATION (BLOCK (ALT '+'))) (RULE SUBTRACTION (BLOCK (ALT '-'))) (RULE MULTIPLICATION (BLOCK (ALT '*'))) (RULE DIVISION (BLOCK (ALT '/'))) (RULE MOD (BLOCK (ALT '%'))) (RULE QUESTION_MARK (BLOCK (ALT '?'))) (RULE OR (BLOCK (ALT '||'))) (RULE AND (BLOCK (ALT '&&'))) (RULE NOT (BLOCK (ALT '!'))) (RULE EQUAL (BLOCK (ALT '=='))) (RULE NOT_EQUAL (BLOCK (ALT '!='))) (RULE LESS_THAN (BLOCK (ALT '<'))) (RULE LESS_THAN_EQUAL (BLOCK (ALT '<='))) (RULE GREATER_THAN (BLOCK (ALT '>'))) (RULE GREATER_THAN_EQUAL (BLOCK (ALT '>='))) (RULE ASSIGN (BLOCK (ALT '='))) (RULE DOT (BLOCK (ALT '.'))) (RULE COMMA (BLOCK (ALT ','))) (RULE COLON (BLOCK (ALT ':'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE OPEN_PARENTHESIS (BLOCK (ALT '('))) (RULE CLOSE_PARENTHESIS (BLOCK (ALT ')'))) (RULE OPEN_kEY (BLOCK (ALT '{'))) (RULE CLOSE_kEY (BLOCK (ALT '}'))) (RULE WHITESPACE (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '/*' (* (BLOCK (ALT .))) '*/') skip))) (RULE LINE_COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '//' (* (BLOCK (ALT (~ (SET [\r\n])))))) skip))) (RULE ESC_SEQ (RULEMODIFIERS fragment) (BLOCK (ALT '\\' (BLOCK (ALT '\\') (ALT '@') (ALT '[') (ALT ']') (ALT '.') (ALT '#') (ALT '+') (ALT '-') (ALT '*') (ALT '?') (ALT '(') (ALT ')')))))))
+2023-08-07 11:52:15:285 grammar LogManager.java:25 after: (LEXER_GRAMMAR Swiftlex (RULES (RULE INT (BLOCK (ALT 'Int'))) (RULE FLOAT (BLOCK (ALT 'Float'))) (RULE STRING (BLOCK (ALT 'String'))) (RULE BOOL (BLOCK (ALT 'Bool'))) (RULE CHARACTER (BLOCK (ALT 'Character'))) (RULE TRUE (BLOCK (ALT 'true'))) (RULE FALSE (BLOCK (ALT 'false'))) (RULE NIL (BLOCK (ALT 'nil'))) (RULE VAR (BLOCK (ALT 'var'))) (RULE LET (BLOCK (ALT 'let'))) (RULE PRINT (BLOCK (ALT 'print'))) (RULE IF (BLOCK (ALT 'if'))) (RULE ELSE (BLOCK (ALT 'else'))) (RULE SWITCH (BLOCK (ALT 'switch'))) (RULE CASE (BLOCK (ALT 'case'))) (RULE BREAK (BLOCK (ALT 'break'))) (RULE DEFAULT (BLOCK (ALT 'default'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE FOR (BLOCK (ALT 'for'))) (RULE IN (BLOCK (ALT 'in'))) (RULE GUARD (BLOCK (ALT 'guard'))) (RULE CONTINUE (BLOCK (ALT 'continue'))) (RULE RETURN (BLOCK (ALT 'return'))) (RULE FUNC (BLOCK (ALT 'func'))) (RULE STRUCT (BLOCK (ALT 'struct'))) (RULE MUTATING (BLOCK (ALT 'mutating'))) (RULE SELF (BLOCK (ALT 'self'))) (RULE INOUT (BLOCK (ALT 'inout'))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9]))) (? (BLOCK (ALT '.' (+ (BLOCK (ALT [0-9]))))))))) (RULE STRING_LITERAL (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE ID (BLOCK (ALT (BLOCK (ALT [a-zA-Z_])) (* (BLOCK (ALT [a-zA-Z0-9_])))))) (RULE CHARACTER_LITERAL (BLOCK (ALT '"' (BLOCK (ALT (~ (SET ['])))) '"'))) (RULE SUMMATION (BLOCK (ALT '+'))) (RULE SUBTRACTION (BLOCK (ALT '-'))) (RULE MULTIPLICATION (BLOCK (ALT '*'))) (RULE DIVISION (BLOCK (ALT '/'))) (RULE MOD (BLOCK (ALT '%'))) (RULE QUESTION_MARK (BLOCK (ALT '?'))) (RULE OR (BLOCK (ALT '||'))) (RULE AND (BLOCK (ALT '&&'))) (RULE NOT (BLOCK (ALT '!'))) (RULE EQUAL (BLOCK (ALT '=='))) (RULE NOT_EQUAL (BLOCK (ALT '!='))) (RULE LESS_THAN (BLOCK (ALT '<'))) (RULE LESS_THAN_EQUAL (BLOCK (ALT '<='))) (RULE GREATER_THAN (BLOCK (ALT '>'))) (RULE GREATER_THAN_EQUAL (BLOCK (ALT '>='))) (RULE ASSIGN (BLOCK (ALT '='))) (RULE DOT (BLOCK (ALT '.'))) (RULE COMMA (BLOCK (ALT ','))) (RULE COLON (BLOCK (ALT ':'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE OPEN_PARENTHESIS (BLOCK (ALT '('))) (RULE CLOSE_PARENTHESIS (BLOCK (ALT ')'))) (RULE OPEN_kEY (BLOCK (ALT '{'))) (RULE CLOSE_kEY (BLOCK (ALT '}'))) (RULE WHITESPACE (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '/*' (* (BLOCK (ALT .))) '*/') skip))) (RULE LINE_COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '//' (* (BLOCK (ALT (~ (SET [\r\n])))))) skip))) (RULE ESC_SEQ (RULEMODIFIERS fragment) (BLOCK (ALT '\\' (SET '\\' '@' '[' ']' '.' '#' '+' '-' '*' '?' '(' ')'))))))
+2023-08-07 11:52:16:019 grammar LogManager.java:25 before: (COMBINED_GRAMMAR Expr (RULES (RULE prog (BLOCK (ALT (* (BLOCK (ALT expr NEWLINE)))))) (RULE expr (BLOCK (ALT expr (BLOCK (ALT '*') (ALT '/')) expr) (ALT expr (BLOCK (ALT '+') (ALT '-')) expr) (ALT INT) (ALT '(' expr ')'))) (RULE NEWLINE (BLOCK (ALT (+ (BLOCK (ALT [\r\n])))))) (RULE INT (BLOCK (ALT (+ (BLOCK (ALT [0-9]))))))))
+2023-08-07 11:52:16:019 grammar LogManager.java:25 after: (COMBINED_GRAMMAR Expr (RULES (RULE prog (BLOCK (ALT (* (BLOCK (ALT expr NEWLINE)))))) (RULE expr (BLOCK (ALT expr (SET '*' '/') expr) (ALT expr (SET '+' '-') expr) (ALT INT) (ALT '(' expr ')'))) (RULE NEWLINE (BLOCK (ALT (+ (BLOCK (ALT [\r\n])))))) (RULE INT (BLOCK (ALT (+ (BLOCK (ALT [0-9]))))))))
+2023-08-07 11:52:16:021 grammar LogManager.java:25 after extract implicit lexer =(COMBINED_GRAMMAR Expr (RULES (RULE prog (BLOCK (ALT (* (BLOCK (ALT expr NEWLINE)))))) (RULE expr (BLOCK (ALT expr (SET '*' '/') expr) (ALT expr (SET '+' '-') expr) (ALT INT) (ALT '(' expr ')')))))
+2023-08-07 11:52:16:021 grammar LogManager.java:25 lexer =(LEXER_GRAMMAR ExprLexer (RULES (RULE T__0 (BLOCK (ALT '*'))) (RULE T__1 (BLOCK (ALT '/'))) (RULE T__2 (BLOCK (ALT '+'))) (RULE T__3 (BLOCK (ALT '-'))) (RULE T__4 (BLOCK (ALT '('))) (RULE T__5 (BLOCK (ALT ')'))) (RULE NEWLINE (BLOCK (ALT (+ (BLOCK (ALT [\r\n])))))) (RULE INT (BLOCK (ALT (+ (BLOCK (ALT [0-9]))))))))
+2023-08-07 11:52:16:094 left-recursion LogManager.java:25 expr
+    :   ( {} INT<tokenIndex=44> 
+        | '('<tokenIndex=48> expr<tokenIndex=50> ')'<tokenIndex=52> 
+        )
+        (
+          {p.Precpred(p.GetParserRuleContext(), 4)}?<p=4> ('*'<tokenIndex=23>|'/'<tokenIndex=25>) expr<tokenIndex=28,p=5>
+                  | {p.Precpred(p.GetParserRuleContext(), 3)}?<p=3> ('+'<tokenIndex=35>|'-'<tokenIndex=37>) expr<tokenIndex=40,p=4>
+        )*
+    ;
+2023-08-07 11:52:16:099 grammar LogManager.java:25 added: (RULE expr (BLOCK (ALT (BLOCK (ALT {} (INT (ELEMENT_OPTIONS (= tokenIndex 44)))) (ALT ('(' (ELEMENT_OPTIONS (= tokenIndex 48))) (expr (ELEMENT_OPTIONS (= tokenIndex 50))) (')' (ELEMENT_OPTIONS (= tokenIndex 52))))) (* (BLOCK (ALT ({p.Precpred(p.GetParserRuleContext(), 4)}? (ELEMENT_OPTIONS (= p 4))) (SET ('*' (ELEMENT_OPTIONS (= tokenIndex 23))) ('/' (ELEMENT_OPTIONS (= tokenIndex 25)))) (expr (ELEMENT_OPTIONS (= tokenIndex 28) (= p 5)))) (ALT ({p.Precpred(p.GetParserRuleContext(), 3)}? (ELEMENT_OPTIONS (= p 3))) (SET ('+' (ELEMENT_OPTIONS (= tokenIndex 35))) ('-' (ELEMENT_OPTIONS (= tokenIndex 37)))) (expr (ELEMENT_OPTIONS (= tokenIndex 40) (= p 4)))))))))
+2023-08-07 11:52:16:100 semantics LogManager.java:25 tokens={EOF=-1, T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, NEWLINE=7, INT=8}
+2023-08-07 11:52:16:100 semantics LogManager.java:25 strings={'*'=1, '/'=2, '+'=3, '-'=4, '('=5, ')'=6}
+2023-08-07 11:52:16:111 LL1 LogManager.java:25 
+DECISION 0 in rule prog
+2023-08-07 11:52:16:111 LL1 LogManager.java:25 look=[{5, 8}, <EOF>]
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 LL(1)? true
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 
+DECISION 1 in rule expr
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 look=[8, 5]
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 LL(1)? true
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 
+DECISION 2 in rule expr
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 look=[null, null]
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 
+DECISION 3 in rule expr
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 look=[null, null]
+2023-08-07 11:52:16:112 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:127 action-translator LogManager.java:25 translate 
+2023-08-07 11:52:16:129 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 4)
+2023-08-07 11:52:16:129 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 3)
+2023-08-07 11:52:16:131 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 4)
+2023-08-07 11:52:16:131 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 3)
+2023-08-07 11:52:16:373 grammar LogManager.java:25 load Swiftlex from Swiftgramm.g4
+2023-08-07 11:52:16:377 grammar LogManager.java:25 before: (COMBINED_GRAMMAR Swiftgramm (import Swiftlex) (@ header {
+        import "fmt"
+}) (RULES (RULE s (BLOCK (ALT block EOF))) (RULE block (BLOCK (ALT (* (BLOCK (ALT sentences)))))) (RULE sentences (BLOCK (ALT sentence sentences) (ALT sentence))) (RULE sentence (BLOCK (ALT declare_var) (ALT declare_constant) (ALT assign_var))) (RULE print (BLOCK (ALT PRINT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS))) (RULE declare_var (BLOCK (ALT VAR ID COLON datatype ASSIGN expression {fmt.Println("Variable declaration: ");}) (ALT VAR ID ASSIGN expression) (ALT VAR ID COLON datatype QUESTION_MARK))) (RULE declare_constant (BLOCK (ALT LET ID COLON datatype ASSIGN expression) (ALT LET ID ASSIGN expression) (ALT LET ID COLON datatype QUESTION_MARK))) (RULE assign_var (BLOCK (ALT ID ASSIGN expression))) (RULE if_sentence (BLOCK (ALT IF expression sentences) (ALT IF expression sentences ELSE sentences))) (RULE switch_sentence (BLOCK (ALT SWITCH expression OPEN_kEY switch_cases CLOSE_kEY))) (RULE switch_cases (BLOCK (ALT switch_case switch_cases) (ALT switch_case))) (RULE switch_case (BLOCK (ALT CASE expression COLON sentences) (ALT DEFAULT COLON sentences))) (RULE while_sentence (BLOCK (ALT WHILE expression OPEN_kEY sentences CLOSE_kEY))) (RULE for_sentence (BLOCK (ALT FOR ID IN expression OPEN_kEY sentences CLOSE_kEY))) (RULE guard_sentence (BLOCK (ALT GUARD expression ELSE sentences))) (RULE break_sentence (BLOCK (ALT BREAK))) (RULE continue_sentence (BLOCK (ALT CONTINUE))) (RULE return_sentence (BLOCK (ALT RETURN expression) (ALT RETURN))) (RULE expression (BLOCK (ALT (= left expression) (= oper (BLOCK (ALT MULTIPLICATION) (ALT DIVISION))) (= right expression)) (ALT (= left expression) (= oper (BLOCK (ALT SUMMATION) (ALT SUBTRACTION))) (= right expression)) (ALT (= left expression) (= oper (BLOCK (ALT LESS_THAN) (ALT LESS_THAN_EQUAL))) (= right expression)) (ALT (= left expression) (= oper (BLOCK (ALT GREATER_THAN) (ALT GREATER_THAN_EQUAL))) (= right expression)) (ALT (= left expression) (= oper (BLOCK (ALT EQUAL) (ALT NOT_EQUAL))) (= right expression)) (ALT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS) (ALT NUMBER) (ALT STRING_LITERAL) (ALT CHARACTER_LITERAL) (ALT ID))) (RULE datatype (BLOCK (ALT INT) (ALT FLOAT) (ALT STRING) (ALT BOOL)))))
+2023-08-07 11:52:16:377 grammar LogManager.java:25 imported actions: []
+2023-08-07 11:52:16:381 grammar LogManager.java:25 Swiftgramm parser:header={
+        import "fmt"
+}
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE INT (BLOCK (ALT 'Int')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE FLOAT (BLOCK (ALT 'Float')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE STRING (BLOCK (ALT 'String')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE BOOL (BLOCK (ALT 'Bool')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE CHARACTER (BLOCK (ALT 'Character')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE TRUE (BLOCK (ALT 'true')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE FALSE (BLOCK (ALT 'false')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE NIL (BLOCK (ALT 'nil')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE VAR (BLOCK (ALT 'var')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE LET (BLOCK (ALT 'let')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE PRINT (BLOCK (ALT 'print')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE IF (BLOCK (ALT 'if')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE ELSE (BLOCK (ALT 'else')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE SWITCH (BLOCK (ALT 'switch')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE CASE (BLOCK (ALT 'case')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE BREAK (BLOCK (ALT 'break')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE DEFAULT (BLOCK (ALT 'default')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE WHILE (BLOCK (ALT 'while')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE FOR (BLOCK (ALT 'for')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE IN (BLOCK (ALT 'in')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE GUARD (BLOCK (ALT 'guard')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE CONTINUE (BLOCK (ALT 'continue')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE RETURN (BLOCK (ALT 'return')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE FUNC (BLOCK (ALT 'func')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE STRUCT (BLOCK (ALT 'struct')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE MUTATING (BLOCK (ALT 'mutating')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE SELF (BLOCK (ALT 'self')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE INOUT (BLOCK (ALT 'inout')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9]))) (? (BLOCK (ALT '.' (+ (BLOCK (ALT [0-9])))))))))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE STRING_LITERAL (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE ID (BLOCK (ALT (BLOCK (ALT [a-zA-Z_])) (* (BLOCK (ALT [a-zA-Z0-9_]))))))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE CHARACTER_LITERAL (BLOCK (ALT '"' (BLOCK (ALT (~ (SET ['])))) '"')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE SUMMATION (BLOCK (ALT '+')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE SUBTRACTION (BLOCK (ALT '-')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE MULTIPLICATION (BLOCK (ALT '*')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE DIVISION (BLOCK (ALT '/')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE MOD (BLOCK (ALT '%')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE QUESTION_MARK (BLOCK (ALT '?')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE OR (BLOCK (ALT '||')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE AND (BLOCK (ALT '&&')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE NOT (BLOCK (ALT '!')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE EQUAL (BLOCK (ALT '==')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE NOT_EQUAL (BLOCK (ALT '!=')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE LESS_THAN (BLOCK (ALT '<')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE LESS_THAN_EQUAL (BLOCK (ALT '<=')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE GREATER_THAN (BLOCK (ALT '>')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE GREATER_THAN_EQUAL (BLOCK (ALT '>=')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE ASSIGN (BLOCK (ALT '=')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE DOT (BLOCK (ALT '.')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE COMMA (BLOCK (ALT ',')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE COLON (BLOCK (ALT ':')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE SEMICOLON (BLOCK (ALT ';')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE OPEN_PARENTHESIS (BLOCK (ALT '(')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE CLOSE_PARENTHESIS (BLOCK (ALT ')')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE OPEN_kEY (BLOCK (ALT '{')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE CLOSE_kEY (BLOCK (ALT '}')))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE WHITESPACE (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip)))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '/*' (* (BLOCK (ALT .))) '*/') skip)))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE LINE_COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '//' (* (BLOCK (ALT (~ (SET [\r\n])))))) skip)))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 imported rule: (RULE ESC_SEQ (RULEMODIFIERS fragment) (BLOCK (ALT '\\' (BLOCK (ALT '\\') (ALT '@') (ALT '[') (ALT ']') (ALT '.') (ALT '#') (ALT '+') (ALT '-') (ALT '*') (ALT '?') (ALT '(') (ALT ')')))))
+2023-08-07 11:52:16:382 grammar LogManager.java:25 Grammar: (COMBINED_GRAMMAR Swiftgramm (import Swiftlex) (@ header {
+        import "fmt"
+}) (RULES (RULE s (BLOCK (ALT block EOF))) (RULE block (BLOCK (ALT (* (BLOCK (ALT sentences)))))) (RULE sentences (BLOCK (ALT sentence sentences) (ALT sentence))) (RULE sentence (BLOCK (ALT declare_var) (ALT declare_constant) (ALT assign_var))) (RULE print (BLOCK (ALT PRINT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS))) (RULE declare_var (BLOCK (ALT VAR ID COLON datatype ASSIGN expression {fmt.Println("Variable declaration: ");}) (ALT VAR ID ASSIGN expression) (ALT VAR ID COLON datatype QUESTION_MARK))) (RULE declare_constant (BLOCK (ALT LET ID COLON datatype ASSIGN expression) (ALT LET ID ASSIGN expression) (ALT LET ID COLON datatype QUESTION_MARK))) (RULE assign_var (BLOCK (ALT ID ASSIGN expression))) (RULE if_sentence (BLOCK (ALT IF expression sentences) (ALT IF expression sentences ELSE sentences))) (RULE switch_sentence (BLOCK (ALT SWITCH expression OPEN_kEY switch_cases CLOSE_kEY))) (RULE switch_cases (BLOCK (ALT switch_case switch_cases) (ALT switch_case))) (RULE switch_case (BLOCK (ALT CASE expression COLON sentences) (ALT DEFAULT COLON sentences))) (RULE while_sentence (BLOCK (ALT WHILE expression OPEN_kEY sentences CLOSE_kEY))) (RULE for_sentence (BLOCK (ALT FOR ID IN expression OPEN_kEY sentences CLOSE_kEY))) (RULE guard_sentence (BLOCK (ALT GUARD expression ELSE sentences))) (RULE break_sentence (BLOCK (ALT BREAK))) (RULE continue_sentence (BLOCK (ALT CONTINUE))) (RULE return_sentence (BLOCK (ALT RETURN expression) (ALT RETURN))) (RULE expression (BLOCK (ALT (= left expression) (= oper (BLOCK (ALT MULTIPLICATION) (ALT DIVISION))) (= right expression)) (ALT (= left expression) (= oper (BLOCK (ALT SUMMATION) (ALT SUBTRACTION))) (= right expression)) (ALT (= left expression) (= oper (BLOCK (ALT LESS_THAN) (ALT LESS_THAN_EQUAL))) (= right expression)) (ALT (= left expression) (= oper (BLOCK (ALT GREATER_THAN) (ALT GREATER_THAN_EQUAL))) (= right expression)) (ALT (= left expression) (= oper (BLOCK (ALT EQUAL) (ALT NOT_EQUAL))) (= right expression)) (ALT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS) (ALT NUMBER) (ALT STRING_LITERAL) (ALT CHARACTER_LITERAL) (ALT ID))) (RULE datatype (BLOCK (ALT INT) (ALT FLOAT) (ALT STRING) (ALT BOOL))) (RULE INT (BLOCK (ALT 'Int'))) (RULE FLOAT (BLOCK (ALT 'Float'))) (RULE STRING (BLOCK (ALT 'String'))) (RULE BOOL (BLOCK (ALT 'Bool'))) (RULE CHARACTER (BLOCK (ALT 'Character'))) (RULE TRUE (BLOCK (ALT 'true'))) (RULE FALSE (BLOCK (ALT 'false'))) (RULE NIL (BLOCK (ALT 'nil'))) (RULE VAR (BLOCK (ALT 'var'))) (RULE LET (BLOCK (ALT 'let'))) (RULE PRINT (BLOCK (ALT 'print'))) (RULE IF (BLOCK (ALT 'if'))) (RULE ELSE (BLOCK (ALT 'else'))) (RULE SWITCH (BLOCK (ALT 'switch'))) (RULE CASE (BLOCK (ALT 'case'))) (RULE BREAK (BLOCK (ALT 'break'))) (RULE DEFAULT (BLOCK (ALT 'default'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE FOR (BLOCK (ALT 'for'))) (RULE IN (BLOCK (ALT 'in'))) (RULE GUARD (BLOCK (ALT 'guard'))) (RULE CONTINUE (BLOCK (ALT 'continue'))) (RULE RETURN (BLOCK (ALT 'return'))) (RULE FUNC (BLOCK (ALT 'func'))) (RULE STRUCT (BLOCK (ALT 'struct'))) (RULE MUTATING (BLOCK (ALT 'mutating'))) (RULE SELF (BLOCK (ALT 'self'))) (RULE INOUT (BLOCK (ALT 'inout'))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9]))) (? (BLOCK (ALT '.' (+ (BLOCK (ALT [0-9]))))))))) (RULE STRING_LITERAL (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE ID (BLOCK (ALT (BLOCK (ALT [a-zA-Z_])) (* (BLOCK (ALT [a-zA-Z0-9_])))))) (RULE CHARACTER_LITERAL (BLOCK (ALT '"' (BLOCK (ALT (~ (SET ['])))) '"'))) (RULE SUMMATION (BLOCK (ALT '+'))) (RULE SUBTRACTION (BLOCK (ALT '-'))) (RULE MULTIPLICATION (BLOCK (ALT '*'))) (RULE DIVISION (BLOCK (ALT '/'))) (RULE MOD (BLOCK (ALT '%'))) (RULE QUESTION_MARK (BLOCK (ALT '?'))) (RULE OR (BLOCK (ALT '||'))) (RULE AND (BLOCK (ALT '&&'))) (RULE NOT (BLOCK (ALT '!'))) (RULE EQUAL (BLOCK (ALT '=='))) (RULE NOT_EQUAL (BLOCK (ALT '!='))) (RULE LESS_THAN (BLOCK (ALT '<'))) (RULE LESS_THAN_EQUAL (BLOCK (ALT '<='))) (RULE GREATER_THAN (BLOCK (ALT '>'))) (RULE GREATER_THAN_EQUAL (BLOCK (ALT '>='))) (RULE ASSIGN (BLOCK (ALT '='))) (RULE DOT (BLOCK (ALT '.'))) (RULE COMMA (BLOCK (ALT ','))) (RULE COLON (BLOCK (ALT ':'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE OPEN_PARENTHESIS (BLOCK (ALT '('))) (RULE CLOSE_PARENTHESIS (BLOCK (ALT ')'))) (RULE OPEN_kEY (BLOCK (ALT '{'))) (RULE CLOSE_kEY (BLOCK (ALT '}'))) (RULE WHITESPACE (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '/*' (* (BLOCK (ALT .))) '*/') skip))) (RULE LINE_COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '//' (* (BLOCK (ALT (~ (SET [\r\n])))))) skip))) (RULE ESC_SEQ (RULEMODIFIERS fragment) (BLOCK (ALT '\\' (BLOCK (ALT '\\') (ALT '@') (ALT '[') (ALT ']') (ALT '.') (ALT '#') (ALT '+') (ALT '-') (ALT '*') (ALT '?') (ALT '(') (ALT ')')))))))
+2023-08-07 11:52:16:389 grammar LogManager.java:25 after: (COMBINED_GRAMMAR Swiftgramm (import Swiftlex) (@ header {
+        import "fmt"
+}) (RULES (RULE s (BLOCK (ALT block EOF))) (RULE block (BLOCK (ALT (* (BLOCK (ALT sentences)))))) (RULE sentences (BLOCK (ALT sentence sentences) (ALT sentence))) (RULE sentence (BLOCK (ALT declare_var) (ALT declare_constant) (ALT assign_var))) (RULE print (BLOCK (ALT PRINT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS))) (RULE declare_var (BLOCK (ALT VAR ID COLON datatype ASSIGN expression {fmt.Println("Variable declaration: ");}) (ALT VAR ID ASSIGN expression) (ALT VAR ID COLON datatype QUESTION_MARK))) (RULE declare_constant (BLOCK (ALT LET ID COLON datatype ASSIGN expression) (ALT LET ID ASSIGN expression) (ALT LET ID COLON datatype QUESTION_MARK))) (RULE assign_var (BLOCK (ALT ID ASSIGN expression))) (RULE if_sentence (BLOCK (ALT IF expression sentences) (ALT IF expression sentences ELSE sentences))) (RULE switch_sentence (BLOCK (ALT SWITCH expression OPEN_kEY switch_cases CLOSE_kEY))) (RULE switch_cases (BLOCK (ALT switch_case switch_cases) (ALT switch_case))) (RULE switch_case (BLOCK (ALT CASE expression COLON sentences) (ALT DEFAULT COLON sentences))) (RULE while_sentence (BLOCK (ALT WHILE expression OPEN_kEY sentences CLOSE_kEY))) (RULE for_sentence (BLOCK (ALT FOR ID IN expression OPEN_kEY sentences CLOSE_kEY))) (RULE guard_sentence (BLOCK (ALT GUARD expression ELSE sentences))) (RULE break_sentence (BLOCK (ALT BREAK))) (RULE continue_sentence (BLOCK (ALT CONTINUE))) (RULE return_sentence (BLOCK (ALT RETURN expression) (ALT RETURN))) (RULE expression (BLOCK (ALT (= left expression) (= oper (SET MULTIPLICATION DIVISION)) (= right expression)) (ALT (= left expression) (= oper (SET SUMMATION SUBTRACTION)) (= right expression)) (ALT (= left expression) (= oper (SET LESS_THAN LESS_THAN_EQUAL)) (= right expression)) (ALT (= left expression) (= oper (SET GREATER_THAN GREATER_THAN_EQUAL)) (= right expression)) (ALT (= left expression) (= oper (SET EQUAL NOT_EQUAL)) (= right expression)) (ALT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS) (ALT NUMBER) (ALT STRING_LITERAL) (ALT CHARACTER_LITERAL) (ALT ID))) (RULE datatype (BLOCK (ALT (SET INT FLOAT STRING BOOL)))) (RULE INT (BLOCK (ALT 'Int'))) (RULE FLOAT (BLOCK (ALT 'Float'))) (RULE STRING (BLOCK (ALT 'String'))) (RULE BOOL (BLOCK (ALT 'Bool'))) (RULE CHARACTER (BLOCK (ALT 'Character'))) (RULE TRUE (BLOCK (ALT 'true'))) (RULE FALSE (BLOCK (ALT 'false'))) (RULE NIL (BLOCK (ALT 'nil'))) (RULE VAR (BLOCK (ALT 'var'))) (RULE LET (BLOCK (ALT 'let'))) (RULE PRINT (BLOCK (ALT 'print'))) (RULE IF (BLOCK (ALT 'if'))) (RULE ELSE (BLOCK (ALT 'else'))) (RULE SWITCH (BLOCK (ALT 'switch'))) (RULE CASE (BLOCK (ALT 'case'))) (RULE BREAK (BLOCK (ALT 'break'))) (RULE DEFAULT (BLOCK (ALT 'default'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE FOR (BLOCK (ALT 'for'))) (RULE IN (BLOCK (ALT 'in'))) (RULE GUARD (BLOCK (ALT 'guard'))) (RULE CONTINUE (BLOCK (ALT 'continue'))) (RULE RETURN (BLOCK (ALT 'return'))) (RULE FUNC (BLOCK (ALT 'func'))) (RULE STRUCT (BLOCK (ALT 'struct'))) (RULE MUTATING (BLOCK (ALT 'mutating'))) (RULE SELF (BLOCK (ALT 'self'))) (RULE INOUT (BLOCK (ALT 'inout'))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9]))) (? (BLOCK (ALT '.' (+ (BLOCK (ALT [0-9]))))))))) (RULE STRING_LITERAL (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE ID (BLOCK (ALT (BLOCK (ALT [a-zA-Z_])) (* (BLOCK (ALT [a-zA-Z0-9_])))))) (RULE CHARACTER_LITERAL (BLOCK (ALT '"' (BLOCK (ALT (~ (SET ['])))) '"'))) (RULE SUMMATION (BLOCK (ALT '+'))) (RULE SUBTRACTION (BLOCK (ALT '-'))) (RULE MULTIPLICATION (BLOCK (ALT '*'))) (RULE DIVISION (BLOCK (ALT '/'))) (RULE MOD (BLOCK (ALT '%'))) (RULE QUESTION_MARK (BLOCK (ALT '?'))) (RULE OR (BLOCK (ALT '||'))) (RULE AND (BLOCK (ALT '&&'))) (RULE NOT (BLOCK (ALT '!'))) (RULE EQUAL (BLOCK (ALT '=='))) (RULE NOT_EQUAL (BLOCK (ALT '!='))) (RULE LESS_THAN (BLOCK (ALT '<'))) (RULE LESS_THAN_EQUAL (BLOCK (ALT '<='))) (RULE GREATER_THAN (BLOCK (ALT '>'))) (RULE GREATER_THAN_EQUAL (BLOCK (ALT '>='))) (RULE ASSIGN (BLOCK (ALT '='))) (RULE DOT (BLOCK (ALT '.'))) (RULE COMMA (BLOCK (ALT ','))) (RULE COLON (BLOCK (ALT ':'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE OPEN_PARENTHESIS (BLOCK (ALT '('))) (RULE CLOSE_PARENTHESIS (BLOCK (ALT ')'))) (RULE OPEN_kEY (BLOCK (ALT '{'))) (RULE CLOSE_kEY (BLOCK (ALT '}'))) (RULE WHITESPACE (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '/*' (* (BLOCK (ALT .))) '*/') skip))) (RULE LINE_COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '//' (* (BLOCK (ALT (~ (SET [\r\n])))))) skip))) (RULE ESC_SEQ (RULEMODIFIERS fragment) (BLOCK (ALT '\\' (SET '\\' '@' '[' ']' '.' '#' '+' '-' '*' '?' '(' ')'))))))
+2023-08-07 11:52:16:392 grammar LogManager.java:25 after extract implicit lexer =(COMBINED_GRAMMAR Swiftgramm (import Swiftlex) (@ header {
+        import "fmt"
+}) (RULES (RULE s (BLOCK (ALT block EOF))) (RULE block (BLOCK (ALT (* (BLOCK (ALT sentences)))))) (RULE sentences (BLOCK (ALT sentence sentences) (ALT sentence))) (RULE sentence (BLOCK (ALT declare_var) (ALT declare_constant) (ALT assign_var))) (RULE print (BLOCK (ALT PRINT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS))) (RULE declare_var (BLOCK (ALT VAR ID COLON datatype ASSIGN expression {fmt.Println("Variable declaration: ");}) (ALT VAR ID ASSIGN expression) (ALT VAR ID COLON datatype QUESTION_MARK))) (RULE declare_constant (BLOCK (ALT LET ID COLON datatype ASSIGN expression) (ALT LET ID ASSIGN expression) (ALT LET ID COLON datatype QUESTION_MARK))) (RULE assign_var (BLOCK (ALT ID ASSIGN expression))) (RULE if_sentence (BLOCK (ALT IF expression sentences) (ALT IF expression sentences ELSE sentences))) (RULE switch_sentence (BLOCK (ALT SWITCH expression OPEN_kEY switch_cases CLOSE_kEY))) (RULE switch_cases (BLOCK (ALT switch_case switch_cases) (ALT switch_case))) (RULE switch_case (BLOCK (ALT CASE expression COLON sentences) (ALT DEFAULT COLON sentences))) (RULE while_sentence (BLOCK (ALT WHILE expression OPEN_kEY sentences CLOSE_kEY))) (RULE for_sentence (BLOCK (ALT FOR ID IN expression OPEN_kEY sentences CLOSE_kEY))) (RULE guard_sentence (BLOCK (ALT GUARD expression ELSE sentences))) (RULE break_sentence (BLOCK (ALT BREAK))) (RULE continue_sentence (BLOCK (ALT CONTINUE))) (RULE return_sentence (BLOCK (ALT RETURN expression) (ALT RETURN))) (RULE expression (BLOCK (ALT (= left expression) (= oper (SET MULTIPLICATION DIVISION)) (= right expression)) (ALT (= left expression) (= oper (SET SUMMATION SUBTRACTION)) (= right expression)) (ALT (= left expression) (= oper (SET LESS_THAN LESS_THAN_EQUAL)) (= right expression)) (ALT (= left expression) (= oper (SET GREATER_THAN GREATER_THAN_EQUAL)) (= right expression)) (ALT (= left expression) (= oper (SET EQUAL NOT_EQUAL)) (= right expression)) (ALT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS) (ALT NUMBER) (ALT STRING_LITERAL) (ALT CHARACTER_LITERAL) (ALT ID))) (RULE datatype (BLOCK (ALT (SET INT FLOAT STRING BOOL))))))
+2023-08-07 11:52:16:392 grammar LogManager.java:25 lexer =(LEXER_GRAMMAR SwiftgrammLexer (@ header {
+        import "fmt"
+}) (RULES (RULE INT (BLOCK (ALT 'Int'))) (RULE FLOAT (BLOCK (ALT 'Float'))) (RULE STRING (BLOCK (ALT 'String'))) (RULE BOOL (BLOCK (ALT 'Bool'))) (RULE CHARACTER (BLOCK (ALT 'Character'))) (RULE TRUE (BLOCK (ALT 'true'))) (RULE FALSE (BLOCK (ALT 'false'))) (RULE NIL (BLOCK (ALT 'nil'))) (RULE VAR (BLOCK (ALT 'var'))) (RULE LET (BLOCK (ALT 'let'))) (RULE PRINT (BLOCK (ALT 'print'))) (RULE IF (BLOCK (ALT 'if'))) (RULE ELSE (BLOCK (ALT 'else'))) (RULE SWITCH (BLOCK (ALT 'switch'))) (RULE CASE (BLOCK (ALT 'case'))) (RULE BREAK (BLOCK (ALT 'break'))) (RULE DEFAULT (BLOCK (ALT 'default'))) (RULE WHILE (BLOCK (ALT 'while'))) (RULE FOR (BLOCK (ALT 'for'))) (RULE IN (BLOCK (ALT 'in'))) (RULE GUARD (BLOCK (ALT 'guard'))) (RULE CONTINUE (BLOCK (ALT 'continue'))) (RULE RETURN (BLOCK (ALT 'return'))) (RULE FUNC (BLOCK (ALT 'func'))) (RULE STRUCT (BLOCK (ALT 'struct'))) (RULE MUTATING (BLOCK (ALT 'mutating'))) (RULE SELF (BLOCK (ALT 'self'))) (RULE INOUT (BLOCK (ALT 'inout'))) (RULE NUMBER (BLOCK (ALT (+ (BLOCK (ALT [0-9]))) (? (BLOCK (ALT '.' (+ (BLOCK (ALT [0-9]))))))))) (RULE STRING_LITERAL (BLOCK (ALT '"' (* (BLOCK (ALT (~ (SET ["]))))) '"'))) (RULE ID (BLOCK (ALT (BLOCK (ALT [a-zA-Z_])) (* (BLOCK (ALT [a-zA-Z0-9_])))))) (RULE CHARACTER_LITERAL (BLOCK (ALT '"' (BLOCK (ALT (~ (SET ['])))) '"'))) (RULE SUMMATION (BLOCK (ALT '+'))) (RULE SUBTRACTION (BLOCK (ALT '-'))) (RULE MULTIPLICATION (BLOCK (ALT '*'))) (RULE DIVISION (BLOCK (ALT '/'))) (RULE MOD (BLOCK (ALT '%'))) (RULE QUESTION_MARK (BLOCK (ALT '?'))) (RULE OR (BLOCK (ALT '||'))) (RULE AND (BLOCK (ALT '&&'))) (RULE NOT (BLOCK (ALT '!'))) (RULE EQUAL (BLOCK (ALT '=='))) (RULE NOT_EQUAL (BLOCK (ALT '!='))) (RULE LESS_THAN (BLOCK (ALT '<'))) (RULE LESS_THAN_EQUAL (BLOCK (ALT '<='))) (RULE GREATER_THAN (BLOCK (ALT '>'))) (RULE GREATER_THAN_EQUAL (BLOCK (ALT '>='))) (RULE ASSIGN (BLOCK (ALT '='))) (RULE DOT (BLOCK (ALT '.'))) (RULE COMMA (BLOCK (ALT ','))) (RULE COLON (BLOCK (ALT ':'))) (RULE SEMICOLON (BLOCK (ALT ';'))) (RULE OPEN_PARENTHESIS (BLOCK (ALT '('))) (RULE CLOSE_PARENTHESIS (BLOCK (ALT ')'))) (RULE OPEN_kEY (BLOCK (ALT '{'))) (RULE CLOSE_kEY (BLOCK (ALT '}'))) (RULE WHITESPACE (BLOCK (LEXER_ALT_ACTION (ALT (+ (BLOCK (ALT [ \t\r\n])))) skip))) (RULE COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '/*' (* (BLOCK (ALT .))) '*/') skip))) (RULE LINE_COMMENT (BLOCK (LEXER_ALT_ACTION (ALT '//' (* (BLOCK (ALT (~ (SET [\r\n])))))) skip))) (RULE ESC_SEQ (RULEMODIFIERS fragment) (BLOCK (ALT '\\' (SET '\\' '@' '[' ']' '.' '#' '+' '-' '*' '?' '(' ')'))))))
+2023-08-07 11:52:16:408 action-translator LogManager.java:25 translate 
+        import "fmt"
+
+2023-08-07 11:52:16:517 left-recursion LogManager.java:25 expression
+    :   ( {} OPEN_PARENTHESIS<tokenIndex=427> expression<tokenIndex=429> CLOSE_PARENTHESIS<tokenIndex=431> 
+        | NUMBER<tokenIndex=435> 
+        | STRING_LITERAL<tokenIndex=439> 
+        | CHARACTER_LITERAL<tokenIndex=443> 
+        | ID<tokenIndex=447> 
+        )
+        (
+          {p.Precpred(p.GetParserRuleContext(), 10)}?<p=10> oper=(MULTIPLICATION<tokenIndex=344>|DIVISION<tokenIndex=346>) right=expression<tokenIndex=351,p=11>
+                  | {p.Precpred(p.GetParserRuleContext(), 9)}?<p=9> oper=(SUMMATION<tokenIndex=362>|SUBTRACTION<tokenIndex=364>) right=expression<tokenIndex=369,p=10>
+                  | {p.Precpred(p.GetParserRuleContext(), 8)}?<p=8> oper=(LESS_THAN<tokenIndex=380>|LESS_THAN_EQUAL<tokenIndex=382>) right=expression<tokenIndex=387,p=9>
+                  | {p.Precpred(p.GetParserRuleContext(), 7)}?<p=7> oper=(GREATER_THAN<tokenIndex=398>|GREATER_THAN_EQUAL<tokenIndex=400>) right=expression<tokenIndex=405,p=8>
+                  | {p.Precpred(p.GetParserRuleContext(), 6)}?<p=6> oper=(EQUAL<tokenIndex=416>|NOT_EQUAL<tokenIndex=418>) right=expression<tokenIndex=423,p=7>
+        )*
+    ;
+2023-08-07 11:52:16:523 grammar LogManager.java:25 added: (RULE expression (BLOCK (ALT (BLOCK (ALT {} (OPEN_PARENTHESIS (ELEMENT_OPTIONS (= tokenIndex 427))) (expression (ELEMENT_OPTIONS (= tokenIndex 429))) (CLOSE_PARENTHESIS (ELEMENT_OPTIONS (= tokenIndex 431)))) (ALT (NUMBER (ELEMENT_OPTIONS (= tokenIndex 435)))) (ALT (STRING_LITERAL (ELEMENT_OPTIONS (= tokenIndex 439)))) (ALT (CHARACTER_LITERAL (ELEMENT_OPTIONS (= tokenIndex 443)))) (ALT (ID (ELEMENT_OPTIONS (= tokenIndex 447))))) (* (BLOCK (ALT ({p.Precpred(p.GetParserRuleContext(), 10)}? (ELEMENT_OPTIONS (= p 10))) (= oper (SET (MULTIPLICATION (ELEMENT_OPTIONS (= tokenIndex 344))) (DIVISION (ELEMENT_OPTIONS (= tokenIndex 346))))) (= right (expression (ELEMENT_OPTIONS (= tokenIndex 351) (= p 11))))) (ALT ({p.Precpred(p.GetParserRuleContext(), 9)}? (ELEMENT_OPTIONS (= p 9))) (= oper (SET (SUMMATION (ELEMENT_OPTIONS (= tokenIndex 362))) (SUBTRACTION (ELEMENT_OPTIONS (= tokenIndex 364))))) (= right (expression (ELEMENT_OPTIONS (= tokenIndex 369) (= p 10))))) (ALT ({p.Precpred(p.GetParserRuleContext(), 8)}? (ELEMENT_OPTIONS (= p 8))) (= oper (SET (LESS_THAN (ELEMENT_OPTIONS (= tokenIndex 380))) (LESS_THAN_EQUAL (ELEMENT_OPTIONS (= tokenIndex 382))))) (= right (expression (ELEMENT_OPTIONS (= tokenIndex 387) (= p 9))))) (ALT ({p.Precpred(p.GetParserRuleContext(), 7)}? (ELEMENT_OPTIONS (= p 7))) (= oper (SET (GREATER_THAN (ELEMENT_OPTIONS (= tokenIndex 398))) (GREATER_THAN_EQUAL (ELEMENT_OPTIONS (= tokenIndex 400))))) (= right (expression (ELEMENT_OPTIONS (= tokenIndex 405) (= p 8))))) (ALT ({p.Precpred(p.GetParserRuleContext(), 6)}? (ELEMENT_OPTIONS (= p 6))) (= oper (SET (EQUAL (ELEMENT_OPTIONS (= tokenIndex 416))) (NOT_EQUAL (ELEMENT_OPTIONS (= tokenIndex 418))))) (= right (expression (ELEMENT_OPTIONS (= tokenIndex 423) (= p 7))))))))))
+2023-08-07 11:52:16:525 semantics LogManager.java:25 tokens={EOF=-1, INT=1, FLOAT=2, STRING=3, BOOL=4, CHARACTER=5, TRUE=6, FALSE=7, NIL=8, VAR=9, LET=10, PRINT=11, IF=12, ELSE=13, SWITCH=14, CASE=15, BREAK=16, DEFAULT=17, WHILE=18, FOR=19, IN=20, GUARD=21, CONTINUE=22, RETURN=23, FUNC=24, STRUCT=25, MUTATING=26, SELF=27, INOUT=28, NUMBER=29, STRING_LITERAL=30, ID=31, CHARACTER_LITERAL=32, SUMMATION=33, SUBTRACTION=34, MULTIPLICATION=35, DIVISION=36, MOD=37, QUESTION_MARK=38, OR=39, AND=40, NOT=41, EQUAL=42, NOT_EQUAL=43, LESS_THAN=44, LESS_THAN_EQUAL=45, GREATER_THAN=46, GREATER_THAN_EQUAL=47, ASSIGN=48, DOT=49, COMMA=50, COLON=51, SEMICOLON=52, OPEN_PARENTHESIS=53, CLOSE_PARENTHESIS=54, OPEN_kEY=55, CLOSE_kEY=56, WHITESPACE=57, COMMENT=58, LINE_COMMENT=59}
+2023-08-07 11:52:16:525 semantics LogManager.java:25 strings={'Int'=1, 'Float'=2, 'String'=3, 'Bool'=4, 'Character'=5, 'true'=6, 'false'=7, 'nil'=8, 'var'=9, 'let'=10, 'print'=11, 'if'=12, 'else'=13, 'switch'=14, 'case'=15, 'break'=16, 'default'=17, 'while'=18, 'for'=19, 'in'=20, 'guard'=21, 'continue'=22, 'return'=23, 'func'=24, 'struct'=25, 'mutating'=26, 'self'=27, 'inout'=28, '+'=33, '-'=34, '*'=35, '/'=36, '%'=37, '?'=38, '||'=39, '&&'=40, '!'=41, '=='=42, '!='=43, '<'=44, '<='=45, '>'=46, '>='=47, '='=48, '.'=49, ','=50, ':'=51, ';'=52, '('=53, ')'=54, '{'=55, '}'=56}
+2023-08-07 11:52:16:532 LL1 LogManager.java:25 
+DECISION 0 in rule block
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[{9..10, 31}, <EOF>]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? true
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 1 in rule sentences
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[{9..10, 31}, {9..10, 31}]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 2 in rule sentence
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[9, 10, 31]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? true
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 3 in rule declare_var
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[9, 9, 9]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 4 in rule declare_constant
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[10, 10, 10]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 5 in rule if_sentence
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[12, 12]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 6 in rule switch_cases
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[{15, 17}, {15, 17}]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 7 in rule switch_case
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[15, 17]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? true
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 8 in rule return_sentence
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[23, 23]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 9 in rule expression
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[53, 29, 30, 32, 31]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? true
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 10 in rule expression
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 look=[null, null, null, null, null]
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:533 LL1 LogManager.java:25 
+DECISION 11 in rule expression
+2023-08-07 11:52:16:534 LL1 LogManager.java:25 look=[null, null]
+2023-08-07 11:52:16:534 LL1 LogManager.java:25 LL(1)? false
+2023-08-07 11:52:16:534 action-translator LogManager.java:25 translate 
+        import "fmt"
+
+2023-08-07 11:52:16:538 action-translator LogManager.java:25 translate fmt.Println("Variable declaration: ");
+2023-08-07 11:52:16:547 action-translator LogManager.java:25 translate 
+2023-08-07 11:52:16:547 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 10)
+2023-08-07 11:52:16:547 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 9)
+2023-08-07 11:52:16:548 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 8)
+2023-08-07 11:52:16:548 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 7)
+2023-08-07 11:52:16:548 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 6)
+2023-08-07 11:52:16:549 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 10)
+2023-08-07 11:52:16:549 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 9)
+2023-08-07 11:52:16:549 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 8)
+2023-08-07 11:52:16:549 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 7)
+2023-08-07 11:52:16:549 action-translator LogManager.java:25 translate p.Precpred(p.GetParserRuleContext(), 6)
+2023-08-07 11:52:16:715 action-translator LogManager.java:25 translate 
+        import "fmt"
+
+2023-08-07 11:52:16:715 action-translator LogManager.java:25 translate 
+        import "fmt"
+
+2023-08-07 11:52:16:774 action-translator LogManager.java:25 translate 
+        import "fmt"
+
+2023-08-07 11:52:16:774 action-translator LogManager.java:25 translate 
+        import "fmt"
+
+2023-08-07 11:52:16:859 action-translator LogManager.java:25 translate 
+        import "fmt"
+
+2023-08-07 11:52:16:859 action-translator LogManager.java:25 translate 
+        import "fmt"
+
+2023-08-07 11:52:16:915 action-translator LogManager.java:25 translate 
+        import "fmt"
+
+2023-08-07 11:52:16:915 action-translator LogManager.java:25 translate 
+        import "fmt"
+

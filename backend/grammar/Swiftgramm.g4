@@ -1,6 +1,9 @@
 grammar Swiftgramm;
 import Swiftlex;
 
+@header {
+        import "fmt"
+}
 s: block EOF;
 
 block: (sentences)*
@@ -20,7 +23,7 @@ print: PRINT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
 ;
 
 //Declare variables in Swift
-declare_var: VAR ID COLON datatype ASSIGN expression
+declare_var: VAR ID COLON datatype ASSIGN expression {fmt.Println("Variable declaration: ");}
             | VAR ID ASSIGN expression
             | VAR ID COLON datatype QUESTION_MARK
 ;
@@ -45,7 +48,7 @@ switch_sentence: SWITCH expression OPEN_kEY switch_cases CLOSE_kEY
 ;
 
 switch_cases: switch_case switch_cases
-            | switch_cases
+            | switch_case
 ;
 switch_case: CASE expression COLON sentences
             | DEFAULT COLON sentences
@@ -74,15 +77,11 @@ return_sentence: RETURN expression
                 | RETURN
 ;
 
-expression: left=expression op=(MOD) right=expression
-        | left=expression op=(MULTIPLICATION|DIVISION) right=expression
-        | left=expression op=(SUMMATION|SUBTRACTION) right=expression
-        | left=expression op=(LESS_THAN|LESS_THAN_EQUAL) right=expression
-        | left=expression op=(GREATER_THAN|GREATER_THAN_EQUAL) right=expression
-        | left=expression op=(EQUAL|NOT_EQUAL) right=expression
-        | left=expression op=(AND) right=expression
-        | left=expression op=(OR) right=expression
-        | op=(NOT) right=expression
+expression:left=expression oper=(MULTIPLICATION|DIVISION) right=expression
+        | left=expression oper=(SUMMATION|SUBTRACTION) right=expression
+        | left=expression oper=(LESS_THAN|LESS_THAN_EQUAL) right=expression
+        | left=expression oper=(GREATER_THAN|GREATER_THAN_EQUAL) right=expression
+        | left=expression oper=(EQUAL|NOT_EQUAL) right=expression
         | OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
         | NUMBER
         | STRING_LITERAL
