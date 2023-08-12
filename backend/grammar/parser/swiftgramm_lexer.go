@@ -9,7 +9,6 @@ import (
 	"unicode"
 )
 
-import "fmt"
 
 // Suppress unused import error
 var _ = fmt.Printf

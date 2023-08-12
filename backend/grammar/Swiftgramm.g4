@@ -2,95 +2,103 @@ grammar Swiftgramm;
 import Swiftlex;
 
 @header {
-        import "fmt"
+        import "grammar/expressions"
+        import "grammar/instructions"
+        import "grammar/symbol"
+        import "grammar/abstract"
 }
-s: block EOF;
+s returns [[]interface{} code]
+: block EOF{
+        $code = $block.blk
+} ;
 
-block: (sentences)*
+
+block returns [[]interface{} blk] 
+@init{
+        $blk = []interface{}{}
+        var listInt []ISentenceContext
+}
+: instr += sentence+
+{
+        listInt = localctx.(*BlockContext).GetInstr()
+        for _,e := range listInt{
+                $blk = append($blk,e.GetInstr())
+        }
+}
+;
+sentence returns [abstract.Instruction instr]
+        : declare_var {$instr = $declare_var.instr}
 ;
 
-sentences: sentence sentences
-| sentence 
-;
 
-sentence: declare_var
-        | declare_constant
-        | assign_var
-;
-
-//block print
-print: PRINT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
-;
 
 //Declare variables in Swift
-declare_var: VAR ID COLON datatype ASSIGN expression {fmt.Println("Variable declaration: ");}
-            | VAR ID ASSIGN expression
-            | VAR ID COLON datatype QUESTION_MARK
+declare_var returns [abstract.Instruction instr]
+                : VAR ID COLON datatype ASSIGN expression {
+                        fmt.Println("Variable declaration: ");
+                        $instr = instructions.NewDeclareWithValue($ID.text,$datatype.td,$expression.p)
+                }
+                | VAR ID ASSIGN expression
+                | VAR ID COLON datatype QUESTION_MARK
 ;
 
-//Declare constants in Swift
 
-declare_constant: LET ID COLON datatype ASSIGN expression
-                | LET ID ASSIGN expression
-                | LET ID COLON datatype QUESTION_MARK
-;
 
-//Assign variables in Swift
-assign_var: ID ASSIGN expression
-;
-
-//If sentence in Swift
-if_sentence: IF expression sentences
-            | IF expression sentences ELSE sentences
-;
-//Switch sentence in Swift
-switch_sentence: SWITCH expression OPEN_kEY switch_cases CLOSE_kEY
-;
-
-switch_cases: switch_case switch_cases
-            | switch_case
-;
-switch_case: CASE expression COLON sentences
-            | DEFAULT COLON sentences
-;
-//While sentence in Swift
-while_sentence: WHILE expression OPEN_kEY sentences CLOSE_kEY
-;
-//for sentence in Swift
-for_sentence: FOR ID IN expression OPEN_kEY sentences CLOSE_kEY
-;
-
-//guard sentence in Swift
-guard_sentence: GUARD expression ELSE sentences
-;
-
-//break sentence in Swift
-break_sentence: BREAK
-;
-
-//continue sentence in Swift
-continue_sentence: CONTINUE
-;
-
-//return sentence in Swift
-return_sentence: RETURN expression
-                | RETURN
-;
-
-expression:left=expression oper=(MULTIPLICATION|DIVISION) right=expression
+expression returns [abstract.Expression p]
+        :left=expression oper=(MULTIPLICATION|DIVISION) right=expression
         | left=expression oper=(SUMMATION|SUBTRACTION) right=expression
         | left=expression oper=(LESS_THAN|LESS_THAN_EQUAL) right=expression
         | left=expression oper=(GREATER_THAN|GREATER_THAN_EQUAL) right=expression
         | left=expression oper=(EQUAL|NOT_EQUAL) right=expression
         | OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
-        | NUMBER
-        | STRING_LITERAL
-        | CHARACTER_LITERAL
-        | ID
+        | NUMBER{
+                value,err := strconv.Atoi($NUMBER.text)
+                if err != nil{
+                        fmt.Println(err)
+                }
+                $p = expressions.NewNative(value,symbol.INT)
+        }
+        | STRING_LITERAL{
+                value := $STRING_LITERAL.text[1:len($STRING_LITERAL.text)-1]
+                $p = expressions.NewNative(value,symbol.STRING)
+        }
+        | CHARACTER_LITERAL{
+                value := $CHARACTER_LITERAL.text[1:len($CHARACTER_LITERAL.text)-1]
+                $p = expressions.NewNative(value,symbol.CHAR)
+        }
+        | TRUE{
+                value,err := strconv.ParseBool($TRUE.text)
+                if err != nil{
+                        fmt.Println(err)
+                }
+                $p = expressions.NewNative(value,symbol.BOOL) 
+        }
+        | FALSE{
+                value,err := strconv.ParseBool($FALSE.text)
+                if err != nil{
+                        fmt.Println(err)
+                }
+                $p = expressions.NewNative(value,symbol.BOOL) 
+        }
+        | ID{
+
+        }
 ;
 
-datatype: INT
-        | FLOAT
-        | STRING
-        | BOOL
+datatype returns [symbol.TypeData td]
+        : INT{
+                $td = symbol.INT
+        }       
+        | FLOAT{
+                $td = symbol.FLOAT
+        }
+        | STRING_LITERAL{
+                $td = symbol.STRING
+        }
+        | BOOL{
+                $td = symbol.BOOL
+        }
+        | CHARACTER_LITERAL{
+                $td = symbol.CHAR
+        }
 ;

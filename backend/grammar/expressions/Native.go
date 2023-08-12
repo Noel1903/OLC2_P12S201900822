@@ -5,6 +5,7 @@ import (
 )
 
 type Native struct {
+	//Fila - columna
 	Value interface{}
 	TypeR Scoope.TypeData
 }

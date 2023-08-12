@@ -2,28 +2,43 @@ package instructions
 
 import (
 	Abstract "grammar/abstract"
-	Scoope "grammar/symbol"
+	Enviorement "grammar/symbol"
 )
 
 type DeclareVariable struct {
-	typeD Scoope.TypeData
-	value Abstract.Expression
+	identifier string
+	typeD      Enviorement.TypeData
+	value      Abstract.Expression
 }
 
-func newDeclareWithValue(typeVar Scoope.TypeData, value Abstract.Expression) *DeclareVariable {
+func NewDeclareWithValue(identifier string, typeVar Enviorement.TypeData, value Abstract.Expression) *DeclareVariable {
 	return &DeclareVariable{
-		typeD: typeVar,
-		value: value,
+		identifier: identifier,
+		typeD:      typeVar,
+		value:      value,
 	}
 }
 
-func newDeclareWithoutValue(typeVar Scoope.TypeData) *DeclareVariable {
+func NewDeclareWithoutValue(identifier string, typeD Enviorement.TypeData) *DeclareVariable {
 	return &DeclareVariable{
-		typeD: typeVar,
-		value: nil,
+		identifier: identifier,
+		typeD:      typeD,
+		value:      nil,
 	}
 }
 
-/*func (d *DeclareVariable) Execute(env Scoope.SymbolTable)interface{}{
+func (d *DeclareVariable) Execute(table Enviorement.SymbolTable) interface{} {
 
-}*/
+	variable := table.GetVariable(d.identifier)
+	if variable == nil {
+		if d.value != nil {
+			value := d.value.GetValue(table)
+			table.SetVariable(d.identifier, value)
+		} else {
+			table.SetVariable(d.identifier, nil)
+		}
+	}
+
+	return nil
+
+}

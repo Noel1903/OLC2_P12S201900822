@@ -1,6 +1,9 @@
 // Generated from e:\USAC2023\SegundoSemestre\Compiladores2\OLC2_P12S201900822\backend\grammar\Swiftgramm.g4 by ANTLR 4.9.2
 
-        import "fmt"
+        import "grammar/expressions"
+        import "grammar/instructions"
+        import "grammar/symbol"
+        import "grammar/abstract"
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
