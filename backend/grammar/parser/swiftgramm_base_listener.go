@@ -44,6 +44,12 @@ func (s *BaseSwiftgrammListener) EnterDeclare_var(ctx *Declare_varContext) {}
 // ExitDeclare_var is called when production declare_var is exited.
 func (s *BaseSwiftgrammListener) ExitDeclare_var(ctx *Declare_varContext) {}
 
+// EnterPrint_bl is called when production print_bl is entered.
+func (s *BaseSwiftgrammListener) EnterPrint_bl(ctx *Print_blContext) {}
+
+// ExitPrint_bl is called when production print_bl is exited.
+func (s *BaseSwiftgrammListener) ExitPrint_bl(ctx *Print_blContext) {}
+
 // EnterExpression is called when production expression is entered.
 func (s *BaseSwiftgrammListener) EnterExpression(ctx *ExpressionContext) {}
 

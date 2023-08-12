@@ -19,6 +19,9 @@ type SwiftgrammListener interface {
 	// EnterDeclare_var is called when entering the declare_var production.
 	EnterDeclare_var(c *Declare_varContext)
 
+	// EnterPrint_bl is called when entering the print_bl production.
+	EnterPrint_bl(c *Print_blContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -36,6 +39,9 @@ type SwiftgrammListener interface {
 
 	// ExitDeclare_var is called when exiting the declare_var production.
 	ExitDeclare_var(c *Declare_varContext)
+
+	// ExitPrint_bl is called when exiting the print_bl production.
+	ExitPrint_bl(c *Print_blContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)

@@ -36,7 +36,8 @@ SELF: 'self';
 INOUT: 'inout';
 
 //Regex Primitives
-NUMBER : [0-9]+('.'[0-9]+)?;
+NUMBER : [0-9]+;
+FLOATT: [0-9]+('.'[0-9]+)?;
 STRING_LITERAL : '"' (~["])* '"';
 ID : ([a-zA-Z_])[a-zA-Z0-9_]*;
 CHARACTER_LITERAL : '"' (~[']) '"';
@@ -75,6 +76,6 @@ LINE_COMMENT : '//' ~[\r\n]* -> skip;
 
 fragment
 ESC_SEQ
-    :   '\\' ('\\'|'@'|'['|']'|'.'|'#'|'+'|'-'|'*'|'?'|'('|')') // Escape sequence
+    :   '\\' ('\\'|'@'|'['|']'|'.'|'#'|'+'|'-'|'!'|':'|' ') // Escape sequence
     ;
 

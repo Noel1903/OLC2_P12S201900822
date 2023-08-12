@@ -4,6 +4,7 @@ package parser // Swiftgramm
 import "github.com/antlr4-go/antlr/v4"
 
 
+
 // A complete Visitor for a parse tree produced by SwiftgrammParser.
 type SwiftgrammVisitor interface {
 	antlr.ParseTreeVisitor
@@ -19,6 +20,9 @@ type SwiftgrammVisitor interface {
 
 	// Visit a parse tree produced by SwiftgrammParser#declare_var.
 	VisitDeclare_var(ctx *Declare_varContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#print_bl.
+	VisitPrint_bl(ctx *Print_blContext) interface{}
 
 	// Visit a parse tree produced by SwiftgrammParser#expression.
 	VisitExpression(ctx *ExpressionContext) interface{}

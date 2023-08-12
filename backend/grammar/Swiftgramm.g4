@@ -28,6 +28,7 @@ block returns [[]interface{} blk]
 ;
 sentence returns [abstract.Instruction instr]
         : declare_var {$instr = $declare_var.instr}
+        | print_bl {$instr = $print_bl.instr}
 ;
 
 
@@ -42,6 +43,12 @@ declare_var returns [abstract.Instruction instr]
                 | VAR ID COLON datatype QUESTION_MARK
 ;
 
+//block print
+print_bl returns[abstract.Instruction instr]
+: PRINT OPEN_PARENTHESIS expression CLOSE_PARENTHESIS{
+        $instr = instructions.NewPrint($expression.p)
+}
+;
 
 
 expression returns [abstract.Expression p]
@@ -81,7 +88,7 @@ expression returns [abstract.Expression p]
                 $p = expressions.NewNative(value,symbol.BOOL) 
         }
         | ID{
-
+                $p = expressions.NewIdentifier($ID.text)
         }
 ;
 
@@ -89,7 +96,7 @@ datatype returns [symbol.TypeData td]
         : INT{
                 $td = symbol.INT
         }       
-        | FLOAT{
+        | FLOATT{
                 $td = symbol.FLOAT
         }
         | STRING_LITERAL{

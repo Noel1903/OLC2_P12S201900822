@@ -23,6 +23,10 @@ func (v *BaseSwiftgrammVisitor) VisitDeclare_var(ctx *Declare_varContext) interf
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSwiftgrammVisitor) VisitPrint_bl(ctx *Print_blContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSwiftgrammVisitor) VisitExpression(ctx *ExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
