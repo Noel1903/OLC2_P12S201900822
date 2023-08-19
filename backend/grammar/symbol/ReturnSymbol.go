@@ -9,6 +9,7 @@ const (
 	BOOL
 	CHAR
 	NIL
+	UNDEFINED
 )
 
 type ReturnSymbol struct {

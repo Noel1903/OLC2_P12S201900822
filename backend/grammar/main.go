@@ -15,7 +15,7 @@ type TreeShapeListener struct {
 }
 
 func main() {
-	code := "print(\"Hola\")\nvar a : Int = 5\nprint(a)\n"
+	code := "\nprint(\"Hola\"+\"Mundo\")\nprint(!true)\nprint(5!=8)\nprint(\"a\"==\"a\")\nprint(45.10<20.05)"
 	fmt.Println(code)
 	input := antlr.NewInputStream(code)
 	lexer := parser.NewSwiftlex(input)

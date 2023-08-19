@@ -36,11 +36,14 @@ sentence returns [abstract.Instruction instr]
 //Declare variables in Swift
 declare_var returns [abstract.Instruction instr]
                 : VAR ID COLON datatype ASSIGN expression {
-                        fmt.Println("Variable declaration: ");
                         $instr = instructions.NewDeclareWithValue($ID.text,$datatype.td,$expression.p)
                 }
-                | VAR ID ASSIGN expression
-                | VAR ID COLON datatype QUESTION_MARK
+                | VAR ID ASSIGN expression{
+                        $instr = instructions.NewDeclareWithValue($ID.text,symbol.UNDEFINED,$expression.p)
+                }
+                | VAR ID COLON datatype QUESTION_MARK{
+                        $instr = instructions.NewDeclareWithoutValue($ID.text,$datatype.td,expressions.NewNative(nil,symbol.NIL))
+                }
 ;
 
 //block print
@@ -52,11 +55,30 @@ print_bl returns[abstract.Instruction instr]
 
 
 expression returns [abstract.Expression p]
-        :left=expression oper=(MULTIPLICATION|DIVISION) right=expression
-        | left=expression oper=(SUMMATION|SUBTRACTION) right=expression
-        | left=expression oper=(LESS_THAN|LESS_THAN_EQUAL) right=expression
-        | left=expression oper=(GREATER_THAN|GREATER_THAN_EQUAL) right=expression
-        | left=expression oper=(EQUAL|NOT_EQUAL) right=expression
+        :left=expression oper=(MULTIPLICATION|DIVISION) right=expression{
+                $p = expressions.NewArithmeticOperations($left.p,$right.p,$oper.text)
+        }
+        | left=expression oper=(SUMMATION|SUBTRACTION) right=expression{
+                $p = expressions.NewArithmeticOperations($left.p,$right.p,$oper.text)
+        }
+        | left=expression oper=MOD right=expression{
+                $p = expressions.NewArithmeticOperations($left.p,$right.p,$oper.text)
+        }
+        | left=expression oper=(LESS_THAN|LESS_THAN_EQUAL) right=expression{
+                $p = expressions.NewRelationalOperations($left.p,$right.p,$oper.text)
+        }
+        | left=expression oper=(GREATER_THAN|GREATER_THAN_EQUAL) right=expression{
+                $p = expressions.NewRelationalOperations($left.p,$right.p,$oper.text)
+        }
+        | left=expression oper=(EQUAL|NOT_EQUAL) right=expression{
+                $p = expressions.NewRelationalOperations($left.p,$right.p,$oper.text)
+        }
+        | left=expression oper=(AND|OR) right=expression{
+                $p = expressions.NewLogicOperations($left.p,$right.p,$oper.text)
+        }
+        | oper = NOT expression{
+                $p = expressions.NewLogicOperations(nil,$expression.p,$oper.text)
+        }
         | OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
         | NUMBER{
                 value,err := strconv.Atoi($NUMBER.text)
@@ -64,6 +86,13 @@ expression returns [abstract.Expression p]
                         fmt.Println(err)
                 }
                 $p = expressions.NewNative(value,symbol.INT)
+        }
+        | FLOATT{
+                value,err := strconv.ParseFloat($FLOATT.text,64)
+                if err != nil{
+                        fmt.Println(err)
+                }
+                $p = expressions.NewNative(value,symbol.FLOAT)
         }
         | STRING_LITERAL{
                 value := $STRING_LITERAL.text[1:len($STRING_LITERAL.text)-1]
@@ -90,13 +119,16 @@ expression returns [abstract.Expression p]
         | ID{
                 $p = expressions.NewIdentifier($ID.text)
         }
+        | NIL{
+                $p = expressions.NewNative(nil,symbol.NIL)
+        }
 ;
 
 datatype returns [symbol.TypeData td]
         : INT{
                 $td = symbol.INT
         }       
-        | FLOATT{
+        | FLOAT{
                 $td = symbol.FLOAT
         }
         | STRING_LITERAL{
