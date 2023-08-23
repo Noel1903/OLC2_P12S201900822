@@ -13,6 +13,6 @@ func NewIdentifier(id string) Identifier {
 }
 
 func (i Identifier) GetValue(table symbol.SymbolTable) symbol.ReturnSymbol {
-	variable := table.GetVariable(i.Identifier).(symbol.ReturnSymbol)
+	variable := table.GetVariable(i.Identifier)
 	return symbol.ReturnSymbol{Type: variable.Type, Value: variable.Value}
 }

@@ -28,10 +28,33 @@ block returns [[]interface{} blk]
 ;
 sentence returns [abstract.Instruction instr]
         : declare_var {$instr = $declare_var.instr}
+        | declare_let {$instr = $declare_let.instr}
         | print_bl {$instr = $print_bl.instr}
+        | if_bl {$instr = $if_bl.instr}
+        | increment_bl {$instr = $increment_bl.instr}
+        | decrement_bl {$instr = $decrement_bl.instr}
+        | while_bl {$instr = $while_bl.instr}
 ;
 
+increment_bl returns [abstract.Instruction instr]
+: ID INCREMENT expression{
+        $instr = instructions.NewIncreDecrem($ID.text,$INCREMENT.text,$expression.p)
+} 
+;
 
+decrement_bl returns [abstract.Instruction instr]
+: ID DECREMENT expression{
+        $instr = instructions.NewIncreDecrem($ID.text,$DECREMENT.text,$expression.p)
+}
+;
+declare_let returns [abstract.Instruction instr]
+        : LET ID COLON datatype ASSIGN expression{
+                $instr = instructions.NewLet($ID.text,$datatype.td,$expression.p)
+        }
+        | LET ID ASSIGN expression{
+                $instr = instructions.NewLet($ID.text,symbol.UNDEFINED,$expression.p)
+        }
+;
 
 //Declare variables in Swift
 declare_var returns [abstract.Instruction instr]
@@ -53,6 +76,34 @@ print_bl returns[abstract.Instruction instr]
 }
 ;
 
+if_bl returns[abstract.Instruction instr]
+: IF expression OPEN_kEY ifblock = block CLOSE_kEY{
+        $instr = instructions.NewIf($expression.p,$ifblock.blk,nil)
+}
+| IF expression OPEN_kEY ifblock = block CLOSE_kEY ELSE OPEN_kEY elseblock = block CLOSE_kEY{
+        $instr = instructions.NewIf($expression.p,$ifblock.blk,$elseblock.blk)
+}
+| IF expression OPEN_kEY ifblock = block CLOSE_kEY else_if {
+        $instr = instructions.NewIf($expression.p,$ifblock.blk,$else_if.instr)
+}
+;
+
+else_if returns[[]interface{} instr]
+: ELSE IF expression OPEN_kEY ifblock = block CLOSE_kEY{
+        $instr = []interface{}{instructions.NewIf($expression.p,$ifblock.blk,nil)}
+}
+| ELSE IF expression OPEN_kEY ifblock = block CLOSE_kEY ELSE OPEN_kEY elseblock = block CLOSE_kEY{
+        $instr = []interface{}{instructions.NewIf($expression.p,$ifblock.blk,$elseblock.blk)}
+}
+| ELSE IF expression OPEN_kEY ifblock = block CLOSE_kEY else_if{
+        $instr = []interface{}{instructions.NewIf($expression.p,$ifblock.blk,$else_if.instr)}
+};
+
+while_bl returns[abstract.Instruction instr]
+: WHILE expression OPEN_kEY block CLOSE_kEY{
+        $instr = instructions.NewWhile($expression.p,$block.blk)
+}
+;
 
 expression returns [abstract.Expression p]
         :left=expression oper=(MULTIPLICATION|DIVISION) right=expression{

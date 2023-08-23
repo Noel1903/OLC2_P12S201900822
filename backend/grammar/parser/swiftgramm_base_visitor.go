@@ -19,11 +19,35 @@ func (v *BaseSwiftgrammVisitor) VisitSentence(ctx *SentenceContext) interface{} 
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSwiftgrammVisitor) VisitIncrement_bl(ctx *Increment_blContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitDecrement_bl(ctx *Decrement_blContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitDeclare_let(ctx *Declare_letContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSwiftgrammVisitor) VisitDeclare_var(ctx *Declare_varContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseSwiftgrammVisitor) VisitPrint_bl(ctx *Print_blContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitIf_bl(ctx *If_blContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitElse_if(ctx *Else_ifContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitWhile_bl(ctx *While_blContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

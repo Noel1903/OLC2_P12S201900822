@@ -43,6 +43,9 @@ ID : ([a-zA-Z_])[a-zA-Z0-9_]*;
 CHARACTER_LITERAL : '"' (~[']) '"';
 
 //Symbols
+INCREMENT : '+=';
+DECREMENT : '-=';
+RANGE : '...';
 SUMMATION : '+';
 SUBTRACTION : '-';
 MULTIPLICATION : '*';

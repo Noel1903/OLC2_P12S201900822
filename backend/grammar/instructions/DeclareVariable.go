@@ -30,10 +30,10 @@ func NewDeclareWithoutValue(identifier string, typeD Enviorement.TypeData, value
 }
 
 func (d *DeclareVariable) Execute(table Enviorement.SymbolTable) interface{} {
+	var variable symbol.ReturnSymbol
+	variable = table.GetVariable(d.identifier)
 
-	variable := table.GetVariable(d.identifier)
-
-	if variable == nil {
+	if variable.Value == nil {
 		/*if d.value != nil {
 			value := d.value.GetValue(table)
 			fmt.Println(value)
@@ -50,7 +50,7 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable) interface{} {
 			fmt.Println("Error, los tipos no coinciden")
 			return nil
 		}
-		table.SetVariable(d.identifier, value)
+		table.SetVariable(d.identifier, value, true)
 	} else {
 		fmt.Println("Error, la variable ya existe")
 		return nil
