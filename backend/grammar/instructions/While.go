@@ -4,6 +4,7 @@ import (
 	"fmt"
 	Abstract "grammar/abstract"
 	Enviorement "grammar/symbol"
+	"reflect"
 )
 
 type While struct {
@@ -22,13 +23,23 @@ func (w *While) Execute(table Enviorement.SymbolTable) interface{} {
 	condition := w.condition.GetValue(table)
 	if condition.Type != Enviorement.BOOL {
 		fmt.Println("Error: La condicion no es booleana")
+		return nil
 	}
 
 	newEnviorement := Enviorement.NewEnviorement("while", &table)
-
+	var instruc string
 	for condition.Value.(bool) {
 		for _, instr := range w.codeWhile {
-			instr.(Abstract.Instruction).Execute(newEnviorement)
+			result := instr.(Abstract.Instruction).Execute(newEnviorement) //ejecuta instrucciones
+			if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
+				if result.(Enviorement.ReturnSymbol).Value == "break" {
+					instruc = "break"
+					break
+				}
+			}
+		}
+		if instruc == "break" {
+			break
 		}
 		condition = w.condition.GetValue(table)
 		if condition.Type != Enviorement.BOOL {

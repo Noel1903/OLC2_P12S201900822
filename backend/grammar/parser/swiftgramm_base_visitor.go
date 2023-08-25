@@ -27,6 +27,14 @@ func (v *BaseSwiftgrammVisitor) VisitDecrement_bl(ctx *Decrement_blContext) inte
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSwiftgrammVisitor) VisitBreak_bl(ctx *Break_blContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitReturn_bl(ctx *Return_blContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSwiftgrammVisitor) VisitDeclare_let(ctx *Declare_letContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -48,6 +56,10 @@ func (v *BaseSwiftgrammVisitor) VisitElse_if(ctx *Else_ifContext) interface{} {
 }
 
 func (v *BaseSwiftgrammVisitor) VisitWhile_bl(ctx *While_blContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitFor_bl(ctx *For_blContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

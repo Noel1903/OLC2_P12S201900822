@@ -24,6 +24,12 @@ type SwiftgrammVisitor interface {
 	// Visit a parse tree produced by SwiftgrammParser#decrement_bl.
 	VisitDecrement_bl(ctx *Decrement_blContext) interface{}
 
+	// Visit a parse tree produced by SwiftgrammParser#break_bl.
+	VisitBreak_bl(ctx *Break_blContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#return_bl.
+	VisitReturn_bl(ctx *Return_blContext) interface{}
+
 	// Visit a parse tree produced by SwiftgrammParser#declare_let.
 	VisitDeclare_let(ctx *Declare_letContext) interface{}
 
@@ -41,6 +47,9 @@ type SwiftgrammVisitor interface {
 
 	// Visit a parse tree produced by SwiftgrammParser#while_bl.
 	VisitWhile_bl(ctx *While_blContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#for_bl.
+	VisitFor_bl(ctx *For_blContext) interface{}
 
 	// Visit a parse tree produced by SwiftgrammParser#expression.
 	VisitExpression(ctx *ExpressionContext) interface{}

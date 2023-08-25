@@ -3,7 +3,9 @@ package instructions
 import (
 	"fmt"
 	Abstract "grammar/abstract"
+	Enviorement "grammar/symbol"
 	Enviorment "grammar/symbol"
+	"reflect"
 )
 
 type If struct {
@@ -31,11 +33,26 @@ func (i *If) Execute(table Enviorment.SymbolTable) interface{} {
 
 	if condition.Value.(bool) {
 		for _, instr := range i.codeIf {
-			instr.(Abstract.Instruction).Execute(newEnviorement)
+			result := instr.(Abstract.Instruction).Execute(newEnviorement)
+			if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
+				if result.(Enviorement.ReturnSymbol).Value == "break" {
+					return result
+				} else if result.(Enviorement.ReturnSymbol).Value == nil {
+					fmt.Println(result)
+					return result
+				}
+			}
 		}
 	} else {
 		for _, instr := range i.codeElse {
-			instr.(Abstract.Instruction).Execute(newEnviorement)
+			result := instr.(Abstract.Instruction).Execute(newEnviorement)
+			if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
+				if result.(Enviorement.ReturnSymbol).Value == "break" {
+					return result
+				} else if result.(Enviorement.ReturnSymbol).Value == nil {
+					return nil
+				}
+			}
 		}
 	}
 

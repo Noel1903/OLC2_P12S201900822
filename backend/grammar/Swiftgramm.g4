@@ -34,6 +34,9 @@ sentence returns [abstract.Instruction instr]
         | increment_bl {$instr = $increment_bl.instr}
         | decrement_bl {$instr = $decrement_bl.instr}
         | while_bl {$instr = $while_bl.instr}
+        | for_bl {$instr = $for_bl.instr}
+        | break_bl {$instr = $break_bl.instr}
+        | return_bl {$instr = $return_bl.instr}
 ;
 
 increment_bl returns [abstract.Instruction instr]
@@ -47,6 +50,22 @@ decrement_bl returns [abstract.Instruction instr]
         $instr = instructions.NewIncreDecrem($ID.text,$DECREMENT.text,$expression.p)
 }
 ;
+
+break_bl returns [abstract.Instruction instr]
+: BREAK{
+        $instr = instructions.NewBreak("break")
+}
+;
+
+return_bl returns [abstract.Instruction instr]
+: RETURN expression{
+        $instr = instructions.NewReturn($expression.p)
+}
+| RETURN{
+        $instr = instructions.NewReturn(expressions.NewNative(nil,symbol.NIL))
+}
+;
+
 declare_let returns [abstract.Instruction instr]
         : LET ID COLON datatype ASSIGN expression{
                 $instr = instructions.NewLet($ID.text,$datatype.td,$expression.p)
@@ -102,6 +121,12 @@ else_if returns[[]interface{} instr]
 while_bl returns[abstract.Instruction instr]
 : WHILE expression OPEN_kEY block CLOSE_kEY{
         $instr = instructions.NewWhile($expression.p,$block.blk)
+}
+;
+
+for_bl returns[abstract.Instruction instr]
+: FOR ID IN expression1 = expression RANGE expression2 = expression OPEN_kEY block CLOSE_kEY{
+        $instr = instructions.NewFor($ID.text,$expression1.p,$expression2.p,$block.blk)
 }
 ;
 

@@ -22,6 +22,12 @@ type SwiftgrammListener interface {
 	// EnterDecrement_bl is called when entering the decrement_bl production.
 	EnterDecrement_bl(c *Decrement_blContext)
 
+	// EnterBreak_bl is called when entering the break_bl production.
+	EnterBreak_bl(c *Break_blContext)
+
+	// EnterReturn_bl is called when entering the return_bl production.
+	EnterReturn_bl(c *Return_blContext)
+
 	// EnterDeclare_let is called when entering the declare_let production.
 	EnterDeclare_let(c *Declare_letContext)
 
@@ -39,6 +45,9 @@ type SwiftgrammListener interface {
 
 	// EnterWhile_bl is called when entering the while_bl production.
 	EnterWhile_bl(c *While_blContext)
+
+	// EnterFor_bl is called when entering the for_bl production.
+	EnterFor_bl(c *For_blContext)
 
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
@@ -61,6 +70,12 @@ type SwiftgrammListener interface {
 	// ExitDecrement_bl is called when exiting the decrement_bl production.
 	ExitDecrement_bl(c *Decrement_blContext)
 
+	// ExitBreak_bl is called when exiting the break_bl production.
+	ExitBreak_bl(c *Break_blContext)
+
+	// ExitReturn_bl is called when exiting the return_bl production.
+	ExitReturn_bl(c *Return_blContext)
+
 	// ExitDeclare_let is called when exiting the declare_let production.
 	ExitDeclare_let(c *Declare_letContext)
 
@@ -78,6 +93,9 @@ type SwiftgrammListener interface {
 
 	// ExitWhile_bl is called when exiting the while_bl production.
 	ExitWhile_bl(c *While_blContext)
+
+	// ExitFor_bl is called when exiting the for_bl production.
+	ExitFor_bl(c *For_blContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)

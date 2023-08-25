@@ -50,6 +50,18 @@ func (s *BaseSwiftgrammListener) EnterDecrement_bl(ctx *Decrement_blContext) {}
 // ExitDecrement_bl is called when production decrement_bl is exited.
 func (s *BaseSwiftgrammListener) ExitDecrement_bl(ctx *Decrement_blContext) {}
 
+// EnterBreak_bl is called when production break_bl is entered.
+func (s *BaseSwiftgrammListener) EnterBreak_bl(ctx *Break_blContext) {}
+
+// ExitBreak_bl is called when production break_bl is exited.
+func (s *BaseSwiftgrammListener) ExitBreak_bl(ctx *Break_blContext) {}
+
+// EnterReturn_bl is called when production return_bl is entered.
+func (s *BaseSwiftgrammListener) EnterReturn_bl(ctx *Return_blContext) {}
+
+// ExitReturn_bl is called when production return_bl is exited.
+func (s *BaseSwiftgrammListener) ExitReturn_bl(ctx *Return_blContext) {}
+
 // EnterDeclare_let is called when production declare_let is entered.
 func (s *BaseSwiftgrammListener) EnterDeclare_let(ctx *Declare_letContext) {}
 
@@ -85,6 +97,12 @@ func (s *BaseSwiftgrammListener) EnterWhile_bl(ctx *While_blContext) {}
 
 // ExitWhile_bl is called when production while_bl is exited.
 func (s *BaseSwiftgrammListener) ExitWhile_bl(ctx *While_blContext) {}
+
+// EnterFor_bl is called when production for_bl is entered.
+func (s *BaseSwiftgrammListener) EnterFor_bl(ctx *For_blContext) {}
+
+// ExitFor_bl is called when production for_bl is exited.
+func (s *BaseSwiftgrammListener) ExitFor_bl(ctx *For_blContext) {}
 
 // EnterExpression is called when production expression is entered.
 func (s *BaseSwiftgrammListener) EnterExpression(ctx *ExpressionContext) {}
