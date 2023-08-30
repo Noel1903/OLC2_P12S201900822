@@ -8,30 +8,30 @@ import (
 )
 
 type DeclareVariable struct {
-	identifier string
-	typeD      Enviorement.TypeData
-	value      Abstract.Expression
+	Identifier string
+	TypeD      Enviorement.TypeData
+	Value      Abstract.Expression
 }
 
 func NewDeclareWithValue(identifier string, typeVar Enviorement.TypeData, value Abstract.Expression) *DeclareVariable {
 	return &DeclareVariable{
-		identifier: identifier,
-		typeD:      typeVar,
-		value:      value,
+		Identifier: identifier,
+		TypeD:      typeVar,
+		Value:      value,
 	}
 }
 
 func NewDeclareWithoutValue(identifier string, typeD Enviorement.TypeData, value Abstract.Expression) *DeclareVariable {
 	return &DeclareVariable{
-		identifier: identifier,
-		typeD:      typeD,
-		value:      value,
+		Identifier: identifier,
+		TypeD:      typeD,
+		Value:      value,
 	}
 }
 
 func (d *DeclareVariable) Execute(table Enviorement.SymbolTable) interface{} {
 	var variable symbol.ReturnSymbol
-	variable = table.GetVariable(d.identifier)
+	variable = table.GetVariable(d.Identifier)
 
 	if variable.Value == nil {
 		/*if d.value != nil {
@@ -42,15 +42,15 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable) interface{} {
 			table.SetVariable(d.identifier, nil)
 		}*/
 
-		value := d.value.GetValue(table)
-		if d.typeD == symbol.UNDEFINED {
-			d.typeD = value.Type
+		value := d.Value.GetValue(table)
+		if d.TypeD == symbol.UNDEFINED {
+			d.TypeD = value.Type
 		}
-		if value.Type != d.typeD && value.Type != symbol.NIL {
+		if value.Type != d.TypeD && value.Type != symbol.NIL {
 			fmt.Println("Error, los tipos no coinciden")
 			return nil
 		}
-		table.SetVariable(d.identifier, value, true)
+		table.SetVariable(d.Identifier, value, true)
 	} else {
 		fmt.Println("Error, la variable ya existe")
 		return nil

@@ -38,9 +38,9 @@ INOUT: 'inout';
 //Regex Primitives
 NUMBER : [0-9]+;
 FLOATT: [0-9]+('.'[0-9]+)?;
-STRING_LITERAL : '"' (~["])* '"';
 ID : ([a-zA-Z_])[a-zA-Z0-9_]*;
-CHARACTER_LITERAL : '"' (~[']) '"';
+CHARACTER_LITERAL : '"' (~["]) '"';
+STRING_LITERAL : '"' (~["])* '"';
 
 //Symbols
 INCREMENT : '+=';
@@ -70,6 +70,10 @@ OPEN_PARENTHESIS : '(';
 CLOSE_PARENTHESIS : ')';
 OPEN_kEY : '{';
 CLOSE_kEY : '}';
+OPEN_BRACKET : '[';
+CLOSE_BRACKET : ']';
+ARROW : '->';
+
 
 
 ///Ignore 

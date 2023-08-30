@@ -62,6 +62,12 @@ func (s *BaseSwiftgrammListener) EnterReturn_bl(ctx *Return_blContext) {}
 // ExitReturn_bl is called when production return_bl is exited.
 func (s *BaseSwiftgrammListener) ExitReturn_bl(ctx *Return_blContext) {}
 
+// EnterContinue_bl is called when production continue_bl is entered.
+func (s *BaseSwiftgrammListener) EnterContinue_bl(ctx *Continue_blContext) {}
+
+// ExitContinue_bl is called when production continue_bl is exited.
+func (s *BaseSwiftgrammListener) ExitContinue_bl(ctx *Continue_blContext) {}
+
 // EnterDeclare_let is called when production declare_let is entered.
 func (s *BaseSwiftgrammListener) EnterDeclare_let(ctx *Declare_letContext) {}
 
@@ -103,6 +109,54 @@ func (s *BaseSwiftgrammListener) EnterFor_bl(ctx *For_blContext) {}
 
 // ExitFor_bl is called when production for_bl is exited.
 func (s *BaseSwiftgrammListener) ExitFor_bl(ctx *For_blContext) {}
+
+// EnterGuard_bl is called when production guard_bl is entered.
+func (s *BaseSwiftgrammListener) EnterGuard_bl(ctx *Guard_blContext) {}
+
+// ExitGuard_bl is called when production guard_bl is exited.
+func (s *BaseSwiftgrammListener) ExitGuard_bl(ctx *Guard_blContext) {}
+
+// EnterVector_bl is called when production vector_bl is entered.
+func (s *BaseSwiftgrammListener) EnterVector_bl(ctx *Vector_blContext) {}
+
+// ExitVector_bl is called when production vector_bl is exited.
+func (s *BaseSwiftgrammListener) ExitVector_bl(ctx *Vector_blContext) {}
+
+// EnterArray_exp is called when production array_exp is entered.
+func (s *BaseSwiftgrammListener) EnterArray_exp(ctx *Array_expContext) {}
+
+// ExitArray_exp is called when production array_exp is exited.
+func (s *BaseSwiftgrammListener) ExitArray_exp(ctx *Array_expContext) {}
+
+// EnterFunction_bl is called when production function_bl is entered.
+func (s *BaseSwiftgrammListener) EnterFunction_bl(ctx *Function_blContext) {}
+
+// ExitFunction_bl is called when production function_bl is exited.
+func (s *BaseSwiftgrammListener) ExitFunction_bl(ctx *Function_blContext) {}
+
+// EnterParams is called when production params is entered.
+func (s *BaseSwiftgrammListener) EnterParams(ctx *ParamsContext) {}
+
+// ExitParams is called when production params is exited.
+func (s *BaseSwiftgrammListener) ExitParams(ctx *ParamsContext) {}
+
+// EnterCall_function is called when production call_function is entered.
+func (s *BaseSwiftgrammListener) EnterCall_function(ctx *Call_functionContext) {}
+
+// ExitCall_function is called when production call_function is exited.
+func (s *BaseSwiftgrammListener) ExitCall_function(ctx *Call_functionContext) {}
+
+// EnterList_exp is called when production list_exp is entered.
+func (s *BaseSwiftgrammListener) EnterList_exp(ctx *List_expContext) {}
+
+// ExitList_exp is called when production list_exp is exited.
+func (s *BaseSwiftgrammListener) ExitList_exp(ctx *List_expContext) {}
+
+// EnterCall_function_exp is called when production call_function_exp is entered.
+func (s *BaseSwiftgrammListener) EnterCall_function_exp(ctx *Call_function_expContext) {}
+
+// ExitCall_function_exp is called when production call_function_exp is exited.
+func (s *BaseSwiftgrammListener) ExitCall_function_exp(ctx *Call_function_expContext) {}
 
 // EnterExpression is called when production expression is entered.
 func (s *BaseSwiftgrammListener) EnterExpression(ctx *ExpressionContext) {}

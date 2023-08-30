@@ -58,6 +58,10 @@ func (f *For) Execute(table Enviorement.SymbolTable) interface{} {
 						break
 					} else if result.(Enviorement.ReturnSymbol).Value == nil {
 						return nil
+					} else if result.(Enviorement.ReturnSymbol).Value == "continue" {
+						break
+					} else if result.(Enviorement.ReturnSymbol).Value != nil {
+						return result.(Enviorement.ReturnSymbol)
 					}
 				}
 			}

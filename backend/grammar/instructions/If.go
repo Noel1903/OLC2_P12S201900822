@@ -38,8 +38,12 @@ func (i *If) Execute(table Enviorment.SymbolTable) interface{} {
 				if result.(Enviorement.ReturnSymbol).Value == "break" {
 					return result
 				} else if result.(Enviorement.ReturnSymbol).Value == nil {
-					fmt.Println(result)
+					//fmt.Println(result)
 					return result
+				} else if result.(Enviorement.ReturnSymbol).Value == "continue" {
+					break
+				} else if result.(Enviorement.ReturnSymbol).Value != nil {
+					return result.(Enviorement.ReturnSymbol)
 				}
 			}
 		}
@@ -51,6 +55,10 @@ func (i *If) Execute(table Enviorment.SymbolTable) interface{} {
 					return result
 				} else if result.(Enviorement.ReturnSymbol).Value == nil {
 					return nil
+				} else if result.(Enviorement.ReturnSymbol).Value == "continue" {
+					break
+				} else if result.(Enviorement.ReturnSymbol).Value != nil {
+					return result.(Enviorement.ReturnSymbol)
 				}
 			}
 		}

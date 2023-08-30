@@ -35,8 +35,13 @@ sentence returns [abstract.Instruction instr]
         | decrement_bl {$instr = $decrement_bl.instr}
         | while_bl {$instr = $while_bl.instr}
         | for_bl {$instr = $for_bl.instr}
+        | guard_bl {$instr = $guard_bl.instr}
         | break_bl {$instr = $break_bl.instr}
         | return_bl {$instr = $return_bl.instr}
+        | continue_bl {$instr = $continue_bl.instr}
+        | vector_bl {$instr = $vector_bl.instr}
+        | function_bl {$instr = $function_bl.instr}
+        | call_function {$instr = $call_function.instr}
 ;
 
 increment_bl returns [abstract.Instruction instr]
@@ -63,6 +68,12 @@ return_bl returns [abstract.Instruction instr]
 }
 | RETURN{
         $instr = instructions.NewReturn(expressions.NewNative(nil,symbol.NIL))
+}
+;
+
+continue_bl returns [abstract.Instruction instr]
+: CONTINUE{
+        $instr = instructions.NewContinue("continue")
 }
 ;
 
@@ -130,6 +141,77 @@ for_bl returns[abstract.Instruction instr]
 }
 ;
 
+guard_bl returns[abstract.Instruction instr]
+: GUARD expression ELSE OPEN_kEY block CLOSE_kEY{
+        $instr = instructions.NewGuard($expression.p,$block.blk)
+}
+;
+
+vector_bl returns[abstract.Instruction instr]
+: VAR ID COLON OPEN_BRACKET datatype CLOSE_BRACKET ASSIGN  OPEN_BRACKET array_exp CLOSE_BRACKET{
+        
+        $instr = instructions.NewVector($ID.text,$datatype.td,$array_exp.p)
+}
+| VAR ID COLON OPEN_BRACKET datatype CLOSE_BRACKET ASSIGN OPEN_BRACKET CLOSE_BRACKET{
+        
+        $instr = instructions.NewVector($ID.text,$datatype.td,nil)
+}
+;
+
+array_exp returns[[]interface{} p]
+: expression COMMA array_exp{
+        $p = append($array_exp.p, $expression.p)
+}
+| expression{
+        $p = []interface{}{$expression.p}
+        
+}
+;
+
+function_bl returns[abstract.Instruction instr]
+: FUNC ID OPEN_PARENTHESIS CLOSE_PARENTHESIS ARROW datatype OPEN_kEY block CLOSE_kEY{
+        $instr = instructions.NewDeclareFunction($ID.text,$datatype.td,[]interface{}{},$block.blk)
+}
+| FUNC ID OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_kEY block CLOSE_kEY{
+        $instr = instructions.NewDeclareFunction($ID.text,symbol.NIL,[]interface{}{},$block.blk)
+}
+| FUNC ID OPEN_PARENTHESIS params CLOSE_PARENTHESIS ARROW datatype OPEN_kEY block CLOSE_kEY{
+        $instr = instructions.NewDeclareFunction($ID.text,$datatype.td,$params.p,$block.blk)
+}
+;
+
+params returns[[]interface{} p]
+: ID COLON datatype COMMA params{
+        $p = append($params.p,instructions.NewDeclareWithoutValue($ID.text,$datatype.td,expressions.NewNative(nil,symbol.NIL)))
+}| ID COLON datatype{
+        $p = []interface{}{instructions.NewDeclareWithoutValue($ID.text,$datatype.td,expressions.NewNative(nil,symbol.NIL))}
+}
+;
+
+call_function returns[abstract.Instruction instr]
+: ID OPEN_PARENTHESIS CLOSE_PARENTHESIS{
+        $instr = instructions.NewCallFunction($ID.text,[]interface{}{})
+}
+| ID OPEN_PARENTHESIS list_exp CLOSE_PARENTHESIS{
+        $instr = instructions.NewCallFunction($ID.text,$list_exp.p)
+}
+;
+
+list_exp returns[[]interface{} p]
+: expression COMMA list_exp{
+        $p = append($list_exp.p,$expression.p)
+}
+| expression{
+        $p = []interface{}{$expression.p}
+}
+;
+
+call_function_exp returns[abstract.Expression p]
+: call_function{
+        $p = expressions.NewCallFunctionExp($call_function.instr)
+}
+;
+
 expression returns [abstract.Expression p]
         :left=expression oper=(MULTIPLICATION|DIVISION) right=expression{
                 $p = expressions.NewArithmeticOperations($left.p,$right.p,$oper.text)
@@ -156,6 +238,9 @@ expression returns [abstract.Expression p]
                 $p = expressions.NewLogicOperations(nil,$expression.p,$oper.text)
         }
         | OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
+        | call_function_exp{
+                $p = $call_function_exp.p
+        }
         | NUMBER{
                 value,err := strconv.Atoi($NUMBER.text)
                 if err != nil{
@@ -198,6 +283,7 @@ expression returns [abstract.Expression p]
         | NIL{
                 $p = expressions.NewNative(nil,symbol.NIL)
         }
+        
 ;
 
 datatype returns [symbol.TypeData td]
@@ -207,13 +293,13 @@ datatype returns [symbol.TypeData td]
         | FLOAT{
                 $td = symbol.FLOAT
         }
-        | STRING_LITERAL{
+        | STRING{
                 $td = symbol.STRING
         }
         | BOOL{
                 $td = symbol.BOOL
         }
-        | CHARACTER_LITERAL{
+        | CHARACTER{
                 $td = symbol.CHAR
         }
 ;

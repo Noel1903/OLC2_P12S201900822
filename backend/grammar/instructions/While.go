@@ -34,7 +34,14 @@ func (w *While) Execute(table Enviorement.SymbolTable) interface{} {
 			if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
 				if result.(Enviorement.ReturnSymbol).Value == "break" {
 					instruc = "break"
+
 					break
+				} else if result.(Enviorement.ReturnSymbol).Value == nil {
+					return nil
+				} else if result.(Enviorement.ReturnSymbol).Value == "continue" {
+					break
+				} else if result.(Enviorement.ReturnSymbol).Value != nil {
+					return result.(Enviorement.ReturnSymbol)
 				}
 			}
 		}

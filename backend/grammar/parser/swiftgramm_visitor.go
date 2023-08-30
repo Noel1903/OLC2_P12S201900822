@@ -30,6 +30,9 @@ type SwiftgrammVisitor interface {
 	// Visit a parse tree produced by SwiftgrammParser#return_bl.
 	VisitReturn_bl(ctx *Return_blContext) interface{}
 
+	// Visit a parse tree produced by SwiftgrammParser#continue_bl.
+	VisitContinue_bl(ctx *Continue_blContext) interface{}
+
 	// Visit a parse tree produced by SwiftgrammParser#declare_let.
 	VisitDeclare_let(ctx *Declare_letContext) interface{}
 
@@ -50,6 +53,30 @@ type SwiftgrammVisitor interface {
 
 	// Visit a parse tree produced by SwiftgrammParser#for_bl.
 	VisitFor_bl(ctx *For_blContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#guard_bl.
+	VisitGuard_bl(ctx *Guard_blContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#vector_bl.
+	VisitVector_bl(ctx *Vector_blContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#array_exp.
+	VisitArray_exp(ctx *Array_expContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#function_bl.
+	VisitFunction_bl(ctx *Function_blContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#params.
+	VisitParams(ctx *ParamsContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#call_function.
+	VisitCall_function(ctx *Call_functionContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#list_exp.
+	VisitList_exp(ctx *List_expContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#call_function_exp.
+	VisitCall_function_exp(ctx *Call_function_expContext) interface{}
 
 	// Visit a parse tree produced by SwiftgrammParser#expression.
 	VisitExpression(ctx *ExpressionContext) interface{}

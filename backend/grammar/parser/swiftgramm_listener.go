@@ -28,6 +28,9 @@ type SwiftgrammListener interface {
 	// EnterReturn_bl is called when entering the return_bl production.
 	EnterReturn_bl(c *Return_blContext)
 
+	// EnterContinue_bl is called when entering the continue_bl production.
+	EnterContinue_bl(c *Continue_blContext)
+
 	// EnterDeclare_let is called when entering the declare_let production.
 	EnterDeclare_let(c *Declare_letContext)
 
@@ -48,6 +51,30 @@ type SwiftgrammListener interface {
 
 	// EnterFor_bl is called when entering the for_bl production.
 	EnterFor_bl(c *For_blContext)
+
+	// EnterGuard_bl is called when entering the guard_bl production.
+	EnterGuard_bl(c *Guard_blContext)
+
+	// EnterVector_bl is called when entering the vector_bl production.
+	EnterVector_bl(c *Vector_blContext)
+
+	// EnterArray_exp is called when entering the array_exp production.
+	EnterArray_exp(c *Array_expContext)
+
+	// EnterFunction_bl is called when entering the function_bl production.
+	EnterFunction_bl(c *Function_blContext)
+
+	// EnterParams is called when entering the params production.
+	EnterParams(c *ParamsContext)
+
+	// EnterCall_function is called when entering the call_function production.
+	EnterCall_function(c *Call_functionContext)
+
+	// EnterList_exp is called when entering the list_exp production.
+	EnterList_exp(c *List_expContext)
+
+	// EnterCall_function_exp is called when entering the call_function_exp production.
+	EnterCall_function_exp(c *Call_function_expContext)
 
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
@@ -76,6 +103,9 @@ type SwiftgrammListener interface {
 	// ExitReturn_bl is called when exiting the return_bl production.
 	ExitReturn_bl(c *Return_blContext)
 
+	// ExitContinue_bl is called when exiting the continue_bl production.
+	ExitContinue_bl(c *Continue_blContext)
+
 	// ExitDeclare_let is called when exiting the declare_let production.
 	ExitDeclare_let(c *Declare_letContext)
 
@@ -96,6 +126,30 @@ type SwiftgrammListener interface {
 
 	// ExitFor_bl is called when exiting the for_bl production.
 	ExitFor_bl(c *For_blContext)
+
+	// ExitGuard_bl is called when exiting the guard_bl production.
+	ExitGuard_bl(c *Guard_blContext)
+
+	// ExitVector_bl is called when exiting the vector_bl production.
+	ExitVector_bl(c *Vector_blContext)
+
+	// ExitArray_exp is called when exiting the array_exp production.
+	ExitArray_exp(c *Array_expContext)
+
+	// ExitFunction_bl is called when exiting the function_bl production.
+	ExitFunction_bl(c *Function_blContext)
+
+	// ExitParams is called when exiting the params production.
+	ExitParams(c *ParamsContext)
+
+	// ExitCall_function is called when exiting the call_function production.
+	ExitCall_function(c *Call_functionContext)
+
+	// ExitList_exp is called when exiting the list_exp production.
+	ExitList_exp(c *List_expContext)
+
+	// ExitCall_function_exp is called when exiting the call_function_exp production.
+	ExitCall_function_exp(c *Call_function_expContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)
