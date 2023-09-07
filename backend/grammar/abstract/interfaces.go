@@ -10,9 +10,9 @@ type abstract struct {
 }
 
 type Expression interface {
-	GetValue(env table.SymbolTable) table.ReturnSymbol
+	GetValue(env table.SymbolTable, ast *table.AST) table.ReturnSymbol
 }
 
 type Instruction interface {
-	GetInstruction(env table.SymbolTable) interface{}
+	Execute(env table.SymbolTable, ast *table.AST) interface{}
 }
