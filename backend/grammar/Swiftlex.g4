@@ -34,14 +34,24 @@ STRUCT: 'struct';
 MUTATING: 'mutating';
 SELF: 'self';
 INOUT: 'inout';
+APPEND: 'append';
+REMOVELAST: 'removeLast';
+REMOVE : 'remove';
+AT: 'at';
+ISEMPTY: 'IsEmpty';
+COUNT: 'count';
 
 //Regex Primitives
-NUMBER : [0-9]+('.'[0-9]+)?;
-STRING_LITERAL : '"' (~["])* '"';
+NUMBER : [0-9]+;
+FLOATT: [0-9]+('.'[0-9]+)?;
 ID : ([a-zA-Z_])[a-zA-Z0-9_]*;
-CHARACTER_LITERAL : '"' (~[']) '"';
+CHARACTER_LITERAL : '"' (~["]) '"';
+STRING_LITERAL : '"' (~["])* '"';
 
 //Symbols
+INCREMENT : '+=';
+DECREMENT : '-=';
+RANGE : '...';
 SUMMATION : '+';
 SUBTRACTION : '-';
 MULTIPLICATION : '*';
@@ -66,6 +76,11 @@ OPEN_PARENTHESIS : '(';
 CLOSE_PARENTHESIS : ')';
 OPEN_kEY : '{';
 CLOSE_kEY : '}';
+OPEN_BRACKET : '[';
+CLOSE_BRACKET : ']';
+ARROW : '->';
+UNDERSCORE : '_';
+
 
 
 ///Ignore 
@@ -75,6 +90,6 @@ LINE_COMMENT : '//' ~[\r\n]* -> skip;
 
 fragment
 ESC_SEQ
-    :   '\\' ('\\'|'@'|'['|']'|'.'|'#'|'+'|'-'|'*'|'?'|'('|')') // Escape sequence
+    :   '\\' ('\\'|'@'|'['|']'|'.'|'#'|'+'|'-'|'!'|':'|' ') // Escape sequence
     ;
 
