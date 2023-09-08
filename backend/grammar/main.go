@@ -46,6 +46,7 @@ func Interpreter(c *fiber.Ctx) error {
 	p.BuildParseTrees = true
 	var response = Resp{}
 	tree := p.S()
+
 	//fmt.Println(tree.ToStringTree([]string{}, p))
 	var listener *TreeShapeListener = NewTreeShapeListener()
 	antlr.ParseTreeWalkerDefault.Walk(listener, tree)
@@ -115,7 +116,7 @@ func createSymbolTable(symboltable string) {
 	header += symboltable
 	header += "</TABLE>>];\n}"
 
-	dotFile := "E:\\USAC2023\\SegundoSemestre\\Compiladores2\\OLC2_P12S201900822\\reports\\graphTable.dot"
+	dotFile := "E:\\USAC2023\\SegundoSemestre\\Compiladores2\\P1\\OLC2_P12S201900822\\reports\\graphTable.dot"
 
 	// Escribir el contenido en el archivo .dot
 	err := ioutil.WriteFile(dotFile, []byte(header), 0644)
@@ -125,7 +126,7 @@ func createSymbolTable(symboltable string) {
 	}
 
 	// Ruta del archivo de salida .jpg
-	outFile := "E:\\USAC2023\\SegundoSemestre\\Compiladores2\\OLC2_P12S201900822\\reports\\graphTable.jpg"
+	outFile := "E:\\USAC2023\\SegundoSemestre\\Compiladores2\\P1\\OLC2_P12S201900822\\reports\\graphTable.jpg"
 
 	// Ejecutar el comando "dot" para convertir el archivo .dot en .jpg
 	cmd := exec.Command("dot", "-Tjpg", dotFile, "-o", outFile)
@@ -149,7 +150,7 @@ func createErrorTable(symboltable string) {
 	header += symboltable
 	header += "</TABLE>>];\n}"
 
-	dotFile := "E:\\USAC2023\\SegundoSemestre\\Compiladores2\\OLC2_P12S201900822\\reports\\graphErr.dot"
+	dotFile := "E:\\USAC2023\\SegundoSemestre\\Compiladores2\\P1\\OLC2_P12S201900822\\reports\\graphErr.dot"
 
 	// Escribir el contenido en el archivo .dot
 	err := ioutil.WriteFile(dotFile, []byte(header), 0644)
@@ -159,7 +160,7 @@ func createErrorTable(symboltable string) {
 	}
 
 	// Ruta del archivo de salida .jpg
-	outFile := "E:\\USAC2023\\SegundoSemestre\\Compiladores2\\OLC2_P12S201900822\\reports\\graphErr.jpg"
+	outFile := "E:\\USAC2023\\SegundoSemestre\\Compiladores2\\P1\\OLC2_P12S201900822\\reports\\graphErr.jpg"
 
 	// Ejecutar el comando "dot" para convertir el archivo .dot en .jpg
 	cmd := exec.Command("dot", "-Tjpg", dotFile, "-o", outFile)
