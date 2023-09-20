@@ -1,0 +1,9 @@
+
+digraph G{
+fontname="Helvetica,Arial,sans-serif";
+node [fontname="Helvetica,Arial,sans-serif"];
+a0 [shape=none label=<
+<TABLE border="1" cellspacing="0" cellpadding="10">
+<tr><td>Descripcion</td><td>Ambito</td><td>Linea</td><td>Columna</td></tr>
+<tr><td>La variable i no existe</td><td>global</td><td>1</td><td>6</td></tr></TABLE>>];
+}
