@@ -69,7 +69,7 @@ func (f *DeclareFunction) Execute(table Enviorement.SymbolTable, ast *Envioremen
 		Type:  f.Type,
 		Value: f,
 	}
-	table.SetVariable(f.Id, function, true, f.Line, f.Column)
+	table.SetVariable(f.Id, function, true, f.Line, f.Column, false)
 	ast.UpdateSymbolTable("<tr><td>" + f.Id + "</td><td>Funcion</td><td>" + strconv.Itoa(int(f.Type)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(f.Line) + "</td><td>" + strconv.Itoa(f.Column) + "</td></tr>")
 	return nil
 }

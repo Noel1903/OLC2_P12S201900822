@@ -6,30 +6,49 @@ type SymbolTable struct {
 	name          string
 	previousTable *SymbolTable
 	currentTable  map[string]Symbol
+	Position      int
 }
+
+var Position int = 0
 
 func (t *SymbolTable) GetName() string {
 	return t.name
 }
 
+func (t *SymbolTable) GetSize() int {
+	return Position
+}
+
 func NewEnviorement(name string, previous *SymbolTable) SymbolTable {
+	Position = 0
+	if previous != nil {
+		Position = previous.Position
+	}
 	env := SymbolTable{
 		name:          name,
 		previousTable: previous,
 		currentTable:  make(map[string]Symbol),
+		Position:      Position,
 	}
 	return env
 }
 
-func (table *SymbolTable) SetVariable(id string, value ReturnSymbol, declare bool, line int, column int) {
+func (table *SymbolTable) SetVariable(id string, value ReturnSymbol, declare bool, line int, column int, InHeap bool) Symbol {
 	if declare {
+
 		valueSymbol := Symbol{
-			Value:  value,
-			Type:   MUTABLE,
-			Line:   line,
-			Column: column,
+			Value:    value,
+			Type:     MUTABLE,
+			Line:     line,
+			Column:   column,
+			Position: Position,
+			IsGlobal: table.previousTable == nil,
+			InHeap:   InHeap,
 		}
+		valueSymbol.SetPos(Position)
 		table.currentTable[id] = valueSymbol
+		Position += 1
+
 	} else {
 		valueSymbol := Symbol{
 			Value:  value,
@@ -39,7 +58,7 @@ func (table *SymbolTable) SetVariable(id string, value ReturnSymbol, declare boo
 		}
 		table.currentTable[id] = valueSymbol
 	}
-
+	return table.currentTable[id]
 }
 
 func (table *SymbolTable) GetVariable(id string) ReturnSymbol {
@@ -51,6 +70,19 @@ func (table *SymbolTable) GetVariable(id string) ReturnSymbol {
 			return table.previousTable.GetVariable(id)
 		} else {
 			return ReturnSymbol{Type: UNDEFINED, Value: nil}
+		}
+	}
+}
+
+func (table *SymbolTable) GetVar(id string) Symbol {
+	variable := table.currentTable[id]
+	if variable.Value.Value != nil {
+		return variable
+	} else {
+		if table.previousTable != nil {
+			return table.previousTable.GetVar(id)
+		} else {
+			return Symbol{Type: 0, Value: ReturnSymbol{Type: UNDEFINED, Value: nil}}
 		}
 	}
 }

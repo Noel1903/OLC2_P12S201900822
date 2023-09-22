@@ -40,7 +40,7 @@ func (f *For) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) inter
 			Type:  Enviorement.INT,
 			Value: valueInitial.Value,
 		}
-		table.SetVariable(f.identifier, newVariable, true, f.Line, f.Column)
+		table.SetVariable(f.identifier, newVariable, true, f.Line, f.Column, false)
 		fmt.Println(valueFinal)
 		if valueInitial.Type != Enviorement.INT || valueFinal.Type != Enviorement.INT {
 			err := Error.NewException("Los valores deben ser de tipo entero", table.GetName(), f.Line, f.Column)

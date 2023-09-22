@@ -43,7 +43,7 @@ func (v *Vector) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) in
 			Type:  Enviorement.ARRAY,
 			Value: vector_value,
 		}
-		table.SetVariable(v.Id, vector_result, true, v.Line, v.Column)
+		table.SetVariable(v.Id, vector_result, true, v.Line, v.Column, false)
 
 	} else {
 
@@ -62,7 +62,7 @@ func (v *Vector) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) in
 			Type:  Enviorement.ARRAY,
 			Value: vector_value,
 		}
-		table.SetVariable(v.Id, vector_result, true, v.Line, v.Column)
+		table.SetVariable(v.Id, vector_result, true, v.Line, v.Column, false)
 		ast.UpdateSymbolTable("<tr><td>" + v.Id + "</td><td>Vector</td><td>" + strconv.Itoa(int(v.Type)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(v.Line) + "</td><td>" + strconv.Itoa(v.Column) + "</td></tr>")
 
 	}

@@ -1,7 +1,9 @@
 package expressions
 
 import (
+	Generator "grammar/symbol"
 	Scoope "grammar/symbol"
+	"strconv"
 )
 
 type Native struct {
@@ -13,11 +15,59 @@ type Native struct {
 }
 
 func (n Native) GetValue(env Scoope.SymbolTable, ast *Scoope.AST) Scoope.ReturnSymbol {
+	genAuxiliar := Generator.NewGenerator()
+	generator := genAuxiliar.GetInstance()
 
-	return Scoope.ReturnSymbol{
-		Type:  n.TypeR,
-		Value: n.Value,
+	if n.TypeR == Scoope.INT {
+		return Scoope.ReturnSymbol{
+			Type:  n.TypeR,
+			Value: n.Value,
+		}
+	} else if n.TypeR == Scoope.FLOAT {
+		return Scoope.ReturnSymbol{
+			Type:  n.TypeR,
+			Value: n.Value,
+		}
+	} else if n.TypeR == Scoope.STRING {
+		temporal := generator.AddTemporal()
+		generator.AddAssign(temporal, "H")
+		for char := range n.Value.(string) {
+			generator.SetHeap("H", strconv.Itoa(int(n.Value.(string)[char])))
+			generator.NextHeap()
+		}
+		generator.SetHeap("H", "-1")
+		generator.NextHeap()
+		return Scoope.ReturnSymbol{
+			Type:  n.TypeR,
+			Value: temporal,
+		}
+
+	} else if n.TypeR == Scoope.BOOL {
+		if n.Value.(bool) {
+			return Scoope.ReturnSymbol{
+				Type:  n.TypeR,
+				Value: 1,
+			}
+		} else {
+			return Scoope.ReturnSymbol{
+				Type:  n.TypeR,
+				Value: 0,
+			}
+		}
+	} else if n.TypeR == Scoope.CHAR {
+		temporal := generator.AddTemporal()
+		generator.AddAssign(temporal, "H")
+		generator.SetHeap("H", strconv.Itoa(int(n.Value.(string)[0])))
+		generator.NextHeap()
+		generator.SetHeap("H", "-1")
+		generator.NextHeap()
+		return Scoope.ReturnSymbol{
+			Type:  n.TypeR,
+			Value: temporal,
+		}
 	}
+
+	return Scoope.ReturnSymbol{}
 }
 
 func NewNative(value interface{}, typeR Scoope.TypeData, line int, column int) Native {

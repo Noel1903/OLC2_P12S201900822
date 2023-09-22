@@ -42,7 +42,7 @@ func (l *DeclareLet) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST
 				Value: err,
 			}
 		}
-		table.SetVariable(l.identifier, value, false, l.Line, l.Column)
+		table.SetVariable(l.identifier, value, false, l.Line, l.Column, false)
 		ast.UpdateSymbolTable("<tr><td>" + l.identifier + "</td><td>Constante</td><td>" + strconv.Itoa(int(l.typeD)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(l.Line) + "</td><td>" + strconv.Itoa(l.Column) + "</td></tr>")
 	} else {
 		err := Error.NewException("Error: La variable ya existe", table.GetName(), l.Line, l.Column)

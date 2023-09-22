@@ -2,6 +2,7 @@ package instructions
 
 import (
 	abstract "grammar/abstract"
+	Generator "grammar/symbol"
 	symbol "grammar/symbol"
 
 	"strconv"
@@ -69,56 +70,81 @@ func (p Print) String(value symbol.ReturnSymbol) string {
 }
 
 func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
-
-	if len(p.Expression) == 0 {
-		ast.UpdateConsoleOut("\n")
-		return nil
-	} else if len(p.Expression) == 1 {
-		value := p.Expression[0].(abstract.Expression).GetValue(table, ast)
-
-		if value.Type == symbol.ERROR {
-			return value
-		}
-		var print string = ""
-
-		if value.Type == symbol.ARRAY {
-			print = p.StringArray(value, table, ast)
-			ast.UpdateConsoleOut(print + "\n")
-			return nil
-		} else if value.Value == nil {
-			ast.UpdateConsoleOut("nil\n")
-			return nil
-		} else {
-			print = p.String(value)
-			ast.UpdateConsoleOut(print + "\n")
-			return nil
-		}
-
-	} else if len(p.Expression) > 1 {
-		for _, expression := range p.Expression {
-			value := expression.(abstract.Expression).GetValue(table, ast)
-			var print string = ""
-			if value.Type == symbol.CHAR {
-				print = string(value.Value.(byte))
-				ast.UpdateConsoleOut(print + " ")
-
-			}
-			if value.Type == symbol.ARRAY {
-				print = p.StringArray(value, table, ast)
-				ast.UpdateConsoleOut(print + " ")
-
-			} else if value.Value == nil {
-				ast.UpdateConsoleOut("nil")
-			} else {
-				print = p.String(value)
-				ast.UpdateConsoleOut(print + " ")
-
-			}
-		}
-		ast.UpdateConsoleOut("\n")
-		return nil
-	} else if p.Expression == nil {
-		ast.UpdateConsoleOut("nil\n")
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
+	value := p.Expression[0].(abstract.Expression).GetValue(table, ast)
+	if value.Type == symbol.INT {
+		generator.AddPrint("d", strconv.Itoa(value.Value.(int)))
+	} else if value.Type == symbol.FLOAT {
+		generator.AddPrint("f", strconv.FormatFloat(value.Value.(float64), 'f', -1, 64))
+	} else if value.Type == symbol.CHAR {
+		generator.AddPrintString()
+		generator.AddEnv(strconv.Itoa(table.GetSize()))
+		generator.SetStack("P", value.Value.(string))
+		generator.AddComment("Aqui se debe llamar a la funcion printString")
+		generator.AddCall("printString")
+		generator.ReturnEnv(strconv.Itoa(table.GetSize()))
+	} else if value.Type == symbol.STRING {
+		generator.AddPrintString()
+		generator.AddEnv(strconv.Itoa(table.GetSize()))
+		generator.SetStack("P", value.Value.(string))
+		generator.AddComment("Aqui se debe llamar a la funcion printString")
+		generator.AddCall("printString")
+		generator.ReturnEnv(strconv.Itoa(table.GetSize()))
+	} else if value.Type == symbol.BOOL {
+		generator.AddPrint("d", strconv.Itoa(value.Value.(int)))
 	}
 	return nil
+	/*
+		if len(p.Expression) == 0 {
+			ast.UpdateConsoleOut("\n")
+			return nil
+		} else if len(p.Expression) == 1 {
+			value := p.Expression[0].(abstract.Expression).GetValue(table, ast)
+
+			if value.Type == symbol.ERROR {
+				return value
+			}
+			var print string = ""
+
+			if value.Type == symbol.ARRAY {
+				print = p.StringArray(value, table, ast)
+				ast.UpdateConsoleOut(print + "\n")
+				return nil
+			} else if value.Value == nil {
+				ast.UpdateConsoleOut("nil\n")
+				return nil
+			} else {
+				print = p.String(value)
+				ast.UpdateConsoleOut(print + "\n")
+				return nil
+			}
+
+		} else if len(p.Expression) > 1 {
+			for _, expression := range p.Expression {
+				value := expression.(abstract.Expression).GetValue(table, ast)
+				var print string = ""
+				if value.Type == symbol.CHAR {
+					print = string(value.Value.(byte))
+					ast.UpdateConsoleOut(print + " ")
+
+				}
+				if value.Type == symbol.ARRAY {
+					print = p.StringArray(value, table, ast)
+					ast.UpdateConsoleOut(print + " ")
+
+				} else if value.Value == nil {
+					ast.UpdateConsoleOut("nil")
+				} else {
+					print = p.String(value)
+					ast.UpdateConsoleOut(print + " ")
+
+				}
+			}
+			ast.UpdateConsoleOut("\n")
+			return nil
+		} else if p.Expression == nil {
+			ast.UpdateConsoleOut("nil\n")
+		}
+		return nil*/
 }

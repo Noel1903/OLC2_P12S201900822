@@ -74,11 +74,11 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 		//param.(DeclareVariable).Value = value.Value
 		if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
 			fmt.Println("Entra aqui de variable")
-			newEnviorement.SetVariable(param.(*DeclareVariable).Identifier, value, true, c.Line, c.Column)
+			newEnviorement.SetVariable(param.(*DeclareVariable).Identifier, value, true, c.Line, c.Column, false)
 			ast.UpdateSymbolTable("<tr><td>" + param.(*DeclareVariable).Identifier + "</td><td>Funcion</td><td>" + strconv.Itoa(int(param.(*DeclareVariable).TypeD)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(param.(*DeclareVariable).Line) + "</td><td>" + strconv.Itoa(param.(*DeclareVariable).Column) + "</td></tr>")
 		} else if reflect.TypeOf(param) == reflect.TypeOf(&Vector{}) {
 
-			newEnviorement.SetVariable(param.(*Vector).Id, value, true, c.Line, c.Column)
+			newEnviorement.SetVariable(param.(*Vector).Id, value, true, c.Line, c.Column, false)
 			ast.UpdateSymbolTable("<tr><td>" + param.(*Vector).Id + "</td><td>Funcion</td><td>" + strconv.Itoa(int(param.(*Vector).Type)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(param.(*Vector).Line) + "</td><td>" + strconv.Itoa(param.(*Vector).Column) + "</td></tr>")
 		}
 		//mi tabla actual => saludo = "hola","string","mutable"

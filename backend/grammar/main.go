@@ -6,6 +6,7 @@ import (
 	Exception "grammar/exceptions"
 	"grammar/parser"
 	"grammar/symbol"
+	Generator "grammar/symbol"
 	"reflect"
 	"strconv"
 
@@ -55,13 +56,16 @@ func Interpreter(c *fiber.Ctx) error {
 	var consoleErr = ""
 	var ast symbol.AST
 	var reportErr = ""
+	genAux := Generator.NewGenerator()
+	genAux.ClearAll()
+	generator := genAux.GetInstance()
 	ast.SetGlobalTable(table)
 	for _, instr := range Code {
 		//fmt.Println(instr)
 		result := instr.(abstract.Instruction).Execute(table, &ast)
 		if reflect.TypeOf(result) == reflect.TypeOf(symbol.ReturnSymbol{}) {
 
-			fmt.Println("SI")
+			//fmt.Println("SI")
 			if result.(symbol.ReturnSymbol).Type == symbol.ERROR {
 				err := result.(symbol.ReturnSymbol).Value.(*Exception.Exception)
 				reportErr += "<tr><td>" + err.Msg + "</td><td>" + err.Env + "</td><td>" + strconv.Itoa(err.Line) + "</td><td>" + strconv.Itoa(err.Column) + "</td></tr>"
@@ -71,8 +75,8 @@ func Interpreter(c *fiber.Ctx) error {
 		}
 
 	}
-	var consoleOut = ""
-	consoleOut = ast.GetConsoleOut()
+	//var consoleOut = ""
+	//consoleOut = ast.GetConsoleOut()
 	if consoleErr != "" {
 		createErrorTable(reportErr)
 		response = Resp{
@@ -81,14 +85,14 @@ func Interpreter(c *fiber.Ctx) error {
 			Message: "Success",
 		}
 	} else {
-		createSymbolTable(ast.GetReportSymbolTable())
+		//createSymbolTable(ast.GetReportSymbolTable())
 		response = Resp{
-			Output:  consoleOut,
+			Output:  generator.GetCode(),
 			Flag:    true,
 			Message: "Success",
 		}
 	}
-
+	generator.ClearAll()
 	return c.Status(fiber.StatusOK).JSON(response)
 }
 

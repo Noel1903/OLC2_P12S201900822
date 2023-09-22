@@ -5,6 +5,7 @@ import (
 	Errors "grammar/exceptions"
 	"grammar/symbol"
 	Enviorement "grammar/symbol"
+	Generator "grammar/symbol"
 	"strconv"
 )
 
@@ -39,6 +40,8 @@ func NewDeclareWithoutValue(identifier string, typeD Enviorement.TypeData, value
 func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) interface{} {
 	var variable symbol.ReturnSymbol
 	variable = table.GetVariableThis(d.Identifier)
+	genAuxiliar := Generator.NewGenerator()
+	generator := genAuxiliar.GetInstance()
 
 	if variable.Value == nil {
 		value := d.Value.GetValue(table, ast)
@@ -53,7 +56,23 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Envioremen
 				Value: err,
 			}
 		}
-		table.SetVariable(d.Identifier, value, true, d.Line, d.Column)
+		result := table.SetVariable(d.Identifier, value, true, d.Line, d.Column, false)
+		tempPos := result.GetPos()
+		if !result.GetIsGlobal() {
+			tempPos := generator.AddTemporal()
+			generator.AddExpression(tempPos, "P", strconv.Itoa(result.GetPos()), "+")
+		}
+		if value.Type == symbol.INT {
+			generator.SetStack(strconv.Itoa(tempPos), strconv.Itoa(value.GetValue().(int)))
+		} else if value.Type == symbol.FLOAT {
+			generator.SetStack(strconv.Itoa(tempPos), strconv.FormatFloat(value.GetValue().(float64), 'f', -1, 64))
+		} else if value.Type == symbol.STRING {
+			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
+		} else if value.Type == symbol.BOOL {
+			generator.SetStack(strconv.Itoa(tempPos), strconv.Itoa(value.GetValue().(int)))
+		} else if value.Type == symbol.CHAR {
+			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
+		}
 		ast.UpdateSymbolTable("<tr><td>" + d.Identifier + "</td><td>Variable</td><td>" + strconv.Itoa(int(d.TypeD)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(d.Line) + "</td><td>" + strconv.Itoa(d.Column) + "</td></tr>")
 	} else {
 		err := Errors.NewException("La variable ya ha sido declarada", table.GetName(), d.Line, d.Column)
