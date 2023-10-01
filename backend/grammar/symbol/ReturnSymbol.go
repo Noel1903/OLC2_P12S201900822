@@ -34,6 +34,10 @@ func (this *ReturnSymbol) SetValue(value interface{}) {
 	this.Value = value
 }
 
+func (this *ReturnSymbol) SetType(Type TypeData) {
+	this.Type = Type
+}
+
 func (this *ReturnSymbol) GetLabelTrue() string {
 	return this.LabelTrue
 }

@@ -4,6 +4,7 @@ import (
 	Abstract "grammar/abstract"
 	Errors "grammar/exceptions"
 	Enviorement "grammar/symbol"
+	Generator "grammar/symbol"
 )
 
 type LogicOperations struct {
@@ -26,11 +27,26 @@ func NewLogicOperations(left Abstract.Expression, right Abstract.Expression, op 
 
 func And(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
+
 	if typeleft == Enviorement.BOOL && typeright == Enviorement.BOOL {
-		operation := left.(bool) && right.(bool)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+
+		generator.AddIf(left.(string), right.(string), "&&", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else {
 		result = Enviorement.ReturnSymbol{
@@ -43,11 +59,25 @@ func And(left interface{}, right interface{}, typeleft Enviorement.TypeData, typ
 
 func Or(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.BOOL && typeright == Enviorement.BOOL {
-		operation := left.(bool) || right.(bool)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+
+		generator.AddIf(left.(string), right.(string), "||", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else {
 		result = Enviorement.ReturnSymbol{
@@ -60,11 +90,25 @@ func Or(left interface{}, right interface{}, typeleft Enviorement.TypeData, type
 
 func Not(right interface{}, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
+
 	if typeright == Enviorement.BOOL {
-		operation := !right.(bool)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(right.(string), "1", "==", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "0")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "1")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else {
 		result = Enviorement.ReturnSymbol{

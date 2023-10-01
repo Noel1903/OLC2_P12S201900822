@@ -9,26 +9,34 @@ type SymbolTable struct {
 	Position      int
 }
 
-var Position int = 0
-
 func (t *SymbolTable) GetName() string {
 	return t.name
 }
 
 func (t *SymbolTable) GetSize() int {
-	return Position
+
+	if t.previousTable != nil {
+		return t.previousTable.GetSize()
+	}
+	return t.Position
+}
+
+func (t *SymbolTable) SetSize(size int) {
+	t.Position = size + 1
 }
 
 func NewEnviorement(name string, previous *SymbolTable) SymbolTable {
-	Position = 0
+	position := 0
+
 	if previous != nil {
-		Position = previous.Position
+		position = previous.GetSize()
 	}
+
 	env := SymbolTable{
 		name:          name,
 		previousTable: previous,
 		currentTable:  make(map[string]Symbol),
-		Position:      Position,
+		Position:      position,
 	}
 	return env
 }
@@ -41,13 +49,13 @@ func (table *SymbolTable) SetVariable(id string, value ReturnSymbol, declare boo
 			Type:     MUTABLE,
 			Line:     line,
 			Column:   column,
-			Position: Position,
+			Position: table.GetSize(),
 			IsGlobal: table.previousTable == nil,
 			InHeap:   InHeap,
 		}
-		valueSymbol.SetPos(Position)
+		valueSymbol.SetPos(table.GetSize())
 		table.currentTable[id] = valueSymbol
-		Position += 1
+		table.SetSize(table.GetSize())
 
 	} else {
 		valueSymbol := Symbol{

@@ -63,13 +63,13 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Envioremen
 			generator.AddExpression(tempPos, "P", strconv.Itoa(result.GetPos()), "+")
 		}
 		if value.Type == symbol.INT {
-			generator.SetStack(strconv.Itoa(tempPos), strconv.Itoa(value.GetValue().(int)))
+			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
 		} else if value.Type == symbol.FLOAT {
-			generator.SetStack(strconv.Itoa(tempPos), strconv.FormatFloat(value.GetValue().(float64), 'f', -1, 64))
+			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
 		} else if value.Type == symbol.STRING {
 			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
 		} else if value.Type == symbol.BOOL {
-			generator.SetStack(strconv.Itoa(tempPos), strconv.Itoa(value.GetValue().(int)))
+			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
 		} else if value.Type == symbol.CHAR {
 			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
 		}

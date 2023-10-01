@@ -19,14 +19,16 @@ func (n Native) GetValue(env Scoope.SymbolTable, ast *Scoope.AST) Scoope.ReturnS
 	generator := genAuxiliar.GetInstance()
 
 	if n.TypeR == Scoope.INT {
+		valueString := strconv.Itoa(n.Value.(int))
 		return Scoope.ReturnSymbol{
 			Type:  n.TypeR,
-			Value: n.Value,
+			Value: valueString,
 		}
 	} else if n.TypeR == Scoope.FLOAT {
+		valueString := strconv.FormatFloat(n.Value.(float64), 'f', -1, 64)
 		return Scoope.ReturnSymbol{
 			Type:  n.TypeR,
-			Value: n.Value,
+			Value: valueString,
 		}
 	} else if n.TypeR == Scoope.STRING {
 		temporal := generator.AddTemporal()
@@ -46,12 +48,12 @@ func (n Native) GetValue(env Scoope.SymbolTable, ast *Scoope.AST) Scoope.ReturnS
 		if n.Value.(bool) {
 			return Scoope.ReturnSymbol{
 				Type:  n.TypeR,
-				Value: 1,
+				Value: "1",
 			}
 		} else {
 			return Scoope.ReturnSymbol{
 				Type:  n.TypeR,
-				Value: 0,
+				Value: "0",
 			}
 		}
 	} else if n.TypeR == Scoope.CHAR {

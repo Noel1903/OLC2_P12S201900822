@@ -4,6 +4,7 @@ import (
 	Abstract "grammar/abstract"
 	Errors "grammar/exceptions"
 	Enviorement "grammar/symbol"
+	Generator "grammar/symbol"
 )
 
 type ArithmeticOperations struct {
@@ -27,29 +28,39 @@ func NewArithmeticOperations(left Abstract.Expression, right Abstract.Expression
 
 func Addition(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) + right.(int)
+		//operation := left.(int) + right.(int)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "+", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) + right.(float64)
+		//operation := float64(left.(int)) + right.(float64)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "+", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) + float64(right.(int))
+		//operation := left.(float64) + float64(right.(int))
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "+", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) + right.(float64)
+		//operation := left.(float64) + right.(float64)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "+", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.STRING && typeright == Enviorement.STRING {
 		operation := left.(string) + right.(string)
@@ -76,29 +87,40 @@ func Addition(left interface{}, right interface{}, typeleft Enviorement.TypeData
 
 func Subtraction(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) - right.(int)
+		//operation := left.(int) - right.(int)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "-", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) - right.(float64)
+		//operation := float64(left.(int)) - right.(float64)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "-", temporal)
 		result = Enviorement.ReturnSymbol{
-			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Type:  Enviorement.INT,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) - float64(right.(int))
+		//operation := left.(float64) - float64(right.(int))
+
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "-", temporal)
 		result = Enviorement.ReturnSymbol{
-			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Type:  Enviorement.INT,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) - right.(float64)
+		//operation := left.(float64) - right.(float64)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "-", temporal)
 		result = Enviorement.ReturnSymbol{
-			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Type:  Enviorement.INT,
+			Value: temporal,
 		}
 	} else {
 
@@ -114,29 +136,39 @@ func Subtraction(left interface{}, right interface{}, typeleft Enviorement.TypeD
 
 func Multiplication(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) * right.(int)
+		//operation := left.(int) * right.(int)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "*", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) * right.(float64)
+		//operation := float64(left.(int)) * right.(float64)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "*", temporal)
 		result = Enviorement.ReturnSymbol{
-			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Type:  Enviorement.INT,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) * float64(right.(int))
+		//operation := left.(float64) * float64(right.(int))
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "*", temporal)
 		result = Enviorement.ReturnSymbol{
-			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Type:  Enviorement.INT,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) * right.(float64)
+		//operation := left.(float64) * right.(float64)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "*", temporal)
 		result = Enviorement.ReturnSymbol{
-			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Type:  Enviorement.INT,
+			Value: temporal,
 		}
 	} else {
 
@@ -152,29 +184,39 @@ func Multiplication(left interface{}, right interface{}, typeleft Enviorement.Ty
 
 func Division(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) / right.(int)
+		//operation := left.(int) / right.(int)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "/", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) / right.(float64)
+		//operation := float64(left.(int)) / right.(float64)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "/", temporal)
 		result = Enviorement.ReturnSymbol{
-			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Type:  Enviorement.INT,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) / float64(right.(int))
+		//operation := left.(float64) / float64(right.(int))
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "/", temporal)
 		result = Enviorement.ReturnSymbol{
-			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Type:  Enviorement.INT,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) / right.(float64)
+		//operation := left.(float64) / right.(float64)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "/", temporal)
 		result = Enviorement.ReturnSymbol{
-			Type:  Enviorement.FLOAT,
-			Value: operation,
+			Type:  Enviorement.INT,
+			Value: temporal,
 		}
 	} else {
 
@@ -190,11 +232,15 @@ func Division(left interface{}, right interface{}, typeleft Enviorement.TypeData
 
 func Module(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) % right.(int)
+		//operation := left.(int) % right.(int)
+		temporal := generator.AddTemporal()
+		generator.AddExpression(left.(string), right.(string), "%", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
-			Value: operation,
+			Value: temporal,
 		}
 	} else {
 

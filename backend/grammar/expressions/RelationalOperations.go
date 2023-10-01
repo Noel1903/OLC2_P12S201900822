@@ -4,6 +4,7 @@ import (
 	Abstract "grammar/abstract"
 	Errors "grammar/exceptions"
 	Enviorement "grammar/symbol"
+	Generator "grammar/symbol"
 )
 
 type RelationalOperations struct {
@@ -26,29 +27,80 @@ func NewRelationalOperations(left Abstract.Expression, right Abstract.Expression
 
 func LessThan(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) < right.(int)
+		//operation := left.(int) < right.(int)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+
+		generator.AddIf(left.(string), right.(string), "<", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) < right.(float64)
+		//operation := float64(left.(int)) < right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "<", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) < float64(right.(int))
+		//operation := left.(float64) < float64(right.(int))
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "<", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) < right.(float64)
+		//operation := left.(float64) < right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "<", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.STRING && typeright == Enviorement.STRING {
 		operation := left.(string) < right.(string)
@@ -74,29 +126,76 @@ func LessThan(left interface{}, right interface{}, typeleft Enviorement.TypeData
 
 func GreaterThan(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
+
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) > right.(int)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), ">", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) > right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), ">", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) > float64(right.(int))
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), ">", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) > right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), ">", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.STRING && typeright == Enviorement.STRING {
 		operation := left.(string) > right.(string)
@@ -122,29 +221,75 @@ func GreaterThan(left interface{}, right interface{}, typeleft Enviorement.TypeD
 
 func LessThanEquals(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) <= right.(int)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "<=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) <= right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "<=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) <= float64(right.(int))
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "<=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) <= right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "<=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.STRING && typeright == Enviorement.STRING {
 		operation := left.(string) <= right.(string)
@@ -169,29 +314,75 @@ func LessThanEquals(left interface{}, right interface{}, typeleft Enviorement.Ty
 
 func GreaterThanEquals(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) >= right.(int)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), ">=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) >= right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), ">=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) >= float64(right.(int))
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), ">=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) >= right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), ">=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.STRING && typeright == Enviorement.STRING {
 		operation := left.(string) >= right.(string)
@@ -216,29 +407,75 @@ func GreaterThanEquals(left interface{}, right interface{}, typeleft Enviorement
 
 func Equals(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) == right.(int)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "==", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) == right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "==", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) == float64(right.(int))
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "==", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) == right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "==", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.STRING && typeright == Enviorement.STRING {
 		operation := left.(string) == right.(string)
@@ -253,10 +490,21 @@ func Equals(left interface{}, right interface{}, typeleft Enviorement.TypeData, 
 			Value: operation,
 		}
 	} else if typeleft == Enviorement.BOOL && typeright == Enviorement.BOOL {
-		operation := left.(bool) == right.(bool)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "==", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else {
 		result = Enviorement.ReturnSymbol{
@@ -271,29 +519,75 @@ func Equals(left interface{}, right interface{}, typeleft Enviorement.TypeData, 
 
 func NotEquals(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
-		operation := left.(int) != right.(int)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "!=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
-		operation := float64(left.(int)) != right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "!=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
-		operation := left.(float64) != float64(right.(int))
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "!=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.FLOAT {
-		operation := left.(float64) != right.(float64)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "!=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.STRING && typeright == Enviorement.STRING {
 		operation := left.(string) != right.(string)
@@ -308,10 +602,21 @@ func NotEquals(left interface{}, right interface{}, typeleft Enviorement.TypeDat
 			Value: operation,
 		}
 	} else if typeleft == Enviorement.BOOL && typeright == Enviorement.BOOL {
-		operation := left.(bool) != right.(bool)
+		temporal := generator.AddTemporal()
+		labeltrue := generator.AddLabel()
+		labelfalse := generator.AddLabel()
+		labelJump := generator.AddLabel()
+		generator.AddIf(left.(string), right.(string), "!=", labeltrue)
+		generator.AddGoto(labelfalse)
+		generator.PutLabel(labeltrue)
+		generator.AddAssign(temporal, "1")
+		generator.AddGoto(labelJump)
+		generator.PutLabel(labelfalse)
+		generator.AddAssign(temporal, "0")
+		generator.PutLabel(labelJump)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.BOOL,
-			Value: operation,
+			Value: temporal,
 		}
 	} else {
 		result = Enviorement.ReturnSymbol{
@@ -349,7 +654,7 @@ func (r RelationalOperations) GetValue(table Enviorement.SymbolTable, ast *Envio
 	}
 
 	if result.Type == Enviorement.ERROR {
-		result.Value = Errors.NewException("Error en la operacion aritmetica", table.GetName(), r.Line, r.Column)
+		result.Value = Errors.NewException("Error en la operacion relacional", table.GetName(), r.Line, r.Column)
 	}
 	return result
 
