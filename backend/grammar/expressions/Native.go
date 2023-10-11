@@ -45,17 +45,22 @@ func (n Native) GetValue(env Scoope.SymbolTable, ast *Scoope.AST) Scoope.ReturnS
 		}
 
 	} else if n.TypeR == Scoope.BOOL {
+		labelTrue := generator.AddLabel()
+		labelFalse := generator.AddLabel()
+
 		if n.Value.(bool) {
-			return Scoope.ReturnSymbol{
-				Type:  n.TypeR,
-				Value: "1",
-			}
+			generator.AddGoto(labelTrue)
 		} else {
-			return Scoope.ReturnSymbol{
-				Type:  n.TypeR,
-				Value: "0",
-			}
+			generator.AddGoto(labelFalse)
 		}
+		returnS := Scoope.ReturnSymbol{
+			Type:  n.TypeR,
+			Value: "",
+		}
+		returnS.LabelTrue = append(returnS.LabelTrue, labelTrue)
+		returnS.LabelFalse = append(returnS.LabelFalse, labelFalse)
+		return returnS
+
 	} else if n.TypeR == Scoope.CHAR {
 		temporal := generator.AddTemporal()
 		generator.AddAssign(temporal, "H")

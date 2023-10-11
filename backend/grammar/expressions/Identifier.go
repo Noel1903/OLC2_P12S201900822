@@ -27,16 +27,32 @@ func (i Identifier) GetValue(table symbol.SymbolTable, ast *symbol.AST) symbol.R
 		return symbol.ReturnSymbol{Type: symbol.ERROR, Value: newErr}
 	}
 	varTemp := table.GetVar(i.Identifier)
-	temporal := generator.AddTemporal()
-	varPosition := varTemp.GetPos()
-
-	if !varTemp.GetIsGlobal() {
-		tempPos := generator.AddTemporal()
-		generator.AddExpression("P", strconv.Itoa(varPosition), "+", tempPos)
-		generator.GetStack(strconv.Itoa(varPosition), tempPos)
+	temporal01 := generator.AddTemporal()
+	temporal02 := generator.AddTemporal()
+	if varTemp.IsGlobal {
+		generator.GetStack(strconv.Itoa(varTemp.GetPos()), temporal02)
 	} else {
-		generator.GetStack(strconv.Itoa(varPosition), temporal)
+		generator.AddExpression("P", strconv.Itoa(varTemp.GetPos()), "+", temporal01)
+		generator.GetStack(temporal01, temporal02)
+	}
+	//temporal := generator.AddTemporal()
+	//varPosition := varTemp.GetPos()
+
+	//generator.GetStack(strconv.Itoa(varPosition), temporal)
+	if variable.Type == symbol.BOOL {
+		LabelTrue := generator.AddLabel()
+		LabelFalse := generator.AddLabel()
+		generator.AddIf(temporal02, "1", "==", LabelTrue)
+		generator.AddGoto(LabelFalse)
+		result := symbol.ReturnSymbol{
+			Type:  symbol.BOOL,
+			Value: "",
+		}
+		result.LabelTrue = append(result.LabelTrue, LabelTrue)
+		result.LabelFalse = append(result.LabelFalse, LabelFalse)
+		return result
+	} else {
+		return symbol.ReturnSymbol{Type: variable.Type, Value: temporal02}
 	}
 
-	return symbol.ReturnSymbol{Type: variable.Type, Value: temporal}
 }

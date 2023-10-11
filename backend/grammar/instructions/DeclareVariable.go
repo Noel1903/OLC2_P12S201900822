@@ -6,6 +6,7 @@ import (
 	"grammar/symbol"
 	Enviorement "grammar/symbol"
 	Generator "grammar/symbol"
+	"reflect"
 	"strconv"
 )
 
@@ -60,7 +61,7 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Envioremen
 		tempPos := result.GetPos()
 		if !result.GetIsGlobal() {
 			tempPos := generator.AddTemporal()
-			generator.AddExpression(tempPos, "P", strconv.Itoa(result.GetPos()), "+")
+			generator.AddExpression("P", strconv.Itoa(result.GetPos()), "+", tempPos)
 		}
 		if value.Type == symbol.INT {
 			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
@@ -69,7 +70,26 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Envioremen
 		} else if value.Type == symbol.STRING {
 			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
 		} else if value.Type == symbol.BOOL {
-			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
+			newLabel := generator.AddLabel()
+
+			for _, labels := range value.LabelTrue {
+				if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
+					generator.PutLabel(labels.(string))
+
+				}
+			}
+			generator.SetStack(strconv.Itoa(tempPos), "1")
+			generator.AddGoto(newLabel)
+			for _, labels := range value.LabelFalse {
+				if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
+					generator.PutLabel(labels.(string))
+
+				}
+
+			}
+			generator.SetStack(strconv.Itoa(tempPos), "0")
+			generator.PutLabel(newLabel)
+
 		} else if value.Type == symbol.CHAR {
 			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
 		}

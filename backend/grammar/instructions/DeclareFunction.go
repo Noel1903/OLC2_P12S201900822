@@ -1,6 +1,7 @@
 package instructions
 
 import (
+	"fmt"
 	Abstract "grammar/abstract"
 	Error "grammar/exceptions"
 	Enviorement "grammar/symbol"
@@ -76,7 +77,7 @@ func (f *DeclareFunction) Execute(table Enviorement.SymbolTable, ast *Envioremen
 		Value: f,
 	}
 	//tableGlobal := ast.GetGlobalTable()
-	table.SetVariable(f.Id, function, true, f.Line, f.Column, false)
+	table.SetFunction(f.Id, function, true, f.Line, f.Column, false)
 
 	newEnviorement := Enviorement.NewEnviorement(f.Id, &table)
 
@@ -92,7 +93,9 @@ func (f *DeclareFunction) Execute(table Enviorement.SymbolTable, ast *Envioremen
 	for _, instr := range f.codeF {
 
 		instr.(Abstract.Instruction).Execute(newEnviorement, ast)
+
 		if reflect.TypeOf(instr) == reflect.TypeOf(Return{}) {
+			fmt.Println("Return detectado")
 			generator.AddGoto(labelExit)
 		}
 	}

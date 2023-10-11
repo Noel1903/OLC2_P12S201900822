@@ -96,9 +96,25 @@ func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
 		generator.Println()
 		generator.ReturnEnv(strconv.Itoa(table.GetSize()))
 	} else if value.Type == symbol.BOOL {
-		generator.AddPrint("d", value.Value.(string))
+		labelExit := generator.AddLabel()
+		for _, label := range value.LabelTrue {
+			generator.PutLabel(label.(string))
+		}
+		generator.AddPrint("c", "116")
+		generator.AddPrint("c", "114")
+		generator.AddPrint("c", "117")
+		generator.AddPrint("c", "101")
+		generator.AddGoto(labelExit)
+		for _, label := range value.LabelFalse {
+			generator.PutLabel(label.(string))
+		}
+		generator.AddPrint("c", "102")
+		generator.AddPrint("c", "97")
+		generator.AddPrint("c", "108")
+		generator.AddPrint("c", "115")
+		generator.AddPrint("c", "101")
+		generator.PutLabel(labelExit)
 		generator.Println()
-
 	}
 	return nil
 	/*

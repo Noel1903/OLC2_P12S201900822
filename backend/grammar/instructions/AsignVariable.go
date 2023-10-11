@@ -4,6 +4,8 @@ import (
 	Abstract "grammar/abstract"
 	Error "grammar/exceptions"
 	Enviorement "grammar/symbol"
+	Generator "grammar/symbol"
+	"strconv"
 )
 
 type AsignVariable struct {
@@ -19,12 +21,16 @@ func NewAsignVariable(Id string, Expression Abstract.Expression, line int, colum
 
 func (a AsignVariable) Execute(table Enviorement.SymbolTable, tree *Enviorement.AST) interface{} {
 	value := table.GetVariable(a.Id)
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if value.Value != nil {
 		expresion := a.Expression.GetValue(table, tree)
 		if value.Type != expresion.Type {
 			err := Error.NewException("No se puede asignar el valor", a.Id, a.Line, a.Column)
 			return Enviorement.ReturnSymbol{Type: Enviorement.ERROR, Value: err}
 		}
+		variable := table.GetVar(a.Id)
+		generator.SetStack(strconv.Itoa(variable.GetPos()), expresion.Value.(string))
 		table.UpdateVariable(a.Id, expresion)
 	}
 

@@ -25,8 +25,9 @@ func (r *Return) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) in
 	if valueReturn.Value == nil {
 		generator.AddReturn("")
 	} else {
-		generator.AddExpression("P", "1", "+", "P")
+		//generator.AddExpression("P", "1", "+", "P")
 		generator.SetStack("P", valueReturn.Value.(string))
+		generator.AddReturn("")
 	}
 	return Enviorement.ReturnSymbol{
 		Type:  valueReturn.Type,

@@ -49,8 +49,10 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 		c.ParamsIn = append(c.ParamsIn, p.Internal)
 		c.ParamsEx = append(c.ParamsEx, p.External)
 	}
-	newEnviorement := Enviorement.NewEnviorement(c.Id, &table)
+	// := Enviorement.NewEnviorement(c.Id, &table)
 	//fmt.Println(newEnviorement)
+	temp := generator.AddTemporal()
+	generator.AddExpression(temp, strconv.Itoa(table.GetSizeEnv()+1), "+", temp)
 	for index, param := range paramsList {
 		paramE := function.(*DeclareFunction).GetParamsEx()[index]
 		paramT := c.ParamsIn[index] //{"type": "native", "value": "hola"}
@@ -66,11 +68,12 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 		value := paramT.(Abstract.Expression).GetValue(table, ast)
 
 		valueParam := param.(Enviorement.Symbol)
-		position := valueParam.GetPos()
+		//position := valueParam.GetPos()
 		fmt.Println(valueParam.Value.Value, " Valor de parametro")
-		fmt.Println(value.Value, "valor a asignar")
+		//fmt.Println(value.Value, "valor a asignar")
 		//generator.AddAssign(valueParam.Value.Value.(string), value.Value.(string))
-		generator.SetStack(strconv.Itoa(position), value.Value.(string))
+		generator.SetStack(temp, value.Value.(string))
+		generator.AddExpression(temp, "1", "+", temp)
 
 		/*if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
 
@@ -93,12 +96,12 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 	}
 
 	generator.AddComment("Llamada a funcion")
-	generator.AddEnv(strconv.Itoa(newEnviorement.GetSize()))
+	generator.AddEnv(strconv.Itoa(table.GetSize()))
 	generator.AddCall(c.Id)
 	temporal01 := generator.AddTemporal()
 	generator.AddComment("Obtencion de retorno")
 	generator.GetStack("P", temporal01)
-	generator.ReturnEnv(strconv.Itoa(newEnviorement.GetSize()))
+	generator.ReturnEnv(strconv.Itoa(table.GetSize()))
 	return Enviorement.ReturnSymbol{Type: value.Type, Value: temporal01}
 
 	/**/

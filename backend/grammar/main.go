@@ -75,8 +75,10 @@ func Interpreter(c *fiber.Ctx) error {
 		}
 
 	}
+	table.SetSize(0)
 	//var consoleOut = ""
 	//consoleOut = ast.GetConsoleOut()
+
 	if consoleErr != "" {
 		createErrorTable(reportErr)
 		response = Resp{

@@ -255,24 +255,67 @@ func Module(left interface{}, right interface{}, typeleft Enviorement.TypeData, 
 
 func (a ArithmeticOperations) GetValue(table Enviorement.SymbolTable, ast *Enviorement.AST) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
-	expleft := a.left.GetValue(table, ast).Value
-	expright := a.right.GetValue(table, ast).Value
-	typeleft := a.left.GetValue(table, ast).Type
-	typeright := a.right.GetValue(table, ast).Type
 
 	a.Name = table.GetName()
 	switch a.op {
 	case "+":
-		result = Addition(expleft, expright, typeleft, typeright)
+		expleft := a.left.GetValue(table, ast)
+		expright := a.right.GetValue(table, ast)
+		typeleft := expleft.Type
+		typeright := expright.Type
+		left := expleft.Value
+		right := expright.Value
+		result = Addition(left, right, typeleft, typeright)
 	case "-":
-		result = Subtraction(expleft, expright, typeleft, typeright)
+		expleft := a.left.GetValue(table, ast)
+		expright := a.right.GetValue(table, ast)
+		typeleft := expleft.Type
+		typeright := expright.Type
+		left := expleft.Value
+		right := expright.Value
+		result = Subtraction(left, right, typeleft, typeright)
 	case "*":
-		result = Multiplication(expleft, expright, typeleft, typeright)
+		expleft := a.left.GetValue(table, ast)
+		expright := a.right.GetValue(table, ast)
+		typeleft := expleft.Type
+		typeright := expright.Type
+		left := expleft.Value
+		right := expright.Value
+		result = Multiplication(left, right, typeleft, typeright)
+		/*if reflect.TypeOf(a.right) == reflect.TypeOf(callFunctionExp{}) {
+			expright := a.right.GetValue(table, ast)
+			right := expright.Value
+			expleft := a.left.GetValue(table, ast)
+			left := expleft.Value
+			typeleft := expleft.Type
+			typeright := expright.Type
+			result = Multiplication(left, right, typeleft, typeright)
+		} else {
+			expleft := a.left.GetValue(table, ast)
+			expright := a.right.GetValue(table, ast)
+			typeleft := expleft.Type
+			typeright := expright.Type
+			left := expleft.Value
+			right := expright.Value
+			result = Multiplication(left, right, typeleft, typeright)
+		}*/
 	case "/":
-		result = Division(expleft, expright, typeleft, typeright)
+		expleft := a.left.GetValue(table, ast)
+		expright := a.right.GetValue(table, ast)
+		typeleft := expleft.Type
+		typeright := expright.Type
+		left := expleft.Value
+		right := expright.Value
+		result = Division(left, right, typeleft, typeright)
 
 	case "%":
-		result = Module(expleft, expright, typeleft, typeright)
+		expleft := a.left.GetValue(table, ast)
+		expright := a.right.GetValue(table, ast)
+		typeleft := expleft.Type
+		typeright := expright.Type
+		left := expleft.Value
+		right := expright.Value
+		result = Module(left, right, typeleft, typeright)
 
 	default:
 		err := Errors.NewException("Operador no valido", table.GetName(), a.Line, a.Column)
