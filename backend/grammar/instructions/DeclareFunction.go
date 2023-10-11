@@ -1,8 +1,12 @@
 package instructions
 
 import (
+	"fmt"
+	Abstract "grammar/abstract"
 	Error "grammar/exceptions"
 	Enviorement "grammar/symbol"
+	Generator "grammar/symbol"
+	"reflect"
 	"strconv"
 )
 
@@ -58,18 +62,46 @@ func (f *DeclareFunction) Execute(table Enviorement.SymbolTable, ast *Envioremen
 			Value: err,
 		}
 	}
+	var paramsSave []interface{}
 	for _, param := range f.Params {
 		p := param.(*paramFunction)
 		f.ParamsEx = append(f.ParamsEx, p.External)
-		f.ParamsIn = append(f.ParamsIn, p.Internal)
+		//f.ParamsIn = append(f.ParamsIn, p.Internal)
+		paramsSave = append(paramsSave, p.Internal)
 
 	}
-
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	function := Enviorement.ReturnSymbol{
 		Type:  f.Type,
 		Value: f,
 	}
-	table.SetVariable(f.Id, function, true, f.Line, f.Column, false)
+	//tableGlobal := ast.GetGlobalTable()
+	table.SetFunction(f.Id, function, true, f.Line, f.Column, false)
+
+	newEnviorement := Enviorement.NewEnviorement(f.Id, &table)
+
+	for _, param := range paramsSave {
+		temporal := generator.AddTemporal()
+		p := newEnviorement.SetVariable(param.(*DeclareVariable).Identifier, Enviorement.ReturnSymbol{Type: param.(*DeclareVariable).TypeD, Value: temporal}, true, f.Line, f.Column, false)
+		//fmt.Println("Parametro: ", p)
+		f.ParamsIn = append(f.ParamsIn, p)
+	}
+	//fmt.Println(newEnviorement)
+	generator.AddFunc(f.Id)
+	labelExit := generator.AddLabel()
+	for _, instr := range f.codeF {
+
+		instr.(Abstract.Instruction).Execute(newEnviorement, ast)
+
+		if reflect.TypeOf(instr) == reflect.TypeOf(Return{}) {
+			fmt.Println("Return detectado")
+			generator.AddGoto(labelExit)
+		}
+	}
+	generator.PutLabel(labelExit)
+	generator.EndFunc()
+
 	ast.UpdateSymbolTable("<tr><td>" + f.Id + "</td><td>Funcion</td><td>" + strconv.Itoa(int(f.Type)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(f.Line) + "</td><td>" + strconv.Itoa(f.Column) + "</td></tr>")
 	return nil
 }

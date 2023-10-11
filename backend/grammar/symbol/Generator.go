@@ -123,8 +123,30 @@ func (g *Generator) AddPrintString() {
 	g.AddExpression(temp1, "1", "+", temp1)
 	g.AddGoto(labelJump)
 	g.PutLabel(labelCompare)
+
 	g.CodeIn("return;\n}\n")
 	g.inNative = false
+}
+
+func (g *Generator) Println() {
+	g.CodeIn("printf(\"%c\",(char)10);\n")
+}
+
+// ///****************************************Sentencias de Transferencia****************************************
+func (g *Generator) AddBreak() {
+	g.CodeIn("break;\n")
+}
+
+func (g *Generator) AddContinue() {
+	g.CodeIn("continue;\n")
+}
+
+func (g *Generator) AddReturn(value string) {
+	if value != "" {
+		g.CodeIn("return " + value + ";\n")
+	} else {
+		g.CodeIn("return;\n")
+	}
 }
 
 // ****************************************Insersión de código****************************************

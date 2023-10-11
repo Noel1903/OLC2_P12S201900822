@@ -74,14 +74,17 @@ func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
 	generator := genAux.GetInstance()
 	value := p.Expression[0].(abstract.Expression).GetValue(table, ast)
 	if value.Type == symbol.INT {
-		generator.AddPrint("d", strconv.Itoa(value.Value.(int)))
+		generator.AddPrint("d", value.Value.(string))
+		generator.Println()
 	} else if value.Type == symbol.FLOAT {
-		generator.AddPrint("f", strconv.FormatFloat(value.Value.(float64), 'f', -1, 64))
+		generator.AddPrint("f", value.Value.(string))
+		generator.Println()
 	} else if value.Type == symbol.CHAR {
 		generator.AddPrintString()
 		generator.AddEnv(strconv.Itoa(table.GetSize()))
 		generator.SetStack("P", value.Value.(string))
 		generator.AddComment("Aqui se debe llamar a la funcion printString")
+		generator.Println()
 		generator.AddCall("printString")
 		generator.ReturnEnv(strconv.Itoa(table.GetSize()))
 	} else if value.Type == symbol.STRING {
@@ -90,9 +93,28 @@ func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
 		generator.SetStack("P", value.Value.(string))
 		generator.AddComment("Aqui se debe llamar a la funcion printString")
 		generator.AddCall("printString")
+		generator.Println()
 		generator.ReturnEnv(strconv.Itoa(table.GetSize()))
 	} else if value.Type == symbol.BOOL {
-		generator.AddPrint("d", strconv.Itoa(value.Value.(int)))
+		labelExit := generator.AddLabel()
+		for _, label := range value.LabelTrue {
+			generator.PutLabel(label.(string))
+		}
+		generator.AddPrint("c", "116")
+		generator.AddPrint("c", "114")
+		generator.AddPrint("c", "117")
+		generator.AddPrint("c", "101")
+		generator.AddGoto(labelExit)
+		for _, label := range value.LabelFalse {
+			generator.PutLabel(label.(string))
+		}
+		generator.AddPrint("c", "102")
+		generator.AddPrint("c", "97")
+		generator.AddPrint("c", "108")
+		generator.AddPrint("c", "115")
+		generator.AddPrint("c", "101")
+		generator.PutLabel(labelExit)
+		generator.Println()
 	}
 	return nil
 	/*

@@ -18,8 +18,8 @@ const (
 type ReturnSymbol struct {
 	Type       TypeData
 	Value      interface{}
-	LabelTrue  string
-	LabelFalse string
+	LabelTrue  []interface{}
+	LabelFalse []interface{}
 }
 
 func (this *ReturnSymbol) GetValue() interface{} {
@@ -34,10 +34,6 @@ func (this *ReturnSymbol) SetValue(value interface{}) {
 	this.Value = value
 }
 
-func (this *ReturnSymbol) GetLabelTrue() string {
-	return this.LabelTrue
-}
-
-func (this *ReturnSymbol) GetLabelFalse() string {
-	return this.LabelFalse
+func (this *ReturnSymbol) SetType(Type TypeData) {
+	this.Type = Type
 }

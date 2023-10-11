@@ -1,4 +1,4 @@
-// Generated from e:\USAC2023\SegundoSemestre\Compiladores2\OLC2_P12S201900822\backend\grammar\Swiftlex.g4 by ANTLR 4.9.2
+// Generated from e:\USAC2023\SegundoSemestre\Compiladores2\P1\OLC2_P12S201900822\backend\grammar\Swiftlex.g4 by ANTLR 4.9.2
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

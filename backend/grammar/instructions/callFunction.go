@@ -5,7 +5,7 @@ import (
 	Abstract "grammar/abstract"
 	Error "grammar/exceptions"
 	Enviorement "grammar/symbol"
-	"reflect"
+	Generator "grammar/symbol"
 	"strconv"
 )
 
@@ -29,6 +29,8 @@ func NewCallFunction(id string, execParams []interface{}, line int, column int) 
 
 func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) interface{} {
 	value := table.GetVariable(c.Id)
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
 	if value.Value == nil {
 		fmt.Println("Entra aqui de no existe")
 		err := Error.NewException("La funcion no existe", table.GetName(), c.Line, c.Column)
@@ -37,27 +39,20 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 			Value: err,
 		}
 	}
+	fmt.Println(&table, "Tabla que viene del ambito anterior")
 	function := value.Value
 	paramsList := function.(*DeclareFunction).GetParamsIn()
-	instructionsList := function.(*DeclareFunction).GetSentences()
+	//instructionsList := function.(*DeclareFunction).GetSentences()
 
 	for _, param := range c.execParams {
 		p := param.(*paramCall)
 		c.ParamsIn = append(c.ParamsIn, p.Internal)
 		c.ParamsEx = append(c.ParamsEx, p.External)
 	}
-
-	/*if len(paramsList) != len(c.ParamsIn) {
-		fmt.Println("Entra aqui de no coincide cantidad")
-		err := Error.NewException("Error: La cantidad de parametros no coincide", table.GetName(), c.Line, c.Column)
-		return Enviorement.ReturnSymbol{
-			Type:  Enviorement.ERROR,
-			Value: err,
-		}
-	}*/
-
-	newEnviorement := Enviorement.NewEnviorement(c.Id, &table)
-
+	// := Enviorement.NewEnviorement(c.Id, &table)
+	//fmt.Println(newEnviorement)
+	temp := generator.AddTemporal()
+	generator.AddExpression(temp, strconv.Itoa(table.GetSizeEnv()+1), "+", temp)
 	for index, param := range paramsList {
 		paramE := function.(*DeclareFunction).GetParamsEx()[index]
 		paramT := c.ParamsIn[index] //{"type": "native", "value": "hola"}
@@ -70,39 +65,46 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 				Value: err,
 			}
 		}
-		value := paramT.(Abstract.Expression).GetValue(table, ast) //"hola","string"
-		//param.(DeclareVariable).Value = value.Value
-		if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
-			fmt.Println("Entra aqui de variable")
-			newEnviorement.SetVariable(param.(*DeclareVariable).Identifier, value, true, c.Line, c.Column, false)
+		value := paramT.(Abstract.Expression).GetValue(table, ast)
+
+		valueParam := param.(Enviorement.Symbol)
+		//position := valueParam.GetPos()
+		fmt.Println(valueParam.Value.Value, " Valor de parametro")
+		//fmt.Println(value.Value, "valor a asignar")
+		//generator.AddAssign(valueParam.Value.Value.(string), value.Value.(string))
+		generator.SetStack(temp, value.Value.(string))
+		generator.AddExpression(temp, "1", "+", temp)
+
+		/*if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
+
+			res := newEnviorement.GetVar(param.(*DeclareVariable).Identifier)
+			fmt.Println(newEnviorement.GetVariable(param.(*DeclareVariable).Identifier))
+			position := res.GetPos()
+			generator.AddComment("Asignacion de parametro")
+			generator.AddAssign(res.Value.Value.(string), value.Value.(string))
+			generator.SetStack(strconv.Itoa(position), value.Value.(string))
+
+			table.SetVariable(param.(*DeclareVariable).Identifier, value, true, c.Line, c.Column, false)
+
 			ast.UpdateSymbolTable("<tr><td>" + param.(*DeclareVariable).Identifier + "</td><td>Funcion</td><td>" + strconv.Itoa(int(param.(*DeclareVariable).TypeD)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(param.(*DeclareVariable).Line) + "</td><td>" + strconv.Itoa(param.(*DeclareVariable).Column) + "</td></tr>")
 		} else if reflect.TypeOf(param) == reflect.TypeOf(&Vector{}) {
 
-			newEnviorement.SetVariable(param.(*Vector).Id, value, true, c.Line, c.Column, false)
+			table.SetVariable(param.(*Vector).Id, value, true, c.Line, c.Column, false)
 			ast.UpdateSymbolTable("<tr><td>" + param.(*Vector).Id + "</td><td>Funcion</td><td>" + strconv.Itoa(int(param.(*Vector).Type)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(param.(*Vector).Line) + "</td><td>" + strconv.Itoa(param.(*Vector).Column) + "</td></tr>")
-		}
-		//mi tabla actual => saludo = "hola","string","mutable"
+		}*/
 
 	}
 
-	for _, instruction := range instructionsList {
+	generator.AddComment("Llamada a funcion")
+	generator.AddEnv(strconv.Itoa(table.GetSize()))
+	generator.AddCall(c.Id)
+	temporal01 := generator.AddTemporal()
+	generator.AddComment("Obtencion de retorno")
+	generator.GetStack("P", temporal01)
+	generator.ReturnEnv(strconv.Itoa(table.GetSize()))
+	return Enviorement.ReturnSymbol{Type: value.Type, Value: temporal01}
 
-		result := instruction.(Abstract.Instruction).Execute(newEnviorement, ast)
+	/**/
 
-		if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
-			if result.(Enviorement.ReturnSymbol).Value == "break" {
-				break
-			} else if result.(Enviorement.ReturnSymbol).Value == nil {
-				//fmt.Println(result)
-				return result
-			} else if result.(Enviorement.ReturnSymbol).Value == "continue" {
-				break
-			} else if result.(Enviorement.ReturnSymbol).Value != nil {
-				return result.(Enviorement.ReturnSymbol)
-
-			}
-		}
-	}
-
-	return Enviorement.ReturnSymbol{Type: Enviorement.NIL, Value: nil}
+	//return Enviorement.ReturnSymbol{Type: Enviorement.NIL, Value: nil}
 }

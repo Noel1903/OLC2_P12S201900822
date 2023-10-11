@@ -16,14 +16,28 @@ func (t *SymbolTable) GetName() string {
 }
 
 func (t *SymbolTable) GetSize() int {
+
+	if t.previousTable != nil {
+		return t.previousTable.GetSize()
+	}
 	return Position
 }
 
+func (t *SymbolTable) GetSizeEnv() int {
+	return t.Position
+}
+
+func (t *SymbolTable) SetSize(size int) {
+	Position = size
+	t.Position = size
+}
+
 func NewEnviorement(name string, previous *SymbolTable) SymbolTable {
-	Position = 0
+
 	if previous != nil {
-		Position = previous.Position
+		Position = previous.GetSize()
 	}
+
 	env := SymbolTable{
 		name:          name,
 		previousTable: previous,
@@ -41,13 +55,40 @@ func (table *SymbolTable) SetVariable(id string, value ReturnSymbol, declare boo
 			Type:     MUTABLE,
 			Line:     line,
 			Column:   column,
-			Position: Position,
+			Position: table.GetSize(),
 			IsGlobal: table.previousTable == nil,
 			InHeap:   InHeap,
 		}
-		valueSymbol.SetPos(Position)
+		valueSymbol.SetPos(table.GetSize())
 		table.currentTable[id] = valueSymbol
-		Position += 1
+		table.SetSize(table.GetSize() + 1)
+
+	} else {
+		valueSymbol := Symbol{
+			Value:  value,
+			Type:   UNMUTABLE,
+			Line:   line,
+			Column: column,
+		}
+		table.currentTable[id] = valueSymbol
+	}
+	return table.currentTable[id]
+}
+
+func (table *SymbolTable) SetFunction(id string, value ReturnSymbol, declare bool, line int, column int, InHeap bool) Symbol {
+	if declare {
+
+		valueSymbol := Symbol{
+			Value:    value,
+			Type:     MUTABLE,
+			Line:     line,
+			Column:   column,
+			Position: 0,
+			IsGlobal: table.previousTable == nil,
+			InHeap:   InHeap,
+		}
+
+		table.currentTable[id] = valueSymbol
 
 	} else {
 		valueSymbol := Symbol{
@@ -102,8 +143,11 @@ func (table *SymbolTable) UpdateVariable(id string, value ReturnSymbol) interfac
 	if variable.Value != nil {
 		if typevar == MUTABLE {
 			newValue := Symbol{
-				Value: value,
-				Type:  MUTABLE,
+				Value:    value,
+				Type:     MUTABLE,
+				Position: table.currentTable[id].Position,
+				IsGlobal: table.currentTable[id].IsGlobal,
+				InHeap:   table.currentTable[id].InHeap,
 			}
 			table.currentTable[id] = newValue
 		} else {
