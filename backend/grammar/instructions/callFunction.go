@@ -6,6 +6,7 @@ import (
 	Error "grammar/exceptions"
 	Enviorement "grammar/symbol"
 	Generator "grammar/symbol"
+	"reflect"
 	"strconv"
 )
 
@@ -39,7 +40,7 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 			Value: err,
 		}
 	}
-	fmt.Println(&table, "Tabla que viene del ambito anterior")
+	//fmt.Println(&table, "Tabla que viene del ambito anterior")
 	function := value.Value
 	paramsList := function.(*DeclareFunction).GetParamsIn()
 	//instructionsList := function.(*DeclareFunction).GetSentences()
@@ -52,7 +53,8 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 	// := Enviorement.NewEnviorement(c.Id, &table)
 	//fmt.Println(newEnviorement)
 	temp := generator.AddTemporal()
-	generator.AddExpression(temp, strconv.Itoa(table.GetSizeEnv()+1), "+", temp)
+	generator.AddExpression("P", strconv.Itoa(table.GetSize()), "+", temp)
+	cont := 0
 	for index, param := range paramsList {
 		paramE := function.(*DeclareFunction).GetParamsEx()[index]
 		paramT := c.ParamsIn[index] //{"type": "native", "value": "hola"}
@@ -65,33 +67,24 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 				Value: err,
 			}
 		}
+		//fmt.Println(param, reflect.TypeOf(param))
 		value := paramT.(Abstract.Expression).GetValue(table, ast)
 
-		valueParam := param.(Enviorement.Symbol)
-		//position := valueParam.GetPos()
-		fmt.Println(valueParam.Value.Value, " Valor de parametro")
-		//fmt.Println(value.Value, "valor a asignar")
-		//generator.AddAssign(valueParam.Value.Value.(string), value.Value.(string))
-		generator.SetStack(temp, value.Value.(string))
-		generator.AddExpression(temp, "1", "+", temp)
+		if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
+			//variable := table.GetVar(param.(*DeclareVariable).Identifier)
 
-		/*if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
+			table.UpdateVariable(param.(*DeclareVariable).Identifier, value)
+			generator.SetStack(temp, value.Value.(string))
+			cont++
+			if cont != len(paramsList) {
+				generator.AddExpression(temp, "1", "+", temp)
+			}
 
-			res := newEnviorement.GetVar(param.(*DeclareVariable).Identifier)
-			fmt.Println(newEnviorement.GetVariable(param.(*DeclareVariable).Identifier))
-			position := res.GetPos()
-			generator.AddComment("Asignacion de parametro")
-			generator.AddAssign(res.Value.Value.(string), value.Value.(string))
-			generator.SetStack(strconv.Itoa(position), value.Value.(string))
+		}
+		//fmt.Println(value, " Valor de parametro")
+		//fmt.Println(valueParam, " Valor de parametro")
 
-			table.SetVariable(param.(*DeclareVariable).Identifier, value, true, c.Line, c.Column, false)
-
-			ast.UpdateSymbolTable("<tr><td>" + param.(*DeclareVariable).Identifier + "</td><td>Funcion</td><td>" + strconv.Itoa(int(param.(*DeclareVariable).TypeD)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(param.(*DeclareVariable).Line) + "</td><td>" + strconv.Itoa(param.(*DeclareVariable).Column) + "</td></tr>")
-		} else if reflect.TypeOf(param) == reflect.TypeOf(&Vector{}) {
-
-			table.SetVariable(param.(*Vector).Id, value, true, c.Line, c.Column, false)
-			ast.UpdateSymbolTable("<tr><td>" + param.(*Vector).Id + "</td><td>Funcion</td><td>" + strconv.Itoa(int(param.(*Vector).Type)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(param.(*Vector).Line) + "</td><td>" + strconv.Itoa(param.(*Vector).Column) + "</td></tr>")
-		}*/
+		//fmt.Println(valueParam.Value.Value, " Valor de parametro")
 
 	}
 

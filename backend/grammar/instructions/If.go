@@ -7,7 +7,6 @@ import (
 	Enviorment "grammar/symbol"
 	Generator "grammar/symbol"
 	"reflect"
-	"strconv"
 )
 
 type If struct {
@@ -43,24 +42,18 @@ func (i *If) Execute(table Enviorment.SymbolTable, ast *Enviorement.AST) interfa
 	}
 
 	newEnviorement := Enviorment.NewEnviorement("if", &table)
-	//fmt.Println(condition.LabelTrue)
 	for _, labels := range condition.LabelTrue {
 		if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
 			generator.PutLabel(labels.(string))
 
 		}
 	}
-	//generator.AddEnv(strconv.Itoa(table.GetSize()))
-	generator.AddEnv(strconv.Itoa(table.GetSizeEnv()))
 
 	for _, instr := range i.codeIf {
 		instr.(Abstract.Instruction).Execute(newEnviorement, ast)
 
 	}
-	//generator.ReturnEnv(strconv.Itoa(table.GetSize()))
-	generator.ReturnEnv(strconv.Itoa(table.GetSizeEnv()))
 	generator.AddGoto(labelJump)
-	//generator.AddEnv(strconv.Itoa(table.GetSize()))
 	newEnviorement01 := Enviorment.NewEnviorement("else", &table)
 	for _, labels := range condition.LabelFalse {
 		if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
@@ -69,12 +62,9 @@ func (i *If) Execute(table Enviorment.SymbolTable, ast *Enviorement.AST) interfa
 		}
 
 	}
-	generator.AddEnv(strconv.Itoa(table.GetSizeEnv()))
 	for _, instr := range i.codeElse {
 		instr.(Abstract.Instruction).Execute(newEnviorement01, ast)
 	}
-	//generator.ReturnEnv(strconv.Itoa(table.GetSize()))
-	generator.ReturnEnv(strconv.Itoa(table.GetSizeEnv()))
 	generator.PutLabel(labelJump)
 
 	return nil

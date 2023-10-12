@@ -1,10 +1,12 @@
 package expressions
 
 import (
+	"fmt"
 	Abstract "grammar/abstract"
 	Errors "grammar/exceptions"
 	Enviorement "grammar/symbol"
 	Generator "grammar/symbol"
+	"reflect"
 )
 
 type ArithmeticOperations struct {
@@ -275,14 +277,15 @@ func (a ArithmeticOperations) GetValue(table Enviorement.SymbolTable, ast *Envio
 		right := expright.Value
 		result = Subtraction(left, right, typeleft, typeright)
 	case "*":
-		expleft := a.left.GetValue(table, ast)
+		/*expleft := a.left.GetValue(table, ast)
 		expright := a.right.GetValue(table, ast)
 		typeleft := expleft.Type
 		typeright := expright.Type
 		left := expleft.Value
 		right := expright.Value
-		result = Multiplication(left, right, typeleft, typeright)
-		/*if reflect.TypeOf(a.right) == reflect.TypeOf(callFunctionExp{}) {
+		result = Multiplication(left, right, typeleft, typeright)*/
+		fmt.Println(reflect.TypeOf(a.right))
+		if reflect.TypeOf(a.right) == reflect.TypeOf(&callFunctionExp{}) {
 			expright := a.right.GetValue(table, ast)
 			right := expright.Value
 			expleft := a.left.GetValue(table, ast)
@@ -298,7 +301,7 @@ func (a ArithmeticOperations) GetValue(table Enviorement.SymbolTable, ast *Envio
 			left := expleft.Value
 			right := expright.Value
 			result = Multiplication(left, right, typeleft, typeright)
-		}*/
+		}
 	case "/":
 		expleft := a.left.GetValue(table, ast)
 		expright := a.right.GetValue(table, ast)

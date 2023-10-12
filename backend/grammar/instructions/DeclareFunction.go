@@ -66,7 +66,7 @@ func (f *DeclareFunction) Execute(table Enviorement.SymbolTable, ast *Envioremen
 	for _, param := range f.Params {
 		p := param.(*paramFunction)
 		f.ParamsEx = append(f.ParamsEx, p.External)
-		//f.ParamsIn = append(f.ParamsIn, p.Internal)
+		f.ParamsIn = append(f.ParamsIn, p.Internal)
 		paramsSave = append(paramsSave, p.Internal)
 
 	}
@@ -80,14 +80,11 @@ func (f *DeclareFunction) Execute(table Enviorement.SymbolTable, ast *Envioremen
 	table.SetFunction(f.Id, function, true, f.Line, f.Column, false)
 
 	newEnviorement := Enviorement.NewEnviorement(f.Id, &table)
-
-	for _, param := range paramsSave {
-		temporal := generator.AddTemporal()
-		p := newEnviorement.SetVariable(param.(*DeclareVariable).Identifier, Enviorement.ReturnSymbol{Type: param.(*DeclareVariable).TypeD, Value: temporal}, true, f.Line, f.Column, false)
-		//fmt.Println("Parametro: ", p)
-		f.ParamsIn = append(f.ParamsIn, p)
-	}
 	//fmt.Println(newEnviorement)
+	for _, param := range paramsSave {
+		temp := generator.AddTemporal()
+		newEnviorement.SetVariable(param.(*DeclareVariable).Identifier, Enviorement.ReturnSymbol{Type: param.(*DeclareVariable).TypeD, Value: temp}, true, param.(*DeclareVariable).Line, param.(*DeclareVariable).Column, false)
+	}
 	generator.AddFunc(f.Id)
 	labelExit := generator.AddLabel()
 	for _, instr := range f.codeF {
