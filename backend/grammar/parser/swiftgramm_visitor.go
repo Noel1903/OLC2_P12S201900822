@@ -18,6 +18,12 @@ type SwiftgrammVisitor interface {
 	// Visit a parse tree produced by SwiftgrammParser#sentence.
 	VisitSentence(ctx *SentenceContext) interface{}
 
+	// Visit a parse tree produced by SwiftgrammParser#switch_bl.
+	VisitSwitch_bl(ctx *Switch_blContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#cases.
+	VisitCases(ctx *CasesContext) interface{}
+
 	// Visit a parse tree produced by SwiftgrammParser#increment_bl.
 	VisitIncrement_bl(ctx *Increment_blContext) interface{}
 

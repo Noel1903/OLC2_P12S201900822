@@ -19,6 +19,14 @@ func (v *BaseSwiftgrammVisitor) VisitSentence(ctx *SentenceContext) interface{} 
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSwiftgrammVisitor) VisitSwitch_bl(ctx *Switch_blContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseSwiftgrammVisitor) VisitCases(ctx *CasesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSwiftgrammVisitor) VisitIncrement_bl(ctx *Increment_blContext) interface{} {
 	return v.VisitChildren(ctx)
 }

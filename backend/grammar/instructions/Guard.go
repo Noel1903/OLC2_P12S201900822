@@ -24,6 +24,9 @@ func NewGuard(condition Abstract.Expression, codeGuard []interface{}, line int, 
 }
 
 func (g *Guard) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) interface{} {
+	genAux := Enviorement.NewGenerator()
+	generator := genAux.GetInstance()
+
 	condition := g.condition.GetValue(table, ast)
 	if condition.Type != Enviorement.BOOL {
 		err := Error.NewException("Error: La condicion debe ser de tipo booleana", table.GetName(), g.Line, g.Column)
@@ -33,22 +36,28 @@ func (g *Guard) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) int
 		}
 	}
 	newEnviorement := Enviorement.NewEnviorement("guard", &table)
-	if condition.Value.(bool) == false {
-		for _, instr := range g.codeGuard {
-			result := instr.(Abstract.Instruction).Execute(newEnviorement, ast)
-			//fmt.Println("ingresa a guard")
-			if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
-				if result.(Enviorement.ReturnSymbol).Value == "break" {
-					return result
-				} else if result.(Enviorement.ReturnSymbol).Value == nil {
-					//fmt.Println(result)
-					return result
-				} else if result.(Enviorement.ReturnSymbol).Value == "continue" {
-					return result
-				} else if result.(Enviorement.ReturnSymbol).Value != nil {
-					return result.(Enviorement.ReturnSymbol)
-				}
+	for _, labels := range condition.LabelFalse {
+		if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
+			generator.PutLabel(labels.(string))
+		}
+	}
+
+	for _, instr := range g.codeGuard {
+		result := instr.(Abstract.Instruction).Execute(newEnviorement, ast)
+		//fmt.Println("ingresa a guard")
+		if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
+			if result.(Enviorement.ReturnSymbol).Type == Enviorement.BREAK {
+				generator.AddGoto(table.GetFalseLabel())
 			}
+			if result.(Enviorement.ReturnSymbol).Type == Enviorement.CONTINUE {
+				generator.AddGoto(table.GetTrueLabel())
+			}
+		}
+
+	}
+	for _, labels := range condition.LabelTrue {
+		if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
+			generator.PutLabel(labels.(string))
 		}
 	}
 	return nil

@@ -38,6 +38,18 @@ func (s *BaseSwiftgrammListener) EnterSentence(ctx *SentenceContext) {}
 // ExitSentence is called when production sentence is exited.
 func (s *BaseSwiftgrammListener) ExitSentence(ctx *SentenceContext) {}
 
+// EnterSwitch_bl is called when production switch_bl is entered.
+func (s *BaseSwiftgrammListener) EnterSwitch_bl(ctx *Switch_blContext) {}
+
+// ExitSwitch_bl is called when production switch_bl is exited.
+func (s *BaseSwiftgrammListener) ExitSwitch_bl(ctx *Switch_blContext) {}
+
+// EnterCases is called when production cases is entered.
+func (s *BaseSwiftgrammListener) EnterCases(ctx *CasesContext) {}
+
+// ExitCases is called when production cases is exited.
+func (s *BaseSwiftgrammListener) ExitCases(ctx *CasesContext) {}
+
 // EnterIncrement_bl is called when production increment_bl is entered.
 func (s *BaseSwiftgrammListener) EnterIncrement_bl(ctx *Increment_blContext) {}
 

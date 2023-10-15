@@ -52,8 +52,8 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 	}
 	// := Enviorement.NewEnviorement(c.Id, &table)
 	//fmt.Println(newEnviorement)
-	temp := generator.AddTemporal()
-	generator.AddExpression("P", strconv.Itoa(table.GetSize()), "+", temp)
+	/*temp := generator.AddTemporal()
+	generator.AddExpression("P", strconv.Itoa(table.GetSize()), "+", temp)*/
 	cont := 0
 	for index, param := range paramsList {
 		paramE := function.(*DeclareFunction).GetParamsEx()[index]
@@ -67,18 +67,24 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 				Value: err,
 			}
 		}
+		var value Enviorement.ReturnSymbol
 		//fmt.Println(param, reflect.TypeOf(param))
-		value := paramT.(Abstract.Expression).GetValue(table, ast)
+
+		value = paramT.(Abstract.Expression).GetValue(table, ast)
 
 		if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
 			//variable := table.GetVar(param.(*DeclareVariable).Identifier)
 
 			table.UpdateVariable(param.(*DeclareVariable).Identifier, value)
-			generator.SetStack(temp, value.Value.(string))
+			/*generator.SetStack(temp, value.Value.(string))
 			cont++
 			if cont != len(paramsList) {
 				generator.AddExpression(temp, "1", "+", temp)
-			}
+			}*/
+			temp := generator.AddTemporal()
+			generator.AddExpression("P", strconv.Itoa(table.GetSize()+cont), "+", temp)
+			generator.SetStack(temp, value.Value.(string))
+			cont++
 
 		}
 		//fmt.Println(value, " Valor de parametro")

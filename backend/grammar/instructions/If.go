@@ -43,6 +43,7 @@ func (i *If) Execute(table Enviorment.SymbolTable, ast *Enviorement.AST) interfa
 
 	newEnviorement := Enviorment.NewEnviorement("if", &table)
 	for _, labels := range condition.LabelTrue {
+
 		if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
 			generator.PutLabel(labels.(string))
 
@@ -50,7 +51,15 @@ func (i *If) Execute(table Enviorment.SymbolTable, ast *Enviorement.AST) interfa
 	}
 
 	for _, instr := range i.codeIf {
-		instr.(Abstract.Instruction).Execute(newEnviorement, ast)
+		result := instr.(Abstract.Instruction).Execute(newEnviorement, ast)
+		if reflect.TypeOf(result) == reflect.TypeOf(Enviorment.ReturnSymbol{}) {
+			if result.(Enviorment.ReturnSymbol).Type == Enviorment.BREAK {
+				generator.AddGoto(table.GetFalseLabel())
+			}
+			if result.(Enviorment.ReturnSymbol).Type == Enviorment.CONTINUE {
+				generator.AddGoto(table.GetTrueLabel())
+			}
+		}
 
 	}
 	generator.AddGoto(labelJump)
@@ -58,12 +67,19 @@ func (i *If) Execute(table Enviorment.SymbolTable, ast *Enviorement.AST) interfa
 	for _, labels := range condition.LabelFalse {
 		if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
 			generator.PutLabel(labels.(string))
-
 		}
 
 	}
 	for _, instr := range i.codeElse {
-		instr.(Abstract.Instruction).Execute(newEnviorement01, ast)
+		result := instr.(Abstract.Instruction).Execute(newEnviorement01, ast)
+		if reflect.TypeOf(result) == reflect.TypeOf(Enviorment.ReturnSymbol{}) {
+			if result.(Enviorment.ReturnSymbol).Type == Enviorment.BREAK {
+				generator.AddGoto(table.GetFalseLabel())
+			}
+			if result.(Enviorment.ReturnSymbol).Type == Enviorment.CONTINUE {
+				generator.AddGoto(table.GetTrueLabel())
+			}
+		}
 	}
 	generator.PutLabel(labelJump)
 

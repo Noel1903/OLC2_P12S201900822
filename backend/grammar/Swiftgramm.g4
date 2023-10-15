@@ -50,6 +50,31 @@ sentence returns [abstract.Instruction instr]
         | call_function {$instr = $call_function.instr}
         | array_functions {$instr = $array_functions.instr}
         | declare_array_bl { $instr = $declare_array_bl.instr}
+        | switch_bl {$instr = $switch_bl.instr}
+;
+
+switch_bl returns [abstract.Instruction instr]
+: SWITCH expression OPEN_kEY cases CLOSE_kEY{
+        $instr = instructions.NewSwitch($expression.p,$cases.p,$SWITCH.line,$SWITCH.pos)
+}
+;
+
+
+cases returns [[]interface{} p]
+: CASE expression COLON block cases{
+        value := instructions.NewCaseSwitch($expression.p,$block.blk,$CASE.line,$CASE.pos)
+        $p = append([]interface{}{value},$cases.p...)
+}
+|CASE expression COLON block{
+        value := instructions.NewCaseSwitch($expression.p,$block.blk,$CASE.line,$CASE.pos)
+        $p = []interface{}{value}
+}
+
+
+| DEFAULT COLON block{
+        value := instructions.NewCaseSwitch(nil,$block.blk,$DEFAULT.line,$DEFAULT.pos)
+        $p = []interface{}{value}       
+}
 ;
 
 increment_bl returns [abstract.Instruction instr]

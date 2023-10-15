@@ -7,9 +7,27 @@ type SymbolTable struct {
 	previousTable *SymbolTable
 	currentTable  map[string]Symbol
 	Position      int
+	TrueLabel     string
+	FalseLabel    string
 }
 
 var Position int = 0
+
+func (t *SymbolTable) GetTrueLabel() string {
+	return t.TrueLabel
+}
+
+func (t *SymbolTable) SetTrueLabel(label string) {
+	t.TrueLabel = label
+}
+
+func (t *SymbolTable) GetFalseLabel() string {
+	return t.FalseLabel
+}
+
+func (t *SymbolTable) SetFalseLabel(label string) {
+	t.FalseLabel = label
+}
 
 func (t *SymbolTable) GetName() string {
 	return t.name

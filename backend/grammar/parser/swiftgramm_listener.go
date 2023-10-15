@@ -16,6 +16,12 @@ type SwiftgrammListener interface {
 	// EnterSentence is called when entering the sentence production.
 	EnterSentence(c *SentenceContext)
 
+	// EnterSwitch_bl is called when entering the switch_bl production.
+	EnterSwitch_bl(c *Switch_blContext)
+
+	// EnterCases is called when entering the cases production.
+	EnterCases(c *CasesContext)
+
 	// EnterIncrement_bl is called when entering the increment_bl production.
 	EnterIncrement_bl(c *Increment_blContext)
 
@@ -120,6 +126,12 @@ type SwiftgrammListener interface {
 
 	// ExitSentence is called when exiting the sentence production.
 	ExitSentence(c *SentenceContext)
+
+	// ExitSwitch_bl is called when exiting the switch_bl production.
+	ExitSwitch_bl(c *Switch_blContext)
+
+	// ExitCases is called when exiting the cases production.
+	ExitCases(c *CasesContext)
 
 	// ExitIncrement_bl is called when exiting the increment_bl production.
 	ExitIncrement_bl(c *Increment_blContext)

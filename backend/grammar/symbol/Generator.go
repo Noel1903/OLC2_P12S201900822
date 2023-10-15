@@ -15,6 +15,7 @@ type Generator struct {
 	inFunc          bool
 	inNative        bool
 	printStringFunc bool
+	AddString       bool
 }
 
 func (g *Generator) ClearAll() {
@@ -27,6 +28,7 @@ func (g *Generator) ClearAll() {
 	g.inFunc = false
 	g.inNative = false
 	g.printStringFunc = false
+	g.AddString = false
 
 }
 
@@ -41,6 +43,7 @@ func NewGenerator() *Generator {
 		inFunc:          false,
 		inNative:        false,
 		printStringFunc: false,
+		AddString:       false,
 	}
 }
 
@@ -103,7 +106,52 @@ func (g *Generator) AddPrint(type_ string, value string) {
 
 }
 
+// /****************************************ADDITION STRING****************************************
+func (g *Generator) AddAdditionString() {
+	if g.AddString {
+		return
+	}
+	g.AddString = true
+	g.inNative = true
+	g.AddFunc("AdditionString")
+	labelCompare := g.AddLabel()
+	labelJump := g.AddLabel()
+	temp1 := g.AddTemporal()
+	temp2 := g.AddTemporal()
+
+	g.GetStack("P", temp1)
+	g.PutLabel(labelJump)
+	g.GetHeap(temp1, temp2)
+	g.AddIf(temp2, "-1", "==", labelCompare)
+	g.SetHeap("H", temp2)
+	g.AddExpression("H", "1", "+", "H")
+	g.AddExpression(temp1, "1", "+", temp1)
+	g.AddGoto(labelJump)
+	g.PutLabel(labelCompare)
+	temp3 := g.AddTemporal()
+	temp4 := g.AddTemporal()
+	labelCompare01 := g.AddLabel()
+	labelJump01 := g.AddLabel()
+	g.AddExpression("P", "1", "+", temp3)
+	g.GetStack(temp3, temp3)
+	g.PutLabel(labelJump01)
+	g.GetHeap(temp3, temp4)
+	g.AddIf(temp4, "-1", "==", labelCompare01)
+	g.SetHeap("H", temp4)
+	g.AddExpression("H", "1", "+", "H")
+	g.AddExpression(temp3, "1", "+", temp3)
+	g.AddGoto(labelJump01)
+	g.PutLabel(labelCompare01)
+	g.SetHeap("H", "-1")
+	g.AddExpression("H", "1", "+", "H")
+
+	g.CodeIn("return;\n}\n")
+	g.inNative = false
+
+}
+
 // *************************************PRINT STRING*************************************
+
 func (g *Generator) AddPrintString() {
 	if g.printStringFunc {
 		return

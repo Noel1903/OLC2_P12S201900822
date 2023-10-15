@@ -6,7 +6,6 @@ import (
 	Enviorement "grammar/symbol"
 	Generator "grammar/symbol"
 	"reflect"
-	"strconv"
 )
 
 type While struct {
@@ -30,6 +29,8 @@ func (w *While) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) int
 	generator := genAux.GetInstance()
 
 	newLabel := generator.AddLabel()
+
+	temporal := generator.AddLabel()
 	generator.PutLabel(newLabel)
 	condition := w.condition.GetValue(table, ast)
 
@@ -49,25 +50,22 @@ func (w *While) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) int
 		}
 	}
 
-	generator.AddEnv(strconv.Itoa(newEnviorement.GetSizeEnv()))
-
+	newEnviorement.SetTrueLabel(newLabel)
+	newEnviorement.SetFalseLabel(temporal)
 	for _, instr := range w.codeWhile {
 		result := instr.(Abstract.Instruction).Execute(newEnviorement, ast) //ejecuta instrucciones
 		if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
-			if result.(Enviorement.ReturnSymbol).Value == "break" {
-
-				break
-			} else if result.(Enviorement.ReturnSymbol).Value == nil {
-				return nil
-			} else if result.(Enviorement.ReturnSymbol).Value == "continue" {
-				break
-			} else if result.(Enviorement.ReturnSymbol).Value != nil {
-				return result.(Enviorement.ReturnSymbol)
+			if result.(Enviorement.ReturnSymbol).Type == Enviorement.BREAK {
+				generator.AddGoto(temporal)
+			}
+			if result.(Enviorement.ReturnSymbol).Type == Enviorement.CONTINUE {
+				generator.AddGoto(newLabel)
 			}
 		}
+
 	}
 	generator.AddGoto(newLabel)
-	generator.ReturnEnv(strconv.Itoa(newEnviorement.GetSizeEnv()))
+	generator.PutLabel(temporal)
 	for _, labels := range condition.LabelFalse {
 		generator.PutLabel(labels.(string))
 	}

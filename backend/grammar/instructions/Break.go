@@ -16,7 +16,7 @@ func NewBreak(identifier string) *Break {
 
 func (b *Break) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) interface{} {
 	return Enviorement.ReturnSymbol{
-		Type:  Enviorement.UNDEFINED,
+		Type:  Enviorement.BREAK,
 		Value: b.identifier,
 	}
 }

@@ -3,6 +3,7 @@ package instructions
 import (
 	Abstract "grammar/abstract"
 	Enviorement "grammar/symbol"
+	"reflect"
 	"strconv"
 )
 
@@ -41,15 +42,25 @@ func (f *For) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) inter
 	newLabel := generator.AddLabel()
 	exitLabel := generator.AddLabel()
 
-	generator.AddEnv(strconv.Itoa(table.GetSizeEnv()))
 	newEnviorement := Enviorement.NewEnviorement("for", &table)
 	variableChange := newEnviorement.SetVariable(f.identifier, valueInitial, true, f.Line, f.Column, false)
 	tempPos := generator.AddTemporal()
 	generator.AddExpression("P", strconv.Itoa(variableChange.Position), "+", tempPos)
 	generator.SetStack(tempPos, valueInitial.Value.(string))
 	generator.PutLabel(newLabel)
+	newEnviorement.SetTrueLabel(newLabel)
+	newEnviorement.SetFalseLabel(exitLabel)
 	for _, instr := range f.codeFor {
-		instr.(Abstract.Instruction).Execute(newEnviorement, ast)
+		result := instr.(Abstract.Instruction).Execute(newEnviorement, ast)
+		if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
+			if result.(Enviorement.ReturnSymbol).Type == Enviorement.BREAK {
+				generator.AddGoto(exitLabel)
+			}
+			if result.(Enviorement.ReturnSymbol).Type == Enviorement.CONTINUE {
+				generator.AddGoto(newLabel)
+			}
+		}
+
 	}
 	newVariable.Value = newVariable.Value.(int) + 1
 	newEnviorement.UpdateVariable(f.identifier, newVariable)
@@ -60,7 +71,6 @@ func (f *For) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) inter
 	generator.AddIf(temp, valueFinal.Value.(string), "<=", newLabel)
 	generator.AddGoto(exitLabel)
 	generator.PutLabel(exitLabel)
-	generator.ReturnEnv(strconv.Itoa(table.GetSizeEnv()))
 
 	return nil
 }

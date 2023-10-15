@@ -7,6 +7,7 @@ import (
 	Enviorement "grammar/symbol"
 	Generator "grammar/symbol"
 	"reflect"
+	"strconv"
 )
 
 type ArithmeticOperations struct {
@@ -28,7 +29,7 @@ func NewArithmeticOperations(left Abstract.Expression, right Abstract.Expression
 	}
 }
 
-func Addition(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData) Enviorement.ReturnSymbol {
+func Addition(left interface{}, right interface{}, typeleft Enviorement.TypeData, typeright Enviorement.TypeData, table Enviorement.SymbolTable) Enviorement.ReturnSymbol {
 	var result Enviorement.ReturnSymbol
 	genAux := Generator.NewGenerator()
 	generator := genAux.GetInstance()
@@ -65,16 +66,38 @@ func Addition(left interface{}, right interface{}, typeleft Enviorement.TypeData
 			Value: temporal,
 		}
 	} else if typeleft == Enviorement.STRING && typeright == Enviorement.STRING {
-		operation := left.(string) + right.(string)
+		temporal := generator.AddTemporal()
+		temporal2 := generator.AddTemporal()
+		generator.AddAdditionString()
+
+		generator.AddAssign(temporal, "H")
+		generator.AddEnv(strconv.Itoa(table.GetSizeEnv()))
+		generator.AddAssign(temporal2, "P")
+		generator.SetStack(temporal2, left.(string))
+		generator.AddExpression(temporal2, "1", "+", temporal2)
+		generator.SetStack(temporal2, right.(string))
+		generator.AddCall("AdditionString")
+		generator.ReturnEnv(strconv.Itoa(table.GetSizeEnv()))
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.STRING,
-			Value: operation,
+			Value: temporal,
 		}
 	} else if typeleft == Enviorement.STRING && typeright == Enviorement.CHAR {
-		operation := left.(string) + right.(string)
+		temporal := generator.AddTemporal()
+		temporal2 := generator.AddTemporal()
+		generator.AddAdditionString()
+
+		generator.AddAssign(temporal, "H")
+		generator.AddEnv(strconv.Itoa(table.GetSizeEnv()))
+		generator.AddAssign(temporal2, "P")
+		generator.SetStack(temporal2, left.(string))
+		generator.AddExpression(temporal2, "1", "+", temporal2)
+		generator.SetStack(temporal2, right.(string))
+		generator.AddCall("AdditionString")
+		generator.ReturnEnv(strconv.Itoa(table.GetSizeEnv()))
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.STRING,
-			Value: operation,
+			Value: temporal,
 		}
 	} else {
 
@@ -239,7 +262,7 @@ func Module(left interface{}, right interface{}, typeleft Enviorement.TypeData, 
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
 		//operation := left.(int) % right.(int)
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "%", temporal)
+		generator.AddExpression("(int)"+left.(string), "(int)"+right.(string), "%", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -267,7 +290,7 @@ func (a ArithmeticOperations) GetValue(table Enviorement.SymbolTable, ast *Envio
 		typeright := expright.Type
 		left := expleft.Value
 		right := expright.Value
-		result = Addition(left, right, typeleft, typeright)
+		result = Addition(left, right, typeleft, typeright, table)
 	case "-":
 		expleft := a.left.GetValue(table, ast)
 		expright := a.right.GetValue(table, ast)

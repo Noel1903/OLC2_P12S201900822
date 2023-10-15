@@ -16,7 +16,7 @@ func NewContinue(identifier string) *Continue {
 
 func (b *Continue) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) interface{} {
 	return Enviorement.ReturnSymbol{
-		Type:  Enviorement.UNDEFINED,
+		Type:  Enviorement.CONTINUE,
 		Value: b.identifier,
 	}
 }
