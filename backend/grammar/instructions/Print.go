@@ -72,7 +72,20 @@ func (p Print) String(value symbol.ReturnSymbol) string {
 func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
 	genAux := Generator.NewGenerator()
 	generator := genAux.GetInstance()
+	label01 := generator.AddLabel()
+	label02 := generator.AddLabel()
+	label03 := generator.AddLabel()
 	value := p.Expression[0].(abstract.Expression).GetValue(table, ast)
+	generator.AddIf(value.Value.(string), "9999999827968.00", "==", label01)
+	generator.AddGoto(label02)
+	generator.PutLabel(label01)
+	generator.AddPrint("c", "110")
+	generator.AddPrint("c", "105")
+	generator.AddPrint("c", "108")
+	generator.Println()
+	generator.AddGoto(label03)
+	generator.PutLabel(label02)
+
 	if value.Type == symbol.INT {
 		generator.AddPrint("d", value.Value.(string))
 		generator.Println()
@@ -84,8 +97,8 @@ func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
 		generator.AddEnv(strconv.Itoa(table.GetSize()))
 		generator.SetStack("P", value.Value.(string))
 		generator.AddComment("Aqui se debe llamar a la funcion printString")
-		generator.Println()
 		generator.AddCall("printString")
+		generator.Println()
 		generator.ReturnEnv(strconv.Itoa(table.GetSize()))
 	} else if value.Type == symbol.STRING {
 		generator.AddPrintString()
@@ -116,6 +129,7 @@ func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
 		generator.PutLabel(labelExit)
 		generator.Println()
 	}
+	generator.PutLabel(label03)
 	return nil
 	/*
 		if len(p.Expression) == 0 {

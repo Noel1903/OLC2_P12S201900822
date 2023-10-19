@@ -16,13 +16,19 @@ func NewNativeFunction(Id string, Expression Abstract.Expression) *NativeFunctio
 }
 
 func (n NativeFunction) Int(table Enviorement.SymbolTable, tree *Enviorement.AST) Enviorement.ReturnSymbol {
+	genAux := Enviorement.NewGenerator()
+	generator := genAux.GetInstance()
+
 	value := n.Expression.GetValue(table, tree)
 	if value.Type == Enviorement.STRING {
-		valueReturn, err := strconv.Atoi(value.Value.(string))
-		if err != nil {
-			return Enviorement.ReturnSymbol{}
-		}
-		return Enviorement.ReturnSymbol{Type: Enviorement.INT, Value: valueReturn}
+		generator.AddEnv(strconv.Itoa(table.GetSizeEnv()))
+		generator.AddFuncStringToNumber()
+		generator.SetStack("P", value.Value.(string))
+		generator.AddCall("stringToNumber")
+		temporal := generator.AddTemporal()
+		generator.GetStack("P", temporal)
+		generator.ReturnEnv(strconv.Itoa(table.GetSizeEnv()))
+		return Enviorement.ReturnSymbol{Type: Enviorement.INT, Value: temporal}
 	} else if value.Type == Enviorement.FLOAT {
 		valueReturn := int(value.Value.(float64))
 		return Enviorement.ReturnSymbol{Type: Enviorement.INT, Value: valueReturn}
@@ -41,13 +47,18 @@ func (n NativeFunction) Int(table Enviorement.SymbolTable, tree *Enviorement.AST
 }
 
 func (n NativeFunction) Float(table Enviorement.SymbolTable, tree *Enviorement.AST) Enviorement.ReturnSymbol {
+	genAux := Enviorement.NewGenerator()
+	generator := genAux.GetInstance()
 	value := n.Expression.GetValue(table, tree)
 	if value.Type == Enviorement.STRING {
-		valueReturn, err := strconv.ParseFloat(value.Value.(string), 64)
-		if err != nil {
-			return Enviorement.ReturnSymbol{}
-		}
-		return Enviorement.ReturnSymbol{Type: Enviorement.FLOAT, Value: valueReturn}
+		generator.AddEnv(strconv.Itoa(table.GetSizeEnv()))
+		generator.AddFuncStringToNumber()
+		generator.SetStack("P", value.Value.(string))
+		generator.AddCall("stringToNumber")
+		temporal := generator.AddTemporal()
+		generator.GetStack("P", temporal)
+		generator.ReturnEnv(strconv.Itoa(table.GetSizeEnv()))
+		return Enviorement.ReturnSymbol{Type: Enviorement.FLOAT, Value: temporal}
 	} else if value.Type == Enviorement.FLOAT {
 		return value
 	} else if value.Type == Enviorement.INT {

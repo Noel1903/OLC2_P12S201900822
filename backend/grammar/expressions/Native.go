@@ -72,6 +72,13 @@ func (n Native) GetValue(env Scoope.SymbolTable, ast *Scoope.AST) Scoope.ReturnS
 			Type:  n.TypeR,
 			Value: temporal,
 		}
+	} else if n.TypeR == Scoope.NIL {
+		temporal := generator.AddTemporal()
+		generator.AddAssign(temporal, "9999999827968.00")
+		return Scoope.ReturnSymbol{
+			Type:  n.TypeR,
+			Value: temporal,
+		}
 	}
 
 	return Scoope.ReturnSymbol{}

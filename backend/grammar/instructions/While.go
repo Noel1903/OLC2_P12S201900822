@@ -52,6 +52,7 @@ func (w *While) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) int
 
 	newEnviorement.SetTrueLabel(newLabel)
 	newEnviorement.SetFalseLabel(temporal)
+
 	for _, instr := range w.codeWhile {
 		result := instr.(Abstract.Instruction).Execute(newEnviorement, ast) //ejecuta instrucciones
 		if reflect.TypeOf(result) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {

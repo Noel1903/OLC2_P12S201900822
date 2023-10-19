@@ -92,6 +92,8 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Envioremen
 
 		} else if value.Type == symbol.CHAR {
 			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
+		} else if value.Type == symbol.NIL {
+			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
 		}
 		ast.UpdateSymbolTable("<tr><td>" + d.Identifier + "</td><td>Variable</td><td>" + strconv.Itoa(int(d.TypeD)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(d.Line) + "</td><td>" + strconv.Itoa(d.Column) + "</td></tr>")
 	} else {

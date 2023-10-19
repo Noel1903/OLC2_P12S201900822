@@ -211,10 +211,30 @@ func Division(left interface{}, right interface{}, typeleft Enviorement.TypeData
 	var result Enviorement.ReturnSymbol
 	genAux := Generator.NewGenerator()
 	generator := genAux.GetInstance()
+	labelInit := generator.AddLabel()
+	labelSuss := generator.AddLabel()
+	labelEnd := generator.AddLabel()
+	temporal := generator.AddTemporal()
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
 		//operation := left.(int) / right.(int)
-		temporal := generator.AddTemporal()
+		generator.AddIf(right.(string), "0", "==", labelInit)
+		generator.AddGoto(labelSuss)
+		generator.PutLabel(labelInit)
+		generator.AddPrint("c", "77")
+		generator.AddPrint("c", "97")
+		generator.AddPrint("c", "116")
+		generator.AddPrint("c", "104")
+		generator.AddPrint("c", "69")
+		generator.AddPrint("c", "114")
+		generator.AddPrint("c", "114")
+		generator.AddPrint("c", "111")
+		generator.AddPrint("c", "114")
+		generator.Println()
+		generator.AddAssign(temporal, "0")
+		generator.AddGoto(labelEnd)
+		generator.PutLabel(labelSuss)
 		generator.AddExpression(left.(string), right.(string), "/", temporal)
+		generator.PutLabel(labelEnd)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,

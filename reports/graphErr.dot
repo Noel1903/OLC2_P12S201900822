@@ -5,5 +5,5 @@ node [fontname="Helvetica,Arial,sans-serif"];
 a0 [shape=none label=<
 <TABLE border="1" cellspacing="0" cellpadding="10">
 <tr><td>Descripcion</td><td>Ambito</td><td>Linea</td><td>Columna</td></tr>
-<tr><td>Error: La condicion debe ser de tipo booleana</td><td>global</td><td>61</td><td>0</td></tr></TABLE>>];
+<tr><td>La condicion no es booleana</td><td>While</td><td>2</td><td>0</td></tr></TABLE>>];
 }

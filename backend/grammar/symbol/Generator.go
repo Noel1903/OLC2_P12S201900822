@@ -16,6 +16,8 @@ type Generator struct {
 	inNative        bool
 	printStringFunc bool
 	AddString       bool
+	funcInt         bool
+	lenString       bool
 }
 
 func (g *Generator) ClearAll() {
@@ -29,6 +31,8 @@ func (g *Generator) ClearAll() {
 	g.inNative = false
 	g.printStringFunc = false
 	g.AddString = false
+	g.funcInt = false
+	g.lenString = false
 
 }
 
@@ -44,6 +48,8 @@ func NewGenerator() *Generator {
 		inNative:        false,
 		printStringFunc: false,
 		AddString:       false,
+		funcInt:         false,
+		lenString:       false,
 	}
 }
 
@@ -91,6 +97,66 @@ func (g *Generator) AddComment(comment string) {
 func (g *Generator) GetCode() string {
 
 	return g.Header() + g.funcs + g.natives + "\nint main(){\n" + g.code + "\nreturn 0;\n}"
+}
+
+// ************************************lenString************************************
+
+// **********************************FUNC STRING TO NUMBER**********************************
+func (g *Generator) AddFuncStringToNumber() {
+	if g.funcInt {
+		return
+	}
+	g.funcInt = true
+	g.inNative = true
+	g.AddFunc("stringToNumber")
+	labelCompare := g.AddLabel()
+	labelJump := g.AddLabel()
+	labelif := g.AddLabel()
+	labelElse := g.AddLabel()
+	labelInt := g.AddLabel()
+	labelDecimal := g.AddLabel()
+	labelRes := g.AddLabel()
+	temp1 := g.AddTemporal()
+	temp2 := g.AddTemporal()
+	tempNum := g.AddTemporal()
+	tempAcum := g.AddTemporal()
+	tempDecimal := g.AddTemporal()
+	tempDecimalPart := g.AddTemporal()
+	tempMultiplier := g.AddTemporal()
+	temp6 := g.AddTemporal()
+	g.AddAssign(tempAcum, "0")
+	g.AddAssign(tempDecimalPart, "0")
+	g.AddAssign(tempMultiplier, "0.1")
+	g.AddAssign(tempDecimal, "0")
+	g.GetStack("P", temp1)
+	g.PutLabel(labelJump)
+	g.GetHeap(temp1, temp2)
+	g.AddIf(temp2, "-1", "==", labelCompare)
+	g.AddIf(temp2, "46", "==", labelif)
+	g.AddGoto(labelElse)
+	g.PutLabel(labelif)
+	g.AddAssign(tempDecimal, "1")
+	g.AddGoto(labelRes)
+	g.PutLabel(labelElse)
+	g.AddExpression(temp2, "48", "-", tempNum)
+	g.AddIf(tempDecimal, "1", "==", labelDecimal)
+	g.PutLabel(labelInt)
+	g.AddExpression(tempAcum, "10", "*", tempAcum)
+	g.AddExpression(tempAcum, tempNum, "+", tempAcum)
+	g.AddGoto(labelRes)
+	g.PutLabel(labelDecimal)
+	g.AddExpression(tempNum, tempMultiplier, "*", temp6)
+	g.AddExpression(tempDecimalPart, temp6, "+", tempDecimalPart)
+	g.AddExpression(tempMultiplier, "0.1", "*", tempMultiplier)
+	g.PutLabel(labelRes)
+	g.AddExpression(temp1, "1", "+", temp1)
+	g.AddGoto(labelJump)
+	g.PutLabel(labelCompare)
+	g.AddExpression(tempAcum, tempDecimalPart, "+", tempAcum)
+	g.SetStack("P", tempAcum)
+	g.CodeIn("return;\n}\n")
+	g.inNative = false
+
 }
 
 //*************************************PRINT*************************************

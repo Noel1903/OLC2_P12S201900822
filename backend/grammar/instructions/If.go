@@ -42,6 +42,8 @@ func (i *If) Execute(table Enviorment.SymbolTable, ast *Enviorement.AST) interfa
 	}
 
 	newEnviorement := Enviorment.NewEnviorement("if", &table)
+	newEnviorement.SetTrueLabel(table.GetTrueLabel())
+	newEnviorement.SetFalseLabel(table.GetFalseLabel())
 	for _, labels := range condition.LabelTrue {
 
 		if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
@@ -64,6 +66,8 @@ func (i *If) Execute(table Enviorment.SymbolTable, ast *Enviorement.AST) interfa
 	}
 	generator.AddGoto(labelJump)
 	newEnviorement01 := Enviorment.NewEnviorement("else", &table)
+	newEnviorement01.SetTrueLabel(table.GetTrueLabel())
+	newEnviorement01.SetFalseLabel(table.GetFalseLabel())
 	for _, labels := range condition.LabelFalse {
 		if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
 			generator.PutLabel(labels.(string))
