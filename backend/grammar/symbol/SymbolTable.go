@@ -93,6 +93,35 @@ func (table *SymbolTable) SetVariable(id string, value ReturnSymbol, declare boo
 	return table.currentTable[id]
 }
 
+func (table *SymbolTable) SetArray(id string, value ReturnSymbol, typeData TypeData, declare bool, line int, column int, InHeap bool) Symbol {
+	if declare {
+
+		valueSymbol := Symbol{
+			Value:    value,
+			Type:     MUTABLE,
+			Line:     line,
+			Column:   column,
+			Position: table.GetSize(),
+			IsGlobal: table.previousTable == nil,
+			InHeap:   InHeap,
+			TypeArr:  typeData,
+		}
+		valueSymbol.SetPos(table.GetSize())
+		table.currentTable[id] = valueSymbol
+		table.SetSize(table.GetSize() + 1)
+
+	} else {
+		valueSymbol := Symbol{
+			Value:  value,
+			Type:   UNMUTABLE,
+			Line:   line,
+			Column: column,
+		}
+		table.currentTable[id] = valueSymbol
+	}
+	return table.currentTable[id]
+}
+
 func (table *SymbolTable) SetFunction(id string, value ReturnSymbol, declare bool, line int, column int, InHeap bool) Symbol {
 	if declare {
 

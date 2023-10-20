@@ -77,6 +77,8 @@ func (n NativeFunction) Float(table Enviorement.SymbolTable, tree *Enviorement.A
 }
 
 func (n NativeFunction) String(table Enviorement.SymbolTable, tree *Enviorement.AST) Enviorement.ReturnSymbol {
+	genAux := Enviorement.NewGenerator()
+	generator := genAux.GetInstance()
 	value := n.Expression.GetValue(table, tree)
 	if value.Type == Enviorement.STRING {
 		return value
@@ -84,8 +86,14 @@ func (n NativeFunction) String(table Enviorement.SymbolTable, tree *Enviorement.
 		valueReturn := strconv.FormatFloat(value.Value.(float64), 'f', -1, 64)
 		return Enviorement.ReturnSymbol{Type: Enviorement.STRING, Value: valueReturn}
 	} else if value.Type == Enviorement.INT {
-		valueReturn := strconv.Itoa(value.Value.(int))
-		return Enviorement.ReturnSymbol{Type: Enviorement.STRING, Value: valueReturn}
+		generator.AddEnv(strconv.Itoa(table.GetSizeEnv()))
+		generator.AddFuncNumberToString()
+		generator.SetStack("P", value.Value.(string))
+		generator.AddCall("numberToString")
+		temporal := generator.AddTemporal()
+		generator.GetStack("P", temporal)
+		generator.ReturnEnv(strconv.Itoa(table.GetSizeEnv()))
+		return Enviorement.ReturnSymbol{Type: Enviorement.STRING, Value: temporal}
 	} else if value.Type == Enviorement.BOOL {
 		if value.Value.(bool) {
 			return Enviorement.ReturnSymbol{Type: Enviorement.STRING, Value: "true"}

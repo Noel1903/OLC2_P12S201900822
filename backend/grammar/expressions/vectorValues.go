@@ -3,6 +3,7 @@ package expressions
 import (
 	Errors "grammar/exceptions"
 	Enviorement "grammar/symbol"
+	"strconv"
 )
 
 type vectorValues struct {
@@ -18,6 +19,8 @@ func NewVectorValues(Identifier string, Id string, line int, column int) *vector
 
 func (n vectorValues) GetValue(table Enviorement.SymbolTable, ast *Enviorement.AST) Enviorement.ReturnSymbol {
 	variable := table.GetVariable(n.Identifier)
+	genAux := Enviorement.NewGenerator()
+	generator := genAux.GetInstance()
 	if variable.Value == nil {
 		err := Errors.NewException("La variable no ha sido declarada", table.GetName(), n.Line, n.Column)
 		return Enviorement.ReturnSymbol{
@@ -33,8 +36,26 @@ func (n vectorValues) GetValue(table Enviorement.SymbolTable, ast *Enviorement.A
 				Value: err,
 			}
 		}
-		size := len(variable.Value.([]Enviorement.ReturnSymbol))
-		return Enviorement.ReturnSymbol{Type: Enviorement.BOOL, Value: size == 0}
+		tempVar := table.GetVar(n.Identifier)
+		temporal01 := generator.AddTemporal()
+		temporal02 := generator.AddTemporal()
+		tempSizeThis := generator.AddTemporal()
+		labelTrue := generator.AddLabel()
+		labelFalse := generator.AddLabel()
+		if tempVar.IsGlobal {
+			generator.GetStack(strconv.Itoa(tempVar.GetPos()), temporal02)
+		} else {
+			generator.AddExpression("P", strconv.Itoa(tempVar.GetPos()), "+", temporal01)
+			generator.GetStack(temporal01, temporal02)
+		}
+		generator.AddExpression(temporal02, "2", "+", tempSizeThis)
+		generator.GetHeap(tempSizeThis, tempSizeThis)
+		generator.AddIf(tempSizeThis, "0", "==", labelTrue)
+		generator.AddGoto(labelFalse)
+		returnSym := Enviorement.ReturnSymbol{Type: Enviorement.BOOL, Value: ""}
+		returnSym.LabelTrue = append(returnSym.LabelTrue, labelTrue)
+		returnSym.LabelFalse = append(returnSym.LabelFalse, labelFalse)
+		return returnSym
 
 	} else if n.Id == "count" {
 		if variable.Type != Enviorement.ARRAY {
@@ -44,8 +65,22 @@ func (n vectorValues) GetValue(table Enviorement.SymbolTable, ast *Enviorement.A
 				Value: err,
 			}
 		}
-		size := len(variable.Value.([]Enviorement.ReturnSymbol))
-		return Enviorement.ReturnSymbol{Type: Enviorement.INT, Value: size}
+		tempVar := table.GetVar(n.Identifier)
+		temporal01 := generator.AddTemporal()
+		temporal02 := generator.AddTemporal()
+		tempSizeThis := generator.AddTemporal()
+		if tempVar.IsGlobal {
+			generator.GetStack(strconv.Itoa(tempVar.GetPos()), temporal02)
+		} else {
+			generator.AddExpression("P", strconv.Itoa(tempVar.GetPos()), "+", temporal01)
+			generator.GetStack(temporal01, temporal02)
+		}
+		generator.AddExpression(temporal02, "2", "+", tempSizeThis)
+		generator.GetHeap(tempSizeThis, tempSizeThis)
+
+		returnSym := Enviorement.ReturnSymbol{Type: Enviorement.INT, Value: tempSizeThis}
+
+		return returnSym
 	}
 	return Enviorement.ReturnSymbol{}
 }

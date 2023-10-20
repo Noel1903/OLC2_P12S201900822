@@ -86,7 +86,19 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 			generator.SetStack(temp, value.Value.(string))
 			cont++
 
+		} else if reflect.TypeOf(param) == reflect.TypeOf(&Vector{}) {
+			table.UpdateVariable(param.(*Vector).Id, value)
+			/*generator.SetStack(temp, value.Value.(string))
+			cont++
+			if cont != len(paramsList) {
+				generator.AddExpression(temp, "1", "+", temp)
+			}*/
+			temp := generator.AddTemporal()
+			generator.AddExpression("P", strconv.Itoa(table.GetSize()+cont), "+", temp)
+			generator.SetStack(temp, value.Value.(string))
+			cont++
 		}
+
 		//fmt.Println(value, " Valor de parametro")
 		//fmt.Println(valueParam, " Valor de parametro")
 

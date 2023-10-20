@@ -4,6 +4,7 @@ import (
 	"fmt"
 	Abstract "grammar/abstract"
 	Error "grammar/exceptions"
+	"grammar/symbol"
 	Enviorement "grammar/symbol"
 	Generator "grammar/symbol"
 	"reflect"
@@ -80,11 +81,17 @@ func (f *DeclareFunction) Execute(table Enviorement.SymbolTable, ast *Envioremen
 	table.SetFunction(f.Id, function, true, f.Line, f.Column, false)
 
 	newEnviorement := Enviorement.NewEnviorement(f.Id, &table)
-	//fmt.Println(newEnviorement)
 	for _, param := range paramsSave {
+		fmt.Println(reflect.TypeOf(param))
 		temp := generator.AddTemporal()
-		newEnviorement.SetVariable(param.(*DeclareVariable).Identifier, Enviorement.ReturnSymbol{Type: param.(*DeclareVariable).TypeD, Value: temp}, true, param.(*DeclareVariable).Line, param.(*DeclareVariable).Column, false)
+		if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
+			newEnviorement.SetVariable(param.(*DeclareVariable).Identifier, Enviorement.ReturnSymbol{Type: param.(*DeclareVariable).TypeD, Value: temp}, true, param.(*DeclareVariable).Line, param.(*DeclareVariable).Column, false)
+		} else if reflect.TypeOf(param) == reflect.TypeOf(&Vector{}) {
+			newEnviorement.SetArray(param.(*Vector).Id, Enviorement.ReturnSymbol{Type: symbol.ARRAY, Value: temp}, f.Type, true, param.(*Vector).Line, param.(*Vector).Column, false)
+		}
 	}
+	//fmt.Println(newEnviorement)
+
 	generator.AddFunc(f.Id)
 	labelExit := generator.AddLabel()
 	for _, instr := range f.codeF {

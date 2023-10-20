@@ -15,6 +15,7 @@ type Symbol struct {
 	Position int
 	IsGlobal bool
 	InHeap   bool
+	TypeArr  TypeData
 }
 
 func (s *Symbol) GetPos() int {

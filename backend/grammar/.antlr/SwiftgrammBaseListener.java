@@ -58,6 +58,30 @@ public class SwiftgrammBaseListener implements SwiftgrammListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSwitch_bl(SwiftgrammParser.Switch_blContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSwitch_bl(SwiftgrammParser.Switch_blContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCases(SwiftgrammParser.CasesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCases(SwiftgrammParser.CasesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIncrement_bl(SwiftgrammParser.Increment_blContext ctx) { }
 	/**
 	 * {@inheritDoc}

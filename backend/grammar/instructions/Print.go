@@ -76,23 +76,41 @@ func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
 	label02 := generator.AddLabel()
 	label03 := generator.AddLabel()
 	value := p.Expression[0].(abstract.Expression).GetValue(table, ast)
-	generator.AddIf(value.Value.(string), "9999999827968.00", "==", label01)
-	generator.AddGoto(label02)
-	generator.PutLabel(label01)
-	generator.AddPrint("c", "110")
-	generator.AddPrint("c", "105")
-	generator.AddPrint("c", "108")
-	generator.Println()
-	generator.AddGoto(label03)
-	generator.PutLabel(label02)
 
 	if value.Type == symbol.INT {
+		generator.AddIf(value.Value.(string), "9999999827968.00", "==", label01)
+		generator.AddGoto(label02)
+		generator.PutLabel(label01)
+		generator.AddPrint("c", "110")
+		generator.AddPrint("c", "105")
+		generator.AddPrint("c", "108")
+		generator.Println()
+		generator.AddGoto(label03)
+		generator.PutLabel(label02)
 		generator.AddPrint("d", value.Value.(string))
 		generator.Println()
 	} else if value.Type == symbol.FLOAT {
+		generator.AddIf(value.Value.(string), "9999999827968.00", "==", label01)
+		generator.AddGoto(label02)
+		generator.PutLabel(label01)
+		generator.AddPrint("c", "110")
+		generator.AddPrint("c", "105")
+		generator.AddPrint("c", "108")
+		generator.Println()
+		generator.AddGoto(label03)
+		generator.PutLabel(label02)
 		generator.AddPrint("f", value.Value.(string))
 		generator.Println()
 	} else if value.Type == symbol.CHAR {
+		generator.AddIf(value.Value.(string), "9999999827968.00", "==", label01)
+		generator.AddGoto(label02)
+		generator.PutLabel(label01)
+		generator.AddPrint("c", "110")
+		generator.AddPrint("c", "105")
+		generator.AddPrint("c", "108")
+		generator.Println()
+		generator.AddGoto(label03)
+		generator.PutLabel(label02)
 		generator.AddPrintString()
 		generator.AddEnv(strconv.Itoa(table.GetSize()))
 		generator.SetStack("P", value.Value.(string))
@@ -101,6 +119,15 @@ func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
 		generator.Println()
 		generator.ReturnEnv(strconv.Itoa(table.GetSize()))
 	} else if value.Type == symbol.STRING {
+		generator.AddIf(value.Value.(string), "9999999827968.00", "==", label01)
+		generator.AddGoto(label02)
+		generator.PutLabel(label01)
+		generator.AddPrint("c", "110")
+		generator.AddPrint("c", "105")
+		generator.AddPrint("c", "108")
+		generator.Println()
+		generator.AddGoto(label03)
+		generator.PutLabel(label02)
 		generator.AddPrintString()
 		generator.AddEnv(strconv.Itoa(table.GetSize()))
 		generator.SetStack("P", value.Value.(string))
@@ -128,59 +155,52 @@ func (p Print) Execute(table symbol.SymbolTable, ast *symbol.AST) interface{} {
 		generator.AddPrint("c", "101")
 		generator.PutLabel(labelExit)
 		generator.Println()
+	} else if value.Type == symbol.ARRAY {
+		tempVar := table.GetVar(value.Value.(string))
+		temporal01 := generator.AddTemporal()
+		temporal02 := generator.AddTemporal()
+		tempSizeThis := generator.AddTemporal()
+		tempChar := generator.AddTemporal()
+		tempNewChar := generator.AddTemporal()
+		tempCont := generator.AddTemporal()
+		labelTrue := generator.AddLabel()
+		labelFalse := generator.AddLabel()
+		if tempVar.IsGlobal {
+			generator.GetStack(strconv.Itoa(tempVar.GetPos()), temporal02)
+		} else {
+			generator.AddExpression("P", strconv.Itoa(tempVar.GetPos()), "+", temporal01)
+			generator.GetStack(temporal01, temporal02)
+		}
+		generator.AddExpression(temporal02, "2", "+", tempSizeThis)
+		generator.GetHeap(tempSizeThis, tempSizeThis)
+		generator.AddExpression(temporal02, "3", "+", tempChar)
+		generator.PutLabel(labelFalse)
+		generator.AddIf(tempCont, "(int)"+tempSizeThis, "==", labelTrue)
+		generator.GetHeap(tempChar, tempNewChar)
+		if tempVar.TypeArr == symbol.INT {
+			generator.AddPrint("d", tempNewChar)
+		} else if tempVar.TypeArr == symbol.FLOAT {
+			generator.AddPrint("f", tempNewChar)
+		} else if tempVar.TypeArr == symbol.CHAR {
+			generator.AddPrint("c", tempNewChar)
+		} else if tempVar.TypeArr == symbol.STRING {
+			generator.AddPrintString()
+			generator.AddEnv(strconv.Itoa(table.GetSize()))
+			generator.SetStack("P", tempNewChar)
+			generator.AddComment("Aqui se debe llamar a la funcion printString")
+			generator.AddCall("printString")
+			generator.ReturnEnv(strconv.Itoa(table.GetSize()))
+		}
+		generator.AddExpression(tempChar, "1", "+", tempChar)
+		generator.AddExpression(tempCont, "1", "+", tempCont)
+		generator.AddIf(tempCont, "(int)"+tempSizeThis, "==", labelFalse)
+		generator.AddPrint("c", "44")
+		generator.AddGoto(labelFalse)
+		generator.PutLabel(labelTrue)
+		generator.Println()
+
 	}
 	generator.PutLabel(label03)
 	return nil
-	/*
-		if len(p.Expression) == 0 {
-			ast.UpdateConsoleOut("\n")
-			return nil
-		} else if len(p.Expression) == 1 {
-			value := p.Expression[0].(abstract.Expression).GetValue(table, ast)
 
-			if value.Type == symbol.ERROR {
-				return value
-			}
-			var print string = ""
-
-			if value.Type == symbol.ARRAY {
-				print = p.StringArray(value, table, ast)
-				ast.UpdateConsoleOut(print + "\n")
-				return nil
-			} else if value.Value == nil {
-				ast.UpdateConsoleOut("nil\n")
-				return nil
-			} else {
-				print = p.String(value)
-				ast.UpdateConsoleOut(print + "\n")
-				return nil
-			}
-
-		} else if len(p.Expression) > 1 {
-			for _, expression := range p.Expression {
-				value := expression.(abstract.Expression).GetValue(table, ast)
-				var print string = ""
-				if value.Type == symbol.CHAR {
-					print = string(value.Value.(byte))
-					ast.UpdateConsoleOut(print + " ")
-
-				}
-				if value.Type == symbol.ARRAY {
-					print = p.StringArray(value, table, ast)
-					ast.UpdateConsoleOut(print + " ")
-
-				} else if value.Value == nil {
-					ast.UpdateConsoleOut("nil")
-				} else {
-					print = p.String(value)
-					ast.UpdateConsoleOut(print + " ")
-
-				}
-			}
-			ast.UpdateConsoleOut("\n")
-			return nil
-		} else if p.Expression == nil {
-			ast.UpdateConsoleOut("nil\n")
-		}
-		return nil*/
 }

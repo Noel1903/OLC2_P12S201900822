@@ -43,6 +43,26 @@ public interface SwiftgrammListener extends ParseTreeListener {
 	 */
 	void exitSentence(SwiftgrammParser.SentenceContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SwiftgrammParser#switch_bl}.
+	 * @param ctx the parse tree
+	 */
+	void enterSwitch_bl(SwiftgrammParser.Switch_blContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SwiftgrammParser#switch_bl}.
+	 * @param ctx the parse tree
+	 */
+	void exitSwitch_bl(SwiftgrammParser.Switch_blContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SwiftgrammParser#cases}.
+	 * @param ctx the parse tree
+	 */
+	void enterCases(SwiftgrammParser.CasesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SwiftgrammParser#cases}.
+	 * @param ctx the parse tree
+	 */
+	void exitCases(SwiftgrammParser.CasesContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SwiftgrammParser#increment_bl}.
 	 * @param ctx the parse tree
 	 */

@@ -153,6 +153,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_s; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterS(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitS(this);
+		}
 	}
 
 	public final SContext s() throws RecognitionException {
@@ -196,6 +204,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_block; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterBlock(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitBlock(this);
+		}
 	}
 
 	public final BlockContext block() throws RecognitionException {
@@ -330,6 +346,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_sentence; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterSentence(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitSentence(this);
+		}
 	}
 
 	public final SentenceContext sentence() throws RecognitionException {
@@ -531,6 +555,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_switch_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterSwitch_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitSwitch_bl(this);
+		}
 	}
 
 	public final Switch_blContext switch_bl() throws RecognitionException {
@@ -589,6 +621,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_cases; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterCases(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitCases(this);
+		}
 	}
 
 	public final CasesContext cases() throws RecognitionException {
@@ -677,6 +717,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_increment_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterIncrement_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitIncrement_bl(this);
+		}
 	}
 
 	public final Increment_blContext increment_bl() throws RecognitionException {
@@ -722,6 +770,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_decrement_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterDecrement_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitDecrement_bl(this);
+		}
 	}
 
 	public final Decrement_blContext decrement_bl() throws RecognitionException {
@@ -760,6 +816,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_break_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterBreak_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitBreak_bl(this);
+		}
 	}
 
 	public final Break_blContext break_bl() throws RecognitionException {
@@ -799,6 +863,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_return_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterReturn_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitReturn_bl(this);
+		}
 	}
 
 	public final Return_blContext return_bl() throws RecognitionException {
@@ -851,6 +923,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_continue_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterContinue_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitContinue_bl(this);
+		}
 	}
 
 	public final Continue_blContext continue_bl() throws RecognitionException {
@@ -897,6 +977,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_declare_let; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterDeclare_let(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitDeclare_let(this);
+		}
 	}
 
 	public final Declare_letContext declare_let() throws RecognitionException {
@@ -974,6 +1062,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_native_function; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterNative_function(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitNative_function(this);
+		}
 	}
 
 	public final Native_functionContext native_function() throws RecognitionException {
@@ -1068,6 +1164,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_declare_var; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterDeclare_var(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitDeclare_var(this);
+		}
 	}
 
 	public final Declare_varContext declare_var() throws RecognitionException {
@@ -1158,6 +1262,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assign_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterAssign_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitAssign_bl(this);
+		}
 	}
 
 	public final Assign_blContext assign_bl() throws RecognitionException {
@@ -1202,6 +1314,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_print_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterPrint_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitPrint_bl(this);
+		}
 	}
 
 	public final Print_blContext print_bl() throws RecognitionException {
@@ -1250,6 +1370,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_list_print; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterList_print(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitList_print(this);
+		}
 	}
 
 	public final List_printContext list_print() throws RecognitionException {
@@ -1330,6 +1458,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_if_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterIf_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitIf_bl(this);
+		}
 	}
 
 	public final If_blContext if_bl() throws RecognitionException {
@@ -1453,6 +1589,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_else_if; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterElse_if(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitElse_if(this);
+		}
 	}
 
 	public final Else_ifContext else_if() throws RecognitionException {
@@ -1564,6 +1708,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_while_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterWhile_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitWhile_bl(this);
+		}
 	}
 
 	public final While_blContext while_bl() throws RecognitionException {
@@ -1624,6 +1776,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_for_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterFor_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitFor_bl(this);
+		}
 	}
 
 	public final For_blContext for_bl() throws RecognitionException {
@@ -1686,6 +1846,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_guard_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterGuard_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitGuard_bl(this);
+		}
 	}
 
 	public final Guard_blContext guard_bl() throws RecognitionException {
@@ -1750,6 +1918,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_vector_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterVector_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitVector_bl(this);
+		}
 	}
 
 	public final Vector_blContext vector_bl() throws RecognitionException {
@@ -1844,6 +2020,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_array_exp; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterArray_exp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitArray_exp(this);
+		}
 	}
 
 	public final Array_expContext array_exp() throws RecognitionException {
@@ -1915,6 +2099,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_array_functions; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterArray_functions(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitArray_functions(this);
+		}
 	}
 
 	public final Array_functionsContext array_functions() throws RecognitionException {
@@ -2018,6 +2210,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assign_vector; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterAssign_vector(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitAssign_vector(this);
+		}
 	}
 
 	public final Assign_vectorContext assign_vector() throws RecognitionException {
@@ -2081,6 +2281,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_function_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterFunction_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitFunction_bl(this);
+		}
 	}
 
 	public final Function_blContext function_bl() throws RecognitionException {
@@ -2229,6 +2437,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_params; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterParams(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitParams(this);
+		}
 	}
 
 	public final ParamsContext params() throws RecognitionException {
@@ -2426,6 +2642,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_extern_params; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterExtern_params(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitExtern_params(this);
+		}
 	}
 
 	public final Extern_paramsContext extern_params() throws RecognitionException {
@@ -2485,6 +2709,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_call_function; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterCall_function(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitCall_function(this);
+		}
 	}
 
 	public final Call_functionContext call_function() throws RecognitionException {
@@ -2556,6 +2788,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_list_exp; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterList_exp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitList_exp(this);
+		}
 	}
 
 	public final List_expContext list_exp() throws RecognitionException {
@@ -2649,6 +2889,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_call_function_exp; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterCall_function_exp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitCall_function_exp(this);
+		}
 	}
 
 	public final Call_function_expContext call_function_exp() throws RecognitionException {
@@ -2697,6 +2945,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_declare_array_bl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterDeclare_array_bl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitDeclare_array_bl(this);
+		}
 	}
 
 	public final Declare_array_blContext declare_array_bl() throws RecognitionException {
@@ -2755,6 +3011,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_exp_matriz; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterExp_matriz(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitExp_matriz(this);
+		}
 	}
 
 	public final Exp_matrizContext exp_matriz() throws RecognitionException {
@@ -2828,6 +3092,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_type_matrix; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterType_matrix(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitType_matrix(this);
+		}
 	}
 
 	public final Type_matrixContext type_matrix() throws RecognitionException {
@@ -2890,6 +3162,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_definition_matrix; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterDefinition_matrix(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitDefinition_matrix(this);
+		}
 	}
 
 	public final Definition_matrixContext definition_matrix() throws RecognitionException {
@@ -2982,6 +3262,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitExpression(this);
+		}
 	}
 
 	public final ExpressionContext expression() throws RecognitionException {
@@ -3411,6 +3699,14 @@ public class SwiftgrammParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_datatype; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).enterDatatype(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SwiftgrammListener ) ((SwiftgrammListener)listener).exitDatatype(this);
+		}
 	}
 
 	public final DatatypeContext datatype() throws RecognitionException {

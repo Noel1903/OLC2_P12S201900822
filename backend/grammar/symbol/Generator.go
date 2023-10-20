@@ -18,6 +18,7 @@ type Generator struct {
 	AddString       bool
 	funcInt         bool
 	lenString       bool
+	funcIntString   bool
 }
 
 func (g *Generator) ClearAll() {
@@ -33,6 +34,7 @@ func (g *Generator) ClearAll() {
 	g.AddString = false
 	g.funcInt = false
 	g.lenString = false
+	g.funcIntString = false
 
 }
 
@@ -50,6 +52,7 @@ func NewGenerator() *Generator {
 		AddString:       false,
 		funcInt:         false,
 		lenString:       false,
+		funcIntString:   false,
 	}
 }
 
@@ -98,8 +101,6 @@ func (g *Generator) GetCode() string {
 
 	return g.Header() + g.funcs + g.natives + "\nint main(){\n" + g.code + "\nreturn 0;\n}"
 }
-
-// ************************************lenString************************************
 
 // **********************************FUNC STRING TO NUMBER**********************************
 func (g *Generator) AddFuncStringToNumber() {
@@ -154,6 +155,48 @@ func (g *Generator) AddFuncStringToNumber() {
 	g.PutLabel(labelCompare)
 	g.AddExpression(tempAcum, tempDecimalPart, "+", tempAcum)
 	g.SetStack("P", tempAcum)
+	g.CodeIn("return;\n}\n")
+	g.inNative = false
+
+}
+
+// ***************************** FUNC NUMBER TO STRING**********************************
+func (g *Generator) AddFuncNumberToString() {
+	if g.funcIntString {
+		return
+	}
+	g.funcIntString = true
+	g.inNative = true
+	g.AddFunc("numberToString")
+	labelCompare := g.AddLabel()
+	labelJump := g.AddLabel()
+	/*labelif := g.AddLabel()
+	labelElse := g.AddLabel()
+	labelInt := g.AddLabel()
+	labelDecimal := g.AddLabel()
+	labelRes := g.AddLabel()*/
+	temp1 := g.AddTemporal()
+	intPart := g.AddTemporal()
+	decimalPart := g.AddTemporal()
+	heap := g.AddTemporal()
+	digit := g.AddTemporal()
+	tempC := g.AddTemporal()
+	g.AddAssign(heap, "H")
+	g.GetStack("P", temp1)
+	g.AddAssign(intPart, "(int)"+temp1)
+	g.AddExpression(temp1, intPart, "-", decimalPart)
+	g.PutLabel(labelJump)
+	g.AddIf(intPart, "0", "<=", labelCompare)
+	g.AddExpression("(int)"+intPart, "10", "%", digit)
+	g.AddExpression("(int)"+digit, "48", "+", tempC)
+	g.SetHeap("H", tempC)
+	g.AddExpression("H", "1", "+", "H")
+	g.AddExpression(intPart, "10", "/", intPart)
+	g.AddGoto(labelJump)
+	g.PutLabel(labelCompare)
+	g.SetHeap("H", "-1")
+	g.AddExpression("H", "1", "+", "H")
+	g.SetStack("P", heap)
 	g.CodeIn("return;\n}\n")
 	g.inNative = false
 
