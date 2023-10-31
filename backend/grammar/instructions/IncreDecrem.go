@@ -4,6 +4,7 @@ import (
 	Abstract "grammar/abstract"
 	Error "grammar/exceptions"
 	Enviorement "grammar/symbol"
+	Generator "grammar/symbol"
 )
 
 type IncreDecrem struct {
@@ -27,6 +28,9 @@ func NewIncreDecrem(identifier string, operation string, value Abstract.Expressi
 func (inde *IncreDecrem) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) interface{} {
 	value := inde.value.GetValue(table, ast)
 	variable := table.GetVariable(inde.identifier)
+	genAux := Generator.NewGenerator()
+	generator := genAux.GetInstance()
+
 	if variable.Value == nil {
 		err := Error.NewException("Variable no declarada", inde.identifier, inde.Line, inde.Column)
 		return Enviorement.ReturnSymbol{
@@ -36,32 +40,40 @@ func (inde *IncreDecrem) Execute(table Enviorement.SymbolTable, ast *Enviorement
 	}
 	if value.Type == Enviorement.INT && variable.Type == Enviorement.INT {
 		if inde.operation == "+=" {
+			temporal := generator.AddTemporal()
+			generator.AddExpression("(int)"+variable.Value.(string), "(int)"+value.Value.(string), "+", temporal)
 			valueResult := Enviorement.ReturnSymbol{
 				Type:  Enviorement.INT,
-				Value: variable.Value.(int) + value.Value.(int),
+				Value: temporal,
 			}
 			table.UpdateVariable(inde.identifier, valueResult)
 		}
 		if inde.operation == "-=" {
+			temporal := generator.AddTemporal()
+			generator.AddExpression("(int)"+variable.Value.(string), "(int)"+value.Value.(string), "-", temporal)
 			valueResult := Enviorement.ReturnSymbol{
 				Type:  Enviorement.INT,
-				Value: variable.Value.(int) - value.Value.(int),
+				Value: temporal,
 			}
 			table.UpdateVariable(inde.identifier, valueResult)
 		}
 
 	} else if value.Type == Enviorement.FLOAT && variable.Type == Enviorement.FLOAT {
 		if inde.operation == "+=" {
+			temporal := generator.AddTemporal()
+			generator.AddExpression(variable.Value.(string), value.Value.(string), "+", temporal)
 			valueResult := Enviorement.ReturnSymbol{
-				Type:  Enviorement.FLOAT,
-				Value: variable.Value.(float64) + value.Value.(float64),
+				Type:  Enviorement.INT,
+				Value: temporal,
 			}
 			table.UpdateVariable(inde.identifier, valueResult)
 		}
 		if inde.operation == "-=" {
+			temporal := generator.AddTemporal()
+			generator.AddExpression(variable.Value.(string), value.Value.(string), "-", temporal)
 			valueResult := Enviorement.ReturnSymbol{
-				Type:  Enviorement.FLOAT,
-				Value: variable.Value.(float64) - value.Value.(float64),
+				Type:  Enviorement.INT,
+				Value: temporal,
 			}
 			table.UpdateVariable(inde.identifier, valueResult)
 		}

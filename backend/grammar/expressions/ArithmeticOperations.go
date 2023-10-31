@@ -1,7 +1,6 @@
 package expressions
 
 import (
-	"fmt"
 	Abstract "grammar/abstract"
 	Errors "grammar/exceptions"
 	Enviorement "grammar/symbol"
@@ -36,7 +35,7 @@ func Addition(left interface{}, right interface{}, typeleft Enviorement.TypeData
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
 		//operation := left.(int) + right.(int)
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "+", temporal)
+		generator.AddExpression("(int)"+left.(string), "(int)"+right.(string), "+", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -44,7 +43,7 @@ func Addition(left interface{}, right interface{}, typeleft Enviorement.TypeData
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
 		//operation := float64(left.(int)) + right.(float64)
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "+", temporal)
+		generator.AddExpression("(int)"+left.(string), right.(string), "+", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.FLOAT,
 			Value: temporal,
@@ -52,7 +51,7 @@ func Addition(left interface{}, right interface{}, typeleft Enviorement.TypeData
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
 		//operation := left.(float64) + float64(right.(int))
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "+", temporal)
+		generator.AddExpression(left.(string), "(int)"+right.(string), "+", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.FLOAT,
 			Value: temporal,
@@ -117,7 +116,7 @@ func Subtraction(left interface{}, right interface{}, typeleft Enviorement.TypeD
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
 		//operation := left.(int) - right.(int)
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "-", temporal)
+		generator.AddExpression("(int)"+left.(string), "(int)"+right.(string), "-", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -125,7 +124,7 @@ func Subtraction(left interface{}, right interface{}, typeleft Enviorement.TypeD
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
 		//operation := float64(left.(int)) - right.(float64)
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "-", temporal)
+		generator.AddExpression("(int)"+left.(string), right.(string), "-", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -134,7 +133,7 @@ func Subtraction(left interface{}, right interface{}, typeleft Enviorement.TypeD
 		//operation := left.(float64) - float64(right.(int))
 
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "-", temporal)
+		generator.AddExpression(left.(string), "(int)"+right.(string), "-", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -166,7 +165,7 @@ func Multiplication(left interface{}, right interface{}, typeleft Enviorement.Ty
 	if typeleft == Enviorement.INT && typeright == Enviorement.INT {
 		//operation := left.(int) * right.(int)
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "*", temporal)
+		generator.AddExpression("(int)"+left.(string), "(int)"+right.(string), "*", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -174,7 +173,7 @@ func Multiplication(left interface{}, right interface{}, typeleft Enviorement.Ty
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
 		//operation := float64(left.(int)) * right.(float64)
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "*", temporal)
+		generator.AddExpression("(int)"+left.(string), right.(string), "*", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -182,7 +181,7 @@ func Multiplication(left interface{}, right interface{}, typeleft Enviorement.Ty
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
 		//operation := left.(float64) * float64(right.(int))
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "*", temporal)
+		generator.AddExpression(left.(string), "(int)"+right.(string), "*", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -233,7 +232,7 @@ func Division(left interface{}, right interface{}, typeleft Enviorement.TypeData
 		generator.AddAssign(temporal, "0")
 		generator.AddGoto(labelEnd)
 		generator.PutLabel(labelSuss)
-		generator.AddExpression(left.(string), right.(string), "/", temporal)
+		generator.AddExpression("(int)"+left.(string), "(int)"+right.(string), "/", temporal)
 		generator.PutLabel(labelEnd)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
@@ -242,7 +241,7 @@ func Division(left interface{}, right interface{}, typeleft Enviorement.TypeData
 	} else if typeleft == Enviorement.INT && typeright == Enviorement.FLOAT {
 		//operation := float64(left.(int)) / right.(float64)
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "/", temporal)
+		generator.AddExpression("(int)"+left.(string), right.(string), "/", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -250,7 +249,7 @@ func Division(left interface{}, right interface{}, typeleft Enviorement.TypeData
 	} else if typeleft == Enviorement.FLOAT && typeright == Enviorement.INT {
 		//operation := left.(float64) / float64(right.(int))
 		temporal := generator.AddTemporal()
-		generator.AddExpression(left.(string), right.(string), "/", temporal)
+		generator.AddExpression(left.(string), "(int)"+right.(string), "/", temporal)
 		result = Enviorement.ReturnSymbol{
 			Type:  Enviorement.INT,
 			Value: temporal,
@@ -311,6 +310,7 @@ func (a ArithmeticOperations) GetValue(table Enviorement.SymbolTable, ast *Envio
 		left := expleft.Value
 		right := expright.Value
 		result = Addition(left, right, typeleft, typeright, table)
+
 	case "-":
 		expleft := a.left.GetValue(table, ast)
 		expright := a.right.GetValue(table, ast)
@@ -320,14 +320,6 @@ func (a ArithmeticOperations) GetValue(table Enviorement.SymbolTable, ast *Envio
 		right := expright.Value
 		result = Subtraction(left, right, typeleft, typeright)
 	case "*":
-		/*expleft := a.left.GetValue(table, ast)
-		expright := a.right.GetValue(table, ast)
-		typeleft := expleft.Type
-		typeright := expright.Type
-		left := expleft.Value
-		right := expright.Value
-		result = Multiplication(left, right, typeleft, typeright)*/
-		fmt.Println(reflect.TypeOf(a.right))
 		if reflect.TypeOf(a.right) == reflect.TypeOf(&callFunctionExp{}) {
 			expright := a.right.GetValue(table, ast)
 			right := expright.Value

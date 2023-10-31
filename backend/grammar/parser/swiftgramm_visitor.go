@@ -4,7 +4,6 @@ package parser // Swiftgramm
 import "github.com/antlr4-go/antlr/v4"
 
 
-
 // A complete Visitor for a parse tree produced by SwiftgrammParser.
 type SwiftgrammVisitor interface {
 	antlr.ParseTreeVisitor
@@ -113,6 +112,9 @@ type SwiftgrammVisitor interface {
 
 	// Visit a parse tree produced by SwiftgrammParser#definition_matrix.
 	VisitDefinition_matrix(ctx *Definition_matrixContext) interface{}
+
+	// Visit a parse tree produced by SwiftgrammParser#matriz_pos.
+	VisitMatriz_pos(ctx *Matriz_posContext) interface{}
 
 	// Visit a parse tree produced by SwiftgrammParser#expression.
 	VisitExpression(ctx *ExpressionContext) interface{}

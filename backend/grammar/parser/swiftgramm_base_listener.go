@@ -230,6 +230,12 @@ func (s *BaseSwiftgrammListener) EnterDefinition_matrix(ctx *Definition_matrixCo
 // ExitDefinition_matrix is called when production definition_matrix is exited.
 func (s *BaseSwiftgrammListener) ExitDefinition_matrix(ctx *Definition_matrixContext) {}
 
+// EnterMatriz_pos is called when production matriz_pos is entered.
+func (s *BaseSwiftgrammListener) EnterMatriz_pos(ctx *Matriz_posContext) {}
+
+// ExitMatriz_pos is called when production matriz_pos is exited.
+func (s *BaseSwiftgrammListener) ExitMatriz_pos(ctx *Matriz_posContext) {}
+
 // EnterExpression is called when production expression is entered.
 func (s *BaseSwiftgrammListener) EnterExpression(ctx *ExpressionContext) {}
 

@@ -33,7 +33,7 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 	genAux := Generator.NewGenerator()
 	generator := genAux.GetInstance()
 	if value.Value == nil {
-		fmt.Println("Entra aqui de no existe")
+		fmt.Println("Execute(table  Enviorement.SymbolTable")
 		err := Error.NewException("La funcion no existe", table.GetName(), c.Line, c.Column)
 		return Enviorement.ReturnSymbol{
 			Type:  Enviorement.ERROR,
@@ -70,7 +70,7 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 		var value Enviorement.ReturnSymbol
 		//fmt.Println(param, reflect.TypeOf(param))
 
-		value = paramT.(Abstract.Expression).GetValue(table, ast)
+		value = paramT.(Abstract.Expression).GetValue(table, ast) //parametro de llamada
 
 		if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
 			//variable := table.GetVar(param.(*DeclareVariable).Identifier)
@@ -88,6 +88,17 @@ func (c *callFunction) Execute(table Enviorement.SymbolTable, ast *Enviorement.A
 
 		} else if reflect.TypeOf(param) == reflect.TypeOf(&Vector{}) {
 			table.UpdateVariable(param.(*Vector).Id, value)
+			/*generator.SetStack(temp, value.Value.(string))
+			cont++
+			if cont != len(paramsList) {
+				generator.AddExpression(temp, "1", "+", temp)
+			}*/
+			temp := generator.AddTemporal()
+			generator.AddExpression("P", strconv.Itoa(table.GetSize()+cont), "+", temp)
+			generator.SetStack(temp, value.Value.(string))
+			cont++
+		} else if reflect.TypeOf(param) == reflect.TypeOf(&DeclareLet{}) {
+			table.UpdateVariable(param.(*DeclareVariable).Identifier, value)
 			/*generator.SetStack(temp, value.Value.(string))
 			cont++
 			if cont != len(paramsList) {

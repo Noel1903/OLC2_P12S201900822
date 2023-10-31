@@ -43,6 +43,7 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Envioremen
 	variable = table.GetVariableThis(d.Identifier)
 	genAuxiliar := Generator.NewGenerator()
 	generator := genAuxiliar.GetInstance()
+	var tempPos string
 
 	if variable.Value == nil {
 		value := d.Value.GetValue(table, ast)
@@ -58,17 +59,17 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Envioremen
 			}
 		}
 		result := table.SetVariable(d.Identifier, value, true, d.Line, d.Column, false)
-		tempPos := result.GetPos()
+		tempPos = strconv.Itoa(result.GetPos())
 		if !result.GetIsGlobal() {
-			tempPos := generator.AddTemporal()
+			tempPos = generator.AddTemporal()
 			generator.AddExpression("P", strconv.Itoa(result.GetPos()), "+", tempPos)
 		}
 		if value.Type == symbol.INT {
-			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
+			generator.SetStack(tempPos, value.GetValue().(string))
 		} else if value.Type == symbol.FLOAT {
-			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
+			generator.SetStack(tempPos, value.GetValue().(string))
 		} else if value.Type == symbol.STRING {
-			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
+			generator.SetStack(tempPos, value.GetValue().(string))
 		} else if value.Type == symbol.BOOL {
 			newLabel := generator.AddLabel()
 
@@ -78,7 +79,7 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Envioremen
 
 				}
 			}
-			generator.SetStack(strconv.Itoa(tempPos), "1")
+			generator.SetStack(tempPos, "1")
 			generator.AddGoto(newLabel)
 			for _, labels := range value.LabelFalse {
 				if reflect.TypeOf(labels).Kind() != reflect.Slice || reflect.TypeOf(labels).Elem().Kind() == reflect.Interface {
@@ -87,13 +88,13 @@ func (d *DeclareVariable) Execute(table Enviorement.SymbolTable, ast *Envioremen
 				}
 
 			}
-			generator.SetStack(strconv.Itoa(tempPos), "0")
+			generator.SetStack(tempPos, "0")
 			generator.PutLabel(newLabel)
 
 		} else if value.Type == symbol.CHAR {
-			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
+			generator.SetStack(tempPos, value.GetValue().(string))
 		} else if value.Type == symbol.NIL {
-			generator.SetStack(strconv.Itoa(tempPos), value.GetValue().(string))
+			generator.SetStack(tempPos, value.GetValue().(string))
 		}
 		ast.UpdateSymbolTable("<tr><td>" + d.Identifier + "</td><td>Variable</td><td>" + strconv.Itoa(int(d.TypeD)) + "</td><td>" + table.GetName() + "</td><td>" + strconv.Itoa(d.Line) + "</td><td>" + strconv.Itoa(d.Column) + "</td></tr>")
 	} else {

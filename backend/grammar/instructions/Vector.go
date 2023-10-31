@@ -67,10 +67,10 @@ func (v *Vector) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) in
 		}
 
 		result := table.SetArray(v.Id, value, v.Type, true, v.Line, v.Column, false)
-
-		tempPos := result.GetPos()
+		var tempPos string
+		tempPos = strconv.Itoa(result.GetPos())
 		if !result.GetIsGlobal() {
-			tempPos := generator.AddTemporal()
+			tempPos = generator.AddTemporal()
 			generator.AddExpression("P", strconv.Itoa(result.GetPos()), "+", tempPos)
 		}
 		temporalInitial := generator.AddTemporal()
@@ -86,7 +86,7 @@ func (v *Vector) Execute(table Enviorement.SymbolTable, ast *Enviorement.AST) in
 			generator.SetHeap("H", value)
 			generator.AddExpression("H", "1", "+", "H")
 		}
-		generator.SetStack(strconv.Itoa(tempPos), temporalInitial)
+		generator.SetStack(tempPos, temporalInitial)
 
 		/*for _, value := range single_value {
 			value_exp := value.(Abstract.Expression).GetValue(table, ast)

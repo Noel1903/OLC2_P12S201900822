@@ -112,6 +112,9 @@ type SwiftgrammListener interface {
 	// EnterDefinition_matrix is called when entering the definition_matrix production.
 	EnterDefinition_matrix(c *Definition_matrixContext)
 
+	// EnterMatriz_pos is called when entering the matriz_pos production.
+	EnterMatriz_pos(c *Matriz_posContext)
+
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
@@ -222,6 +225,9 @@ type SwiftgrammListener interface {
 
 	// ExitDefinition_matrix is called when exiting the definition_matrix production.
 	ExitDefinition_matrix(c *Definition_matrixContext)
+
+	// ExitMatriz_pos is called when exiting the matriz_pos production.
+	ExitMatriz_pos(c *Matriz_posContext)
 
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)

@@ -413,5 +413,3 @@ const (
 	SwiftgrammLexerCOMMENT            = 72
 	SwiftgrammLexerLINE_COMMENT       = 73
 )
-
-

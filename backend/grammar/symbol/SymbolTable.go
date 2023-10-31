@@ -199,7 +199,7 @@ func (table *SymbolTable) UpdateVariable(id string, value ReturnSymbol) interfac
 			table.currentTable[id] = newValue
 		} else {
 			fmt.Println("Error, la variable es inmutable")
-			return nil
+			return ReturnSymbol{Type: ERROR, Value: nil}
 		}
 	} else {
 		if table.previousTable != nil {

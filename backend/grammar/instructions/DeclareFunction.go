@@ -65,6 +65,7 @@ func (f *DeclareFunction) Execute(table Enviorement.SymbolTable, ast *Envioremen
 	}
 	var paramsSave []interface{}
 	for _, param := range f.Params {
+
 		p := param.(*paramFunction)
 		f.ParamsEx = append(f.ParamsEx, p.External)
 		f.ParamsIn = append(f.ParamsIn, p.Internal)
@@ -82,12 +83,13 @@ func (f *DeclareFunction) Execute(table Enviorement.SymbolTable, ast *Envioremen
 
 	newEnviorement := Enviorement.NewEnviorement(f.Id, &table)
 	for _, param := range paramsSave {
-		fmt.Println(reflect.TypeOf(param))
 		temp := generator.AddTemporal()
 		if reflect.TypeOf(param) == reflect.TypeOf(&DeclareVariable{}) {
 			newEnviorement.SetVariable(param.(*DeclareVariable).Identifier, Enviorement.ReturnSymbol{Type: param.(*DeclareVariable).TypeD, Value: temp}, true, param.(*DeclareVariable).Line, param.(*DeclareVariable).Column, false)
 		} else if reflect.TypeOf(param) == reflect.TypeOf(&Vector{}) {
-			newEnviorement.SetArray(param.(*Vector).Id, Enviorement.ReturnSymbol{Type: symbol.ARRAY, Value: temp}, f.Type, true, param.(*Vector).Line, param.(*Vector).Column, false)
+			newEnviorement.SetArray(param.(*Vector).Id, Enviorement.ReturnSymbol{Type: symbol.ARRAY, Value: temp}, symbol.INT, true, param.(*Vector).Line, param.(*Vector).Column, false)
+		} else if reflect.TypeOf(param) == reflect.TypeOf(&DeclareLet{}) {
+			newEnviorement.SetVariable(param.(*DeclareLet).identifier, Enviorement.ReturnSymbol{Type: param.(*DeclareLet).typeD, Value: temp}, false, param.(*DeclareLet).Line, param.(*DeclareLet).Column, false)
 		}
 	}
 	//fmt.Println(newEnviorement)

@@ -7,9 +7,7 @@ import Swiftlex;
         import "grammar/symbol"
         import "grammar/abstract"
 }
-@members{
-        var CountM int = 0 
-}
+
 
 s returns [[]interface{} code]
 : block EOF{
@@ -52,6 +50,9 @@ sentence returns [abstract.Instruction instr]
         | declare_array_bl { $instr = $declare_array_bl.instr}
         | switch_bl {$instr = $switch_bl.instr}
 ;
+
+
+
 
 switch_bl returns [abstract.Instruction instr]
 : SWITCH expression OPEN_kEY cases CLOSE_kEY{
@@ -340,16 +341,16 @@ call_function_exp returns[abstract.Expression p]
 
 declare_array_bl returns [abstract.Instruction instr]
 :VAR ID COLON type_matrix ASSIGN OPEN_BRACKET exp_matriz CLOSE_BRACKET{
-        $instr = instructions.NewDeclareArray($ID.text,$type_matrix.td,CountM,$exp_matriz.p)
+        $instr = instructions.NewDeclareArray($ID.text,$type_matrix.td,$exp_matriz.p)
 }
 ;
 
 exp_matriz returns [[]interface{} p]
-: OPEN_BRACKET expression CLOSE_BRACKET{
+:  expression {
         value := $expression.p
         $p = []interface{}{value}
 }
-| OPEN_BRACKET expression CLOSE_BRACKET COMMA exp_matriz{ 
+|  expression COMMA exp_matriz{ 
         value := $expression.p
         $p = append([]interface{}{value},$exp_matriz.p...)
 }
@@ -357,10 +358,8 @@ exp_matriz returns [[]interface{} p]
 
 type_matrix returns [symbol.TypeData td]
 : OPEN_BRACKET type_matrix CLOSE_BRACKET{
-        CountM++;
         $td = $type_matrix.td
 }| OPEN_BRACKET datatype CLOSE_BRACKET{
-        CountM++;
         $td = $datatype.td
 }
 ;
@@ -368,6 +367,18 @@ type_matrix returns [symbol.TypeData td]
 definition_matrix returns [[][]interface{} p]
 : type_matrix 
 ;
+
+matriz_pos returns [[]interface{} p]
+: OPEN_BRACKET expression CLOSE_BRACKET{
+        value := $expression.p
+        $p = []interface{}{value}
+}
+| OPEN_BRACKET expression CLOSE_BRACKET matriz_pos{
+        value := $expression.p
+        $p = append([]interface{}{value},$matriz_pos.p...)
+}
+;
+
 
 expression returns [abstract.Expression p]
         :left=expression oper=(MULTIPLICATION|DIVISION) right=expression{
@@ -409,6 +420,7 @@ expression returns [abstract.Expression p]
         | ID OPEN_BRACKET expression CLOSE_BRACKET{
                 $p = expressions.NewGetPosVector($ID.text,$expression.p,$ID.line,$ID.pos)
         }
+        
         | ID DOT COUNT{
                 $p = expressions.NewVectorValues($ID.text,$COUNT.text,$ID.line,$ID.pos)
         }
@@ -425,6 +437,10 @@ expression returns [abstract.Expression p]
                 }
                 $p = expressions.NewNative(value,symbol.INT,$NUMBER.line,$NUMBER.pos)
         }
+        | ID matriz_pos {
+                $p = expressions.NewGetPosMatrix($ID.text,$matriz_pos.p,$ID.line,$ID.pos)
+        }
+
         | FLOATT{
                 value,err := strconv.ParseFloat($FLOATT.text,64)
                 if err != nil{

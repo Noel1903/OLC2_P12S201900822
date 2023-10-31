@@ -147,6 +147,10 @@ func (v *BaseSwiftgrammVisitor) VisitDefinition_matrix(ctx *Definition_matrixCon
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseSwiftgrammVisitor) VisitMatriz_pos(ctx *Matriz_posContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseSwiftgrammVisitor) VisitExpression(ctx *ExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }

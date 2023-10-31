@@ -87,7 +87,7 @@ func Interpreter(c *fiber.Ctx) error {
 			Message: "Success",
 		}
 	} else {
-		//createSymbolTable(ast.GetReportSymbolTable())
+		createSymbolTable(ast.GetReportSymbolTable())
 		response = Resp{
 			Output:  generator.GetCode(),
 			Flag:    true,

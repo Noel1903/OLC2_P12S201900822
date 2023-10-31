@@ -123,9 +123,6 @@ public class SwiftgrammLexer extends Lexer {
 	}
 
 
-	        var CountM int = 0 
-
-
 	public SwiftgrammLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);

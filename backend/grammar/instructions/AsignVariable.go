@@ -5,6 +5,7 @@ import (
 	Error "grammar/exceptions"
 	Enviorement "grammar/symbol"
 	Generator "grammar/symbol"
+	"reflect"
 	"strconv"
 )
 
@@ -31,7 +32,13 @@ func (a AsignVariable) Execute(table Enviorement.SymbolTable, tree *Enviorement.
 		}
 		variable := table.GetVar(a.Id)
 		generator.SetStack(strconv.Itoa(variable.GetPos()), expresion.Value.(string))
-		table.UpdateVariable(a.Id, expresion)
+		res := table.UpdateVariable(a.Id, expresion)
+		if reflect.TypeOf(res) == reflect.TypeOf(Enviorement.ReturnSymbol{}) {
+			if res.(Enviorement.ReturnSymbol).Type == Enviorement.ERROR {
+				err := Error.NewException("No se puede asignar el valor", a.Id, a.Line, a.Column)
+				return Enviorement.ReturnSymbol{Type: Enviorement.ERROR, Value: err}
+			}
+		}
 	}
 
 	return nil
